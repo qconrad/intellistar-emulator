@@ -100,8 +100,8 @@ function checkZipCode(){
     fetchCurrentWeather();
 }
 
-function hiddenZipCodeElement(){
-  document.getElementById('zip_code_form_container').style.top = '-101%';
+function hideZipCodeElement(){
+  document.getElementById('zip-prompt').style.display = 'none';
 }
 
 function fetchCurrentWeather(){
@@ -116,7 +116,7 @@ function fetchCurrentWeather(){
       try{CITY_NAME = data.current_observation.display_location.city.toString().toUpperCase();}
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
       CURRENT_TEMPERATURE = Math.round(data.current_observation.temp_f).toString().toUpperCase();
-      hiddenZipCodeElement();
+      hideZipCodeElement();
       fetchAlerts();
     });
   })

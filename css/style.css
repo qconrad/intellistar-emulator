@@ -437,3 +437,18 @@ body{
 .tomorrow-night-text{
   font-size: 45px;
 }
+
+#zip-prompt{
+  font-size: 40px;
+  margin: 0 auto;
+  width: 250px;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+}
+
+.zip-item{
+  font-size: 40px;
+  width: 100%;
+  margin: 2px;
+}
