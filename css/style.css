@@ -426,6 +426,14 @@ body{
   font-size: 55px;
 }
 
+#cc-dial{
+  width: 450px;
+  height: 450px;
+  left: 50px;
+  top: 15px;
+  position: relative;
+}
+
 .tomorrow-night-text{
   font-size: 45px;
 }
