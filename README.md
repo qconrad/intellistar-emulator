@@ -7,6 +7,8 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 ## Instructions
 1. Extract all contents into folder
 2. Run index.html in Google Chrome
+3. Enter zip code
+4. Click start
 
 ## Features
-Most of core animation and logic has been replicated included severe weather alerts, forecast descriptions, crawl text, and the doppler radar map. Some things are still missing such as most icons, 7 day forecast, and narrations.
+Most of core animation and logic has been replicated included severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map. Some things are still missing such as most icons, 7-day forecast, and narrations.
