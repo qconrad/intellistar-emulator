@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <script type="text/javascript" src="js/script.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Intellistar Emulator</title>
+</head>
+
+<body>
+  <div id="render-frame">
+    <!--Nature Background image-->
+    <div id="background-image" class="below-screen"></div>
+
+    <!-- Weather Channel Logo -->
+    <div id="infobar-container">
+      <img id="infobar-twc-logo" src="assets/logos/twc.svg" />
+      <img id="infobar-local-logo" src="assets/logos/local.svg" />
+      <div id="infobar-location-container" class="infobar-item-container">
+        <div id="infobar-location-text" class="regular-text infobar-text"></div>
+      </div>
+      <div id="infobar-time-container" class="infobar-item-container" style="background-color: rgba(0, 0, 0, 0.25)">
+        <div id="infobar-time-text" class="regular-text infobar-text" style="margin-left: 25px; margin-right: 25px;"></div>
+      </div>
+    </div>
+
+    <!--Main Container-->
+    <div id="content-container">
+      <!-- Transparent Frame -->
+      <div id="content-frame">
+        <!-- Greeting Page -->
+        <div id="greeting-page">
+          <div id="local-logo-container">
+            <img src="assets/logos/local-white-box.svg" />
+          </div>
+
+          <div id="hello-text-container">
+            <div id="hello-text" class="strong-text">HELLO</div>
+          </div>
+
+          <div id="hello-location-container">
+            <div id="hello-location-text" class="regular-text"></div>
+          </div>
+
+          <div id="greeting-text-container">
+            <div id="greeting-text" class="regular-text"></div>
+          </div>
+
+        </div>
+
+        <!-- Single Alert Page -->
+        <div id="single-alert-page" class="page-container alert-page-container">
+          <div>
+            <div class="page-title-bar alert-title-bar regular-text">ALERT</div>
+          </div>
+          <div class="page-content-container forecast forecast-right">
+            <div id="single-alert0" class="narrative-text regular-text"></div>
+          </div>
+
+
+        </div>
+
+        <!-- Multiple Alerts Page -->
+        <div id="multiple-alerts-page" class="page-container alert-page-container">
+          <div>
+            <div class="page-title-bar alert-titlebar regular-text">ALERTS</div>
+          </div>
+          <div class="page-content-container shaded-page-content">
+            <div style="width: 100%; height: 28%; border-bottom: 3px solid rgba(255, 255, 255, 0.75);">
+              <div id="alert0" class="regular-text" style="font-size: 40px; padding: 20px;"></div>
+            </div>
+            <div style="width: 100%; height: 30%; border-bottom: 3px solid rgba(255, 255, 255, 0.75);">
+              <div id="alert1" class="regular-text" style="font-size: 40px; padding: 20px;"></div>
+            </div>
+            <div style="width: 100%; height: 30%;">
+              <div id="alert2" class="regular-text" style="font-size: 40px; padding: 20px;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Current Page -->
+        <div id="current-page" class="page-container">
+          <div>
+            <div class="page-title-bar regular-text">Now</div>
+          </div>
+
+          <div class="page-content-container shaded-page-content">
+            <!-- Temporary -->
+
+          <div style="width: 450px; height: 450px; left: 50px; top: 15px; position: relative;">
+            &nbsp;
+            <img width="100%" src="assets/icons/cc-dial.svg"/>
+          </div>
+          <div style="float: right;" id="cc-temperature-text" class="regular-text">0</div>
+
+          </div>
+
+        </div>
+
+        <!-- Radar Page -->
+        <div id="radar-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">1-Hour Radar</div>
+            <!--  -->
+          </div>
+          <div class="page-content-container">
+            <img id="radar-image" />
+          </div>
+        </div>
+
+        <!-- Today Page -->
+        <div id="today-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">Forecast</div>
+          </div>
+          <div class="page-content-container">
+            <div class="shaded-page-content forecast forecast-left">
+              <div class="strong-text forecast-date">TODAY</div>
+            </div>
+            <div class="shaded-page-content forecast forecast-right">
+              <div id="today-narrative-text" class="narrative-text regular-text "></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tonight Page -->
+        <div id="tonight-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">Forecast</div>
+          </div>
+          <div class="page-content-container">
+            <div class="shaded-page-content forecast forecast-left">
+              <div class="strong-text forecast-date">TONIGHT</div>
+            </div>
+            <div class="shaded-page-content forecast forecast-right">
+              <div id="tonight-narrative-text" class="narrative-text regular-text "></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tomorrow Page -->
+        <div id="tomorrow-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">Forecast</div>
+          </div>
+          <div class="page-content-container">
+            <div class="shaded-page-content forecast forecast-left">
+              <div class="strong-text forecast-date">TOMORROW</div>
+            </div>
+            <div class="shaded-page-content forecast forecast-right">
+              <div id="tomorrow-narrative-text" class="narrative-text regular-text "></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tomorrow Night Page -->
+        <div id="tomorrow-night-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">Forecast</div>
+          </div>
+          <div class="page-content-container">
+            <div class="shaded-page-content forecast forecast-left">
+              <div class="strong-text forecast-date tomorrow-night-text">TOMORROW NIGHT</div>
+            </div>
+            <div class="shaded-page-content forecast forecast-right">
+              <div id="tomorrow-night-narrative-text" class="narrative-text regular-text "></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 7 Day Outlook Page -->
+        <div id="7day-page" class="page-container regular-page-container">
+          <div>
+            <div class="page-title-bar regular-text">7 Day Forecast</div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+    <!-- Text Crawl -->
+    <div id="crawler-container">
+      <marquee id="crawl-text" scrollamount="15" style="font-size: 40px;" class="regular-text" behavior="scroll" direction="left"></marquee>
+    </div>
+
+    <!-- Timeline -->
+    <div id="timeline-container">
+      <!-- Current Logo -->
+      <div style="float: left; height: 100%">
+        <img src="assets/timeline/calendar.svg" height="100%" />
+      </div>
+
+      <!-- Timeline -->
+      <div style="height: 100%; overflow: hidden; margin-left: 95px;">
+        <table cellpadding="0" width="200%;" height="100%" style="border-spacing: 0; border-collapse: collapse; table-layout: fixed;">
+          <tr>
+            <th>
+              <div style="width: 100%; height: 100%; overflow: hidden;">
+                <div id="timeline-events-container">
+                  <table style="table-layout: fixed; overflow: hidden;">
+                    <tr id="timeline-events" class="regular-text" style="font-size: 43px;">
+                      <!-- Timeline events go here -->
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </th>
+          </tr>
+          <tr height="25%">
+            <th>
+              <table width="100%" height="100%">
+                <tr>
+                  <td width="280px">
+                    <div width="100%" height="100%" style="background-color: rgba(255, 255, 255, 0.25);">
+                      <div id="progressbar" style="font-size: 10px;">&nbsp;</div>
+                    </div>
+                  </td>
+
+                  <td style="overflow: hidden; display: block;"></td>
+
+                </tr>
+              </table>
+            </th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!-- Zip code prompt -->
+  <div id="zip_code_form_container" style="left: 50%; margin-left: -15em; text-align: center; transition: top 1s; position: fixed; top: 0;">
+    <div class="regular-text" style="font-size: 40px;">Enter zip code:</div>
+    <input style="font-size: 40px;" type="text" id="zip_code_text"><br>
+    <button style="font-size: 40px; width: 100%; margin-top: 5px;" id="submit_button" onclick="checkZipCode();">Start</button>
+  </div>
+</body>
+</html>
