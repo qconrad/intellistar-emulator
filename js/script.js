@@ -82,7 +82,6 @@ function determinePageOrder(){
       TIMELINE_INDEX = [0, 0, 1, 2, 2, 2];
     }
   }
-
   setInformation();
 }
 
@@ -200,7 +199,6 @@ function setInformation(){
     cell.innerHTML = TIMELINE_ORDER[i];
   }
 
-
   //start once all the information is set
   setTimeout(startAnimation, 0);
 }
@@ -247,7 +245,7 @@ function clearGreetingPage(){
   document.getElementById('greeting-text').classList.remove('shown');
   document.getElementById('local-logo-container').classList.remove('shown');
 
-  //hidden everything
+  //hide everything
   document.getElementById('greeting-text').classList.add('hidden');
   document.getElementById('hello-text-container').classList.add('hidden');
   document.getElementById("hello-location-container").classList.add("hidden");
@@ -390,8 +388,6 @@ function animateValue(id, start, end, duration, beforeText, afterText) {
       }
   }, stepTime);
 }
-
-
 
 var baseSize = {
     w: 1920,
