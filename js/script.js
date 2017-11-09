@@ -4,6 +4,9 @@ var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
 var FORECAST_NARRATIVE = [];
+var OUTLOOK_HIGH = [];
+var OUTLOOK_LOW = [];
+var OUTLOOK_CONDITION = [];
 var CRAWL_TEXT = "This emulator is still a work in progress. It works best in Chrome.";
 var PAGE_TIMINGS = [];
 var PAGE_ORDER = [];
@@ -167,7 +170,14 @@ function fetchForecast(){
     response.json().then(function(data) {
       //PARSE DATA HERE
 
+      // 7 day data
+      for (var i = 0; i < 7; i++) {
+        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit.toString();
+        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit.toString();
+        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions.toString();
+      }
 
+      //narratives
       for (var i = 0; i <= 3; i++){
         FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext.toString();
       }
@@ -206,13 +216,23 @@ function setInformation(){
 
 function setOutlook(){
   for (var i = 0; i < 7; i++) {
+    //get all the elements for given day
     var textElement = "day" + i + "-text";
+    var highElement = "day" + i + "-high";
+    var lowElement = "day" + i + "-low";
+    var conditionElement = "day" + i + "-condition";
     var containerElement = "day" + i + "-container";
     var dayIndex = (new Date().getDay()+ i) % 7;
+
+    //set weekends to transparent
     if(dayIndex == 0 || dayIndex == 6){
       document.getElementById(containerElement).style.backgroundColor = "transparent"; //weekend
     }
     document.getElementById(textElement).innerHTML = weekday[dayIndex];
+
+    document.getElementById(highElement).innerHTML = OUTLOOK_HIGH[i];
+    document.getElementById(lowElement).innerHTML = OUTLOOK_LOW[i];
+    document.getElementById(conditionElement).innerHTML = OUTLOOK_CONDITION[i];
   }
 }
 
