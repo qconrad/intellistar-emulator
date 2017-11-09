@@ -141,7 +141,7 @@ body{
   width: 390px;
   height: 0px;
   overflow: hidden;
-  transition: top 0.5s, height 0.5s;
+  transition: top 0.5s, height 0.5s, left 0.5s, width 50ms;
 }
 
 #greeting-text-container{
@@ -306,7 +306,9 @@ body{
 #local-logo-container.hidden{
   transition-duration: 1s;
   top: -100%;
-  height: 0%;
+  left: 200px;
+  width: 0px;
+  height: 0px;
 }
 
 #infobar-twc-logo.hidden{
