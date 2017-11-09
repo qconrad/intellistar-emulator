@@ -335,6 +335,7 @@ body{
 
 #content-container.expand{
   transition: left 0.5s, top 0.5s, width 0.5s, height 0.5s;
+  transition-delay: 0.5s;
   left: 0px;
   top: 0px;
   width: 100%;
@@ -368,7 +369,7 @@ body{
 }
 
 .regular-page-container{
-  left: 100%;
+  left: 101%;
 }
 
 .alert-page-container{
@@ -451,4 +452,39 @@ body{
   font-size: 40px;
   width: 100%;
   margin: 2px;
+}
+
+.forecast-container{
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  transition: left 0.5s;
+  position: relative;
+  left: 0px;
+}
+
+.forecast-left{
+  width: 350px;
+}
+
+.forecast-right{
+  width: 880px;
+  float: right;
+}
+
+#outlook-titlebar{
+  transition: left 0.5s;
+  position: relative;
+  left: 0px;
+}
+
+#forecast-left-container.hidden{
+  left: -352px;
+}
+
+#forecast-right-container.hidden{
+  left: 882px;
+}
+
+#outlook-titlebar.hidden{
+  left: -350px;
 }

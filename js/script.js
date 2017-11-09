@@ -82,9 +82,14 @@ function determinePageOrder(){
       TIMELINE_INDEX = [0, 0, 1, 2, 2, 2];
     }
   }
+  //DEBUG
+  PAGE_TIMINGS = [0, 5000];
+  PAGE_ORDER = ["7day-page", "7day-page"];
+  TIMELINE_ORDER = ["DEBUG"];
+  TURN_PAGE = [0 , 0];
+  TIMELINE_INDEX = [0, 0];
   setInformation();
 }
-
 function checkZipCode(){
   var isValidZip = false;
     var input = document.getElementById('zip_code_text').value;
@@ -310,10 +315,13 @@ function clearPage(index){
     document.getElementById('progressbar').style.transitionDuration = '0ms';
     document.getElementById('progressbar').classList.remove('progress');
   }
-  document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
-  document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
+
   if(index >= PAGE_ORDER.length-1){
     itsAmazingOutThere();
+  }
+  else{
+    document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
+    document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
   }
 }
 
@@ -322,6 +330,9 @@ function itsAmazingOutThere(){
 }
 
 function clearElements(){
+  document.getElementById("outlook-titlebar").classList.add('hidden');
+  document.getElementById("forecast-left-container").classList.add('hidden');
+  document.getElementById("forecast-right-container").classList.add('hidden');
   document.getElementById("infobar-twc-logo").classList.add("hidden");
   document.getElementById("infobar-local-logo").classList.add("hidden");
   document.getElementById("infobar-location-container").classList.add("hidden");
