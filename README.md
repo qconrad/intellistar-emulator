@@ -12,4 +12,4 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 5. Press F11 for fullscreen
 
 ## Features
-Most of core animation and logic has been replicated included severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map. Some things are still missing such as most icons, 7-day forecast, and narrations.
+Most of core animation and logic has been replicated included severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map. Some things are still missing such as most icons and the narrations.
