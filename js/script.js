@@ -1,9 +1,10 @@
+const weekday = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 ﻿var ZIP_CODE = "00000";
 var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
 var FORECAST_NARRATIVE = [];
-var CRAWL_TEXT = "This is a longer crawl text that scrolls through the bottom bar as the weather is displayed. I haven't decided what I'm going to put here yet.";
+var CRAWL_TEXT = "This emulator is still a work in progress. It works best in Chrome.";
 var PAGE_TIMINGS = [];
 var PAGE_ORDER = [];
 var TIMELINE_ORDER = [];
@@ -84,7 +85,6 @@ function determinePageOrder(){
   }
   setInformation();
 }
-
 function checkZipCode(){
   var isValidZip = false;
     var input = document.getElementById('zip_code_text').value;
@@ -131,7 +131,6 @@ function fetchAlerts(){
     }
     response.json().then(function(data) {
       //PARSE DATA HERE
-      var weekday = ["SUN",  "MON", "TUES", "WED", "THURS", "FRI", "SAT"];
 
       for(var i = 0; i < data.alerts.length; i++){
         var now = new Date()/ 1000;
@@ -191,6 +190,8 @@ function setInformation(){
   document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setOutlook();
+
   var row = document.getElementById('timeline-events')
   for(var i = 0; i < TIMELINE_ORDER.length; i++){
     var cell = row.insertCell(i);
@@ -201,6 +202,18 @@ function setInformation(){
 
   //start once all the information is set
   setTimeout(startAnimation, 0);
+}
+
+function setOutlook(){
+  for (var i = 0; i < 7; i++) {
+    var textElement = "day" + i + "-text";
+    var containerElement = "day" + i + "-container";
+    var dayIndex = (new Date().getDay()+ i) % 7;
+    if(dayIndex == 0 || dayIndex == 6){
+      document.getElementById(containerElement).style.backgroundColor = "transparent"; //weekend
+    }
+    document.getElementById(textElement).innerHTML = weekday[dayIndex];
+  }
 }
 
 function setAlertPage(){
@@ -310,10 +323,13 @@ function clearPage(index){
     document.getElementById('progressbar').style.transitionDuration = '0ms';
     document.getElementById('progressbar').classList.remove('progress');
   }
-  document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
-  document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
+
   if(index >= PAGE_ORDER.length-1){
     itsAmazingOutThere();
+  }
+  else{
+    document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
+    document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
   }
 }
 
@@ -322,6 +338,9 @@ function itsAmazingOutThere(){
 }
 
 function clearElements(){
+  document.getElementById("outlook-titlebar").classList.add('hidden');
+  document.getElementById("forecast-left-container").classList.add('hidden');
+  document.getElementById("forecast-right-container").classList.add('hidden');
   document.getElementById("infobar-twc-logo").classList.add("hidden");
   document.getElementById("infobar-local-logo").classList.add("hidden");
   document.getElementById("infobar-location-container").classList.add("hidden");

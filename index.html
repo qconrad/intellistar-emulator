@@ -90,10 +90,10 @@
 
           <div class="page-content-container shaded-page-content">
             <!-- Temporary -->
-          <div id="cc-dial">
-            <img width="100%" src="assets/icons/cc-dial.svg"/>
-          </div>
-          <div style="float: right;" id="cc-temperature-text" class="regular-text">0</div>
+            <div id="cc-dial">
+              <img width="100%" src="assets/icons/cc-dial.svg" />
+            </div>
+            <div style="float: right;" id="cc-temperature-text" class="regular-text">0</div>
 
           </div>
 
@@ -173,7 +173,34 @@
         <!-- 7 Day Outlook Page -->
         <div id="7day-page" class="page-container regular-page-container">
           <div>
-            <div class="page-title-bar regular-text">7 Day Forecast</div>
+            <div id="outlook-titlebar" class="page-title-bar regular-text">7 Day Forecast</div>
+          </div>
+          <div class="page-content-container">
+            <div id="forecast-left-container" class="forecast-container forecast-left">
+              <div id="day0-container" class="forecast-day">
+                <div id="day0-text" class="strong-text day-text">MON</div>
+              </div>
+              <div id="day1-container" class="forecast-day" style="float: right;">
+                <div id="day1-text" class="strong-text day-text">MON</div>
+              </div>
+            </div>
+            <div id="forecast-right-container" class="forecast-container forecast-right">
+              <div id="day2-container" class="forecast-day day-spacing">
+                <div id="day2-text" class="strong-text day-text">MON</div>
+              </div>
+              <div id="day3-container" class="forecast-day day-spacing">
+                <div id="day3-text" class="strong-text day-text">MON</div>
+              </div>
+              <div id="day4-container" class="forecast-day day-spacing">
+                <div id="day4-text"class="strong-text day-text">MON</div>
+              </div>
+              <div id="day5-container" class="forecast-day day-spacing">
+                <div id="day5-text" class="strong-text day-text">MON</div>
+              </div>
+              <div id="day6-container" class="forecast-day" style="float: right;">
+                <div id="day6-text" class="strong-text day-text">MON</div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -236,4 +263,5 @@
     <button class="zip-item" id="submit_button" onclick="checkZipCode();">Start</button>
   </div>
 </body>
+
 </html>
