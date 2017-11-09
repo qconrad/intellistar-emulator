@@ -24,7 +24,7 @@ window.onload = function() {
 }
 
 function preloadBackground(){
-  var index = Math.floor(Math.random() * 20) + 1;
+  var index = Math.floor(Math.random() * 10) + 1;
   var filePath = 'assets/backgrounds/' + index + '.jpg';
   document.getElementById('background-image').style.backgroundImage = "url('" + filePath + "')";
 }
