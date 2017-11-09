@@ -331,7 +331,7 @@ body{
 
 #content-container.expand{
   transition: left 0.5s, top 0.5s, width 0.5s, height 0.5s;
-  transition-delay: 1s;
+  transition-delay: 0.5s;
   left: 0px;
   top: 0px;
   width: 100%;
@@ -453,7 +453,6 @@ body{
 .forecast-container{
   height: 100%;
   transition: left 0.5s;
-  transition-delay: 0.5s;
   position: relative;
   left: 0px;
   display: inline-block;
@@ -470,7 +469,6 @@ body{
 
 #outlook-titlebar{
   transition: left 0.5s;
-  transition-delay: 0.5s;
   position: relative;
   left: 0px;
 }
