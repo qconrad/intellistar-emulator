@@ -195,6 +195,7 @@ body{
 #progressbar{
   background-color: white;
   width: 0%;
+  font-size: 10px;
 }
 
 #progressbar.progress{
@@ -209,6 +210,10 @@ body{
   font-size: 62px;
   color:white;
   text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
+#timeline-events{
+  font-size: 43px;
 }
 
 #timeline-events-container{
@@ -538,4 +543,8 @@ body{
 .multiple-alert-text{
   font-size: 40px;
   padding: 20px;
+}
+
+#timeline{
+  margin-left: 95px;
 }

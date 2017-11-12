@@ -208,7 +208,7 @@
                 <div id="day3-condition" class="regular-text day-condition">&nbsp;</div>
               </div>
               <div id="day4-container" class="forecast-day day-spacing">
-                <div id="day4-text"class="strong-text day-text">&nbsp;</div>
+                <div id="day4-text" class="strong-text day-text">&nbsp;</div>
                 <div id="day4-icon" class="day-icon">&nbsp;</div>
                 <div id="day4-high" class="regular-text day-temp-high">&nbsp;</div>
                 <div id="day4-low" class="regular-text day-temp-low">&nbsp;</div>
@@ -241,24 +241,22 @@
       <marquee id="crawl-text" scrollamount="15" style="font-size: 40px;" class="regular-text" behavior="scroll" direction="left"></marquee>
     </div>
 
-    <!-- Timeline -->
+    <!-- Timeline Container -->
     <div id="timeline-container">
       <!-- Current Logo -->
-      <div style="float: left; height: 100%">
+      <div style="float: left; width: 85px; height: 85px;">
         <img src="assets/timeline/calendar.svg" height="100%" />
       </div>
 
       <!-- Timeline -->
-      <div style="height: 100%; overflow: hidden; margin-left: 95px;">
-        <table cellpadding="0" width="200%;" height="100%" style="border-spacing: 0; border-collapse: collapse; table-layout: fixed;">
+      <div id="timeline">
+        <table width="200%;" height="100%">
           <tr>
             <th>
-              <div style="width: 100%; height: 100%; overflow: hidden;">
+              <div style="overflow: hidden;">
                 <div id="timeline-events-container">
-                  <table style="table-layout: fixed; overflow: hidden;">
-                    <tr id="timeline-events" class="regular-text" style="font-size: 43px;">
-                      <!-- Timeline events go here -->
-                    </tr>
+                  <table>
+                    <tr id="timeline-events" class="regular-text"></tr>
                   </table>
                 </div>
               </div>
@@ -266,22 +264,20 @@
           </tr>
           <tr height="25%">
             <th>
-              <table width="100%" height="100%">
+              <table>
                 <tr>
                   <td width="280px">
-                    <div width="100%" height="100%" style="background-color: rgba(255, 255, 255, 0.25);">
-                      <div id="progressbar" style="font-size: 10px;">&nbsp;</div>
+                    <div style="background-color: rgba(255, 255, 255, 0.25);">
+                      <div id="progressbar">&nbsp;</div>
                     </div>
                   </td>
-
-                  <td style="overflow: hidden; display: block;"></td>
-
                 </tr>
               </table>
             </th>
           </tr>
         </table>
       </div>
+
     </div>
   </div>
   <!-- Zip code prompt -->
