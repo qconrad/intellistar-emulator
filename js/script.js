@@ -64,7 +64,7 @@ function determinePageOrder(){
   else{
     if(ALERTS.length > 0){
       if(ALERTS.length == 1){
-        PAGE_ORDER = ["single-alerts-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
+        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
         PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
         TIMELINE_ORDER = ["Alert", "Now", "Tonight", "Beyond"];
         TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
