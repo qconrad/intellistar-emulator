@@ -2,7 +2,7 @@
 A work in progress web application that displays weather information in the same visual presentation as the cable headend unit [Intellistar](https://en.wikipedia.org/wiki/IntelliStar).
 
 ## Overview
-This is a local forecast segment that airs on The Weather Channel called the "Local on the 8s". The name is because it airs at timeslots that end in "8" (9:28, 2:48, etc.). The forecast is approximately a minute long and provides information on current and forecasted weather conditions. This type of forecast started in 1982 using WeatherStar Units. It was later upgraded to Intellistar in 2003 and recieved various graphic changes over the years. This emulator uses the style that started in 2013.
+This is a local forecast segment that airs on The Weather Channel called the "Local on the 8s". The name is because it airs at timeslots that end in "8" (9:28, 2:48, etc.). The forecast is approximately a minute long and provides information on current and forecasted weather conditions. This type of forecast started in 1982 using WeatherStar units. It was later upgraded to Intellistar in 2003 and recieved various graphic changes over the years. This emulator uses the style that started in 2013.
 
 ## Instructions
 1. Extract all contents into folder
@@ -13,3 +13,16 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 
 ## Features
 Most of core animation and logic has been replicated included severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map. Some things are still missing such as most icons and the narrations.
+
+## Screenshots
+![Screenshot 1](/screenshots/1.PNG)
+
+![Screenshot 2](/screenshots/2.PNG)
+
+![Screenshot 3](/screenshots/3.PNG)
+
+![Screenshot 4](/screenshots/4.PNG)
+
+![Screenshot 5](/screenshots/5.PNG)
+
+![Screenshot 6](/screenshots/6.PNG)
