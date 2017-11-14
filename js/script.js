@@ -4,9 +4,13 @@ var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
 var FORECAST_NARRATIVE = [];
+var FORECAST_TEMP = [];
+var FORECAST_ICON = [];
+var FORECAST_PRECIP = [];
 var OUTLOOK_HIGH = [];
 var OUTLOOK_LOW = [];
 var OUTLOOK_CONDITION = [];
+var OUTLOOK_ICON = [];
 var CRAWL_TEXT = "This is an example of crawl text.";
 var PAGE_TIMINGS = [];
 var PAGE_ORDER = [];
@@ -175,6 +179,7 @@ function fetchForecast(){
         OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit.toString();
         OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit.toString();
         OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions.toString();
+        OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon.toString();
       }
 
       //narratives
@@ -216,13 +221,22 @@ function setInformation(){
 
 function setOutlook(){
   for (var i = 0; i < 7; i++) {
+    // TODO: change element names to actual elements
     //get all the elements for given day
     var textElement = "day" + i + "-text";
     var highElement = "day" + i + "-high";
     var lowElement = "day" + i + "-low";
     var conditionElement = "day" + i + "-condition";
     var containerElement = "day" + i + "-container";
+    var iconElement = "day" + i + "-icon";
     var dayIndex = (new Date().getDay()+ i) % 7;
+
+    var icon = new Image();
+    icon.style.width = '100%';
+    icon.style.height = '100%';
+    icon.src = 'https://icons.wxug.com/i/c/i/' + OUTLOOK_ICON[i] +'.gif';
+    document.getElementById(iconElement).innerHTML = '';
+    document.getElementById(iconElement).appendChild(icon);
 
     //set weekends to transparent
     if(dayIndex == 0 || dayIndex == 6){
