@@ -234,7 +234,7 @@ function setOutlook(){
     var icon = new Image();
     icon.style.width = '100%';
     icon.style.height = '100%';
-    icon.src = 'https://icons.wxug.com/i/c/i/' + OUTLOOK_ICON[i] +'.gif';
+    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
     document.getElementById(iconElement).innerHTML = '';
     document.getElementById(iconElement).appendChild(icon);
 
