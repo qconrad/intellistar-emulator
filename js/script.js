@@ -35,27 +35,28 @@ function preLoadMusic(){
 }
 
 function determinePageOrder(){
+  // TODO: adjust the timings because right now they are made up and they should better match the original
   var currentTime = new Date();
   if(currentTime.getHours() > 4 && currentTime.getHours() < 14){//day is between 4am and 2pm
     if(ALERTS.length > 0){
       if(ALERTS.length == 1){
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
+        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
+        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
         TIMELINE_ORDER = ["Alert", "Now", "Today", "Tonight", "Beyond"];
         TURN_PAGE = [8000, 17000, 0, 8000, 8000, 19000, 0];
         TIMELINE_INDEX = [0, 1, 1, 2, 3, 4, 4];
       }
       else{
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
+        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
+        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
         TIMELINE_ORDER = ["Alerts", "Now", "Today", "Tonight", "Beyond"];
         TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
         TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
       }
     }
     else{
-      PAGE_TIMINGS = [8500, 8500, 10000, 10000, 11500, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
+      PAGE_TIMINGS = [8500, 4250, 4250, 10000, 10000, 11500, 11500];
+      PAGE_ORDER = ["current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
       TIMELINE_ORDER = ["Now", "Today", "Tonight", "Beyond"];
       TURN_PAGE = [17000, 0, 10000, 10000, 23000, 0];
       TIMELINE_INDEX = [0, 0, 1, 2, 3, 3];
@@ -64,23 +65,23 @@ function determinePageOrder(){
   else{
     if(ALERTS.length > 0){
       if(ALERTS.length == 1){
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
+        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
+        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
         TIMELINE_ORDER = ["Alert", "Now", "Tonight", "Beyond"];
         TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
         TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
       }
       else{
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
+        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
+        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
         TIMELINE_ORDER = ["Alerts", "Now", "Tonight", "Beyond"];
         TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
         TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
       }
     }
     else{
-      PAGE_TIMINGS = [9250, 9250, 10000, 10000, 10000, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
+      PAGE_TIMINGS = [9250, 4625, 4625, 10000, 10000, 10000, 11500];
+      PAGE_ORDER = ["current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
       TIMELINE_ORDER = ["Now", "Tonight", "Beyond"];
       TURN_PAGE = [18500, 0, 10000, 31500, 0, 0];
       TIMELINE_INDEX = [0, 0, 1, 2, 2, 2];
@@ -198,6 +199,7 @@ function setInformation(){
   document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
   document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
   document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
   setOutlook();
