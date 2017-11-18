@@ -8,11 +8,7 @@ var OUTLOOK_HIGH = [];
 var OUTLOOK_LOW = [];
 var OUTLOOK_CONDITION = [];
 var CRAWL_TEXT = "This is an example of crawl text.";
-var PAGE_TIMINGS = [];
-var PAGE_ORDER = [];
-var TIMELINE_ORDER = [];
-var TURN_PAGE = [];
-var TIMELINE_INDEX = [];
+var PAGE_ORDER;
 var ALERTS = [];
 var music;
 
@@ -35,58 +31,11 @@ function preLoadMusic(){
 }
 
 function determinePageOrder(){
-  // TODO: adjust the timings because right now they are made up and they should better match the original
-  var currentTime = new Date();
-  if(currentTime.getHours() > 4 && currentTime.getHours() < 14){//day is between 4am and 2pm
-    if(ALERTS.length > 0){
-      if(ALERTS.length == 1){
-        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-        TIMELINE_ORDER = ["Alert", "Now", "Today", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 8000, 19000, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 4, 4];
-      }
-      else{
-        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-        TIMELINE_ORDER = ["Alerts", "Now", "Today", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-    }
-    else{
-      PAGE_TIMINGS = [8500, 4250, 4250, 10000, 10000, 11500, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "zoomed-radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-      TIMELINE_ORDER = ["Now", "Today", "Tonight", "Beyond"];
-      TURN_PAGE = [17000, 0, 10000, 10000, 23000, 0];
-      TIMELINE_INDEX = [0, 0, 1, 2, 3, 3];
-    }
-  }
-  else{
-    if(ALERTS.length > 0){
-      if(ALERTS.length == 1){
-        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        TIMELINE_ORDER = ["Alert", "Now", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-      else{
-        PAGE_TIMINGS = [8000, 8500, 4250, 4250, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        TIMELINE_ORDER = ["Alerts", "Now", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-    }
-    else{
-      PAGE_TIMINGS = [9250, 4625, 4625, 10000, 10000, 10000, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "zoomed-radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-      TIMELINE_ORDER = ["Now", "Tonight", "Beyond"];
-      TURN_PAGE = [18500, 0, 10000, 31500, 0, 0];
-      TIMELINE_INDEX = [0, 0, 1, 2, 2, 2];
-    }
-  }
+  PAGE_ORDER =
+  [
+    {name: "Now", subpages: [{name: "current-page", duration: 5000}, {name: "radar-page", duration: 2000}]},
+    {name: "Beyond", subpages: [{name: "tomorrow-page", duration: 2000}, {name: "7day-page", duration: 5000}]},
+  ]
   setInformation();
 }
 function checkZipCode(){
@@ -205,11 +154,11 @@ function setInformation(){
   setOutlook();
 
   var row = document.getElementById('timeline-events')
-  for(var i = 0; i < TIMELINE_ORDER.length; i++){
+  for(var i = 0; i < PAGE_ORDER.length; i++){
     var cell = row.insertCell(i);
     cell.style.width = '280px';
     cell.align = 'left';
-    cell.innerHTML = TIMELINE_ORDER[i];
+    cell.innerHTML = PAGE_ORDER[i].name;
   }
 
   //start once all the information is set
@@ -254,7 +203,7 @@ function setAlertPage(){
 }
 
 function startAnimation(){
-  if(PAGE_ORDER[0] == 'current-page'){
+  if(PAGE_ORDER[0].subpages[0].name == 'current-page'){
     document.getElementById('current-page').style.left = '0px';
   }
   else{
@@ -293,65 +242,63 @@ function clearGreetingPage(){
 }
 
 function schedulePages(){
-  for(var i = 0; i < PAGE_ORDER.length; i++){
-      var startTime = calculateStartTime(i);
-      var clearTime = calculateEndTime(i);
-      setTimeout(executePage, startTime, i);
-      setTimeout(clearPage, clearTime, i);
+  var cumlativeTime = 0;
+  for(var p = 0; p < PAGE_ORDER.length; p++){
+    for (var s = 0; s < PAGE_ORDER[p].subpages.length; s++) {
+      //for every single sub page
+      var startTime = cumlativeTime;
+      var clearTime = cumlativeTime + PAGE_ORDER[p].subpages[s].duration;
+      setTimeout(executePage, startTime, p, s);
+      setTimeout(clearPage, clearTime, p, s);
+      cumlativeTime = clearTime;
+    }
   }
 }
 
-function calculateStartTime(index){
-  var startTime = 0;
-  for(var i = 0; i < index; i++){
-      startTime += PAGE_TIMINGS[i]
-  }
-  return startTime;
-}
-
-function calculateEndTime(index){
-  var endTime = 0;
-  for(var i = 0; i <= index; i++){
-      endTime += PAGE_TIMINGS[i]
-  }
-  return endTime;
-}
-
-function executePage(index){
-  if(TURN_PAGE[index] != 0){
+function executePage(pageIndex, subPageIndex){
+  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageElement = document.getElementById(pageName);
+  // console.log(pageName);
+  if(subPageIndex === 0){
+      var pageTime = 0;
+      for (var i = 0; i < PAGE_ORDER[pageIndex].subpages.length; i++) {
+        pageTime += PAGE_ORDER[pageIndex].subpages[i].duration;
+      }
       void document.getElementById('progressbar').offsetWidth;
+      document.getElementById('progressbar').style.transitionDuration = pageTime + "ms";
       document.getElementById('progressbar').classList.add('progress');
-      document.getElementById('progressbar').style.transitionDuration = TURN_PAGE[index] + "ms";
-      document.getElementById('timeline-events-container').style.left = ((-280*TIMELINE_INDEX[index])-(index*3)).toString() + "px";
+      document.getElementById('timeline-events-container').style.left = ((-280*pageIndex)-(pageIndex*3)).toString() + "px";
   }
 
-  document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0.5s';
-  if(index === 0){
-    document.getElementById(PAGE_ORDER[index]).style.top = '0px';
+  pageElement.style.transitionDelay = '0.5s';
+  if(pageIndex === 0 && subPageIndex == 0){
+    pageElement.style.top = '0px';
   }
   else{
-    document.getElementById(PAGE_ORDER[index]).style.left = '0px';
+    pageElement.style.left = '0px';
   }
 
-  if(PAGE_ORDER[index] == "7day-page")
+  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1)
       document.getElementById('crawler-container').classList.add("hidden");
-  else if(PAGE_ORDER[index] == "current-page"){
+  else if(pageName == "current-page"){
     animateValue('cc-temperature-text', -12, CURRENT_TEMPERATURE, 2500, "", "°");
   }
 }
 
-function clearPage(index){
-  if(TURN_PAGE[index + 1] != 0){
+function clearPage(pageIndex, subPageIndex){
+  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageElement = document.getElementById(pageName);
+  if(PAGE_ORDER[pageIndex].subpages.length-1 == subPageIndex){
     document.getElementById('progressbar').style.transitionDuration = '0ms';
     document.getElementById('progressbar').classList.remove('progress');
   }
 
-  if(index >= PAGE_ORDER.length-1){
+  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1){
     itsAmazingOutThere();
   }
   else{
-    document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
-    document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
+    pageElement.style.transitionDelay = '0s';
+    pageElement.style.left = '-101%';
   }
 }
 
