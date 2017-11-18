@@ -1,3 +1,7 @@
+const morning = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Today", subpages: [{name: "today-page", duration: 10000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const night = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "tomorrow-night-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const single = [{name: "Alert", subpages: [{name: "single-alert-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
+const multiple = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
 const weekday = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 ﻿var ZIP_CODE = "00000";
 var CITY_NAME = "CITY_NAME";
@@ -30,12 +34,17 @@ function preLoadMusic(){
   music= new Audio("assets/music/" + index + ".mp3");
 }
 
-function determinePageOrder(){
-  PAGE_ORDER =
-  [
-    {name: "Now", subpages: [{name: "current-page", duration: 5000}, {name: "radar-page", duration: 2000}]},
-    {name: "Beyond", subpages: [{name: "tomorrow-page", duration: 2000}, {name: "7day-page", duration: 5000}]},
-  ]
+function scheduleTimeline(){
+  var currentTime = new Date();
+  if(currentTime.getHours() > 4 && currentTime.getHours() < 14){
+    PAGE_ORDER = morning;
+  }else if(ALERTS.length == 1){
+    PAGE_ORDER = single;
+  }else if(ALERTS.length > 1){
+    PAGE_ORDER = multiple;
+  }else{
+    PAGE_ORDER = night;
+  }
   setInformation();
 }
 function checkZipCode(){
@@ -131,7 +140,7 @@ function fetchForecast(){
       for (var i = 0; i <= 3; i++){
         FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext.toString();
       }
-      determinePageOrder();
+      scheduleTimeline();
     });
   })
 }
