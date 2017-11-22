@@ -1,3 +1,7 @@
+const morning = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Today", subpages: [{name: "today-page", duration: 10000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const night = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "tomorrow-night-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const single = [{name: "Alert", subpages: [{name: "single-alert-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
+const multiple = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
 const weekday = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 ﻿var ZIP_CODE = "00000";
 var CITY_NAME = "CITY_NAME";
@@ -12,11 +16,7 @@ var OUTLOOK_LOW = [];
 var OUTLOOK_CONDITION = [];
 var OUTLOOK_ICON = [];
 var CRAWL_TEXT = "This is an example of crawl text.";
-var PAGE_TIMINGS = [];
-var PAGE_ORDER = [];
-var TIMELINE_ORDER = [];
-var TURN_PAGE = [];
-var TIMELINE_INDEX = [];
+var PAGE_ORDER;
 var ALERTS = [];
 var music;
 
@@ -38,57 +38,16 @@ function preLoadMusic(){
   music= new Audio("assets/music/" + index + ".mp3");
 }
 
-function determinePageOrder(){
+function scheduleTimeline(){
   var currentTime = new Date();
-  if(currentTime.getHours() > 4 && currentTime.getHours() < 14){//day is between 4am and 2pm
-    if(ALERTS.length > 0){
-      if(ALERTS.length == 1){
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-        TIMELINE_ORDER = ["Alert", "Now", "Today", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 8000, 19000, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 4, 4];
-      }
-      else{
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-        TIMELINE_ORDER = ["Alerts", "Now", "Today", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-    }
-    else{
-      PAGE_TIMINGS = [8500, 8500, 10000, 10000, 11500, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "today-page", "tonight-page", "tomorrow-page", "7day-page"];
-      TIMELINE_ORDER = ["Now", "Today", "Tonight", "Beyond"];
-      TURN_PAGE = [17000, 0, 10000, 10000, 23000, 0];
-      TIMELINE_INDEX = [0, 0, 1, 2, 3, 3];
-    }
-  }
-  else{
-    if(ALERTS.length > 0){
-      if(ALERTS.length == 1){
-        PAGE_ORDER = ["single-alert-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        TIMELINE_ORDER = ["Alert", "Now", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-      else{
-        PAGE_ORDER = ["multiple-alerts-page", "current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-        PAGE_TIMINGS = [8000, 8500, 8500, 8000, 8000, 8000, 11000];
-        TIMELINE_ORDER = ["Alerts", "Now", "Tonight", "Beyond"];
-        TURN_PAGE = [8000, 17000, 0, 8000, 27000, 0, 0];
-        TIMELINE_INDEX = [0, 1, 1, 2, 3, 3];
-      }
-    }
-    else{
-      PAGE_TIMINGS = [9250, 9250, 10000, 10000, 10000, 11500];
-      PAGE_ORDER = ["current-page", "radar-page", "tonight-page", "tomorrow-page", "tomorrow-night-page", "7day-page"];
-      TIMELINE_ORDER = ["Now", "Tonight", "Beyond"];
-      TURN_PAGE = [18500, 0, 10000, 31500, 0, 0];
-      TIMELINE_INDEX = [0, 0, 1, 2, 2, 2];
-    }
+  if(currentTime.getHours() > 4 && currentTime.getHours() < 14){
+    PAGE_ORDER = morning;
+  }else if(ALERTS.length == 1){
+    PAGE_ORDER = single;
+  }else if(ALERTS.length > 1){
+    PAGE_ORDER = multiple;
+  }else{
+    PAGE_ORDER = night;
   }
   setInformation();
 }
@@ -176,17 +135,20 @@ function fetchForecast(){
 
       // 7 day data
       for (var i = 0; i < 7; i++) {
-        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit.toString();
-        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit.toString();
-        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions.toString();
-        OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon.toString();
+        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions;
+        OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
       //narratives
       for (var i = 0; i <= 3; i++){
-        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext.toString();
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
+        FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
+        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
       }
-      determinePageOrder();
+      scheduleTimeline();
     });
   })
 }
@@ -198,25 +160,38 @@ function setInformation(){
   document.getElementById("hello-location-text").innerHTML = CITY_NAME + ",";
   document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
   document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
-  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
-  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
-  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
-  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+
   document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setForecast();
   setOutlook();
 
   var row = document.getElementById('timeline-events')
-  for(var i = 0; i < TIMELINE_ORDER.length; i++){
+  for(var i = 0; i < PAGE_ORDER.length; i++){
     var cell = row.insertCell(i);
     cell.style.width = '280px';
     cell.align = 'left';
-    cell.innerHTML = TIMELINE_ORDER[i];
+    cell.innerHTML = PAGE_ORDER[i].name;
   }
 
   //start once all the information is set
   setTimeout(startAnimation, 0);
+}
+
+function setForecast(){
+  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
+  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
+  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
+  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+
+  document.getElementById("today-forecast-temp").innerHTML = FORECAST_TEMP[0];
+  document.getElementById("tonight-forecast-temp").innerHTML = FORECAST_TEMP[1];
+  document.getElementById("tomorrow-forecast-temp").innerHTML = FORECAST_TEMP[2];
+  document.getElementById("tomorrow-night-forecast-temp").innerHTML = FORECAST_TEMP[3];
+
+  // TODO: set icons and precip
 }
 
 function setOutlook(){
@@ -266,7 +241,7 @@ function setAlertPage(){
 }
 
 function startAnimation(){
-  if(PAGE_ORDER[0] == 'current-page'){
+  if(PAGE_ORDER[0].subpages[0].name == 'current-page'){
     document.getElementById('current-page').style.left = '0px';
   }
   else{
@@ -305,65 +280,63 @@ function clearGreetingPage(){
 }
 
 function schedulePages(){
-  for(var i = 0; i < PAGE_ORDER.length; i++){
-      var startTime = calculateStartTime(i);
-      var clearTime = calculateEndTime(i);
-      setTimeout(executePage, startTime, i);
-      setTimeout(clearPage, clearTime, i);
+  var cumlativeTime = 0;
+  for(var p = 0; p < PAGE_ORDER.length; p++){
+    for (var s = 0; s < PAGE_ORDER[p].subpages.length; s++) {
+      //for every single sub page
+      var startTime = cumlativeTime;
+      var clearTime = cumlativeTime + PAGE_ORDER[p].subpages[s].duration;
+      setTimeout(executePage, startTime, p, s);
+      setTimeout(clearPage, clearTime, p, s);
+      cumlativeTime = clearTime;
+    }
   }
 }
 
-function calculateStartTime(index){
-  var startTime = 0;
-  for(var i = 0; i < index; i++){
-      startTime += PAGE_TIMINGS[i]
-  }
-  return startTime;
-}
-
-function calculateEndTime(index){
-  var endTime = 0;
-  for(var i = 0; i <= index; i++){
-      endTime += PAGE_TIMINGS[i]
-  }
-  return endTime;
-}
-
-function executePage(index){
-  if(TURN_PAGE[index] != 0){
+function executePage(pageIndex, subPageIndex){
+  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageElement = document.getElementById(pageName);
+  // console.log(pageName);
+  if(subPageIndex === 0){
+      var pageTime = 0;
+      for (var i = 0; i < PAGE_ORDER[pageIndex].subpages.length; i++) {
+        pageTime += PAGE_ORDER[pageIndex].subpages[i].duration;
+      }
       void document.getElementById('progressbar').offsetWidth;
+      document.getElementById('progressbar').style.transitionDuration = pageTime + "ms";
       document.getElementById('progressbar').classList.add('progress');
-      document.getElementById('progressbar').style.transitionDuration = TURN_PAGE[index] + "ms";
-      document.getElementById('timeline-events-container').style.left = ((-280*TIMELINE_INDEX[index])-(index*3)).toString() + "px";
+      document.getElementById('timeline-events-container').style.left = ((-280*pageIndex)-(pageIndex*3)).toString() + "px";
   }
 
-  document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0.5s';
-  if(index === 0){
-    document.getElementById(PAGE_ORDER[index]).style.top = '0px';
+  pageElement.style.transitionDelay = '0.5s';
+  if(pageIndex === 0 && subPageIndex == 0){
+    pageElement.style.top = '0px';
   }
   else{
-    document.getElementById(PAGE_ORDER[index]).style.left = '0px';
+    pageElement.style.left = '0px';
   }
 
-  if(PAGE_ORDER[index] == "7day-page")
+  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1)
       document.getElementById('crawler-container').classList.add("hidden");
-  else if(PAGE_ORDER[index] == "current-page"){
+  else if(pageName == "current-page"){
     animateValue('cc-temperature-text', -12, CURRENT_TEMPERATURE, 2500, "", "°");
   }
 }
 
-function clearPage(index){
-  if(TURN_PAGE[index + 1] != 0){
+function clearPage(pageIndex, subPageIndex){
+  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageElement = document.getElementById(pageName);
+  if(PAGE_ORDER[pageIndex].subpages.length-1 == subPageIndex){
     document.getElementById('progressbar').style.transitionDuration = '0ms';
     document.getElementById('progressbar').classList.remove('progress');
   }
 
-  if(index >= PAGE_ORDER.length-1){
+  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1){
     itsAmazingOutThere();
   }
   else{
-    document.getElementById(PAGE_ORDER[index]).style.transitionDelay = '0s';
-    document.getElementById(PAGE_ORDER[index]).style.left = '-101%';
+    pageElement.style.transitionDelay = '0s';
+    pageElement.style.left = '-101%';
   }
 }
 

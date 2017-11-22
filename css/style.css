@@ -425,6 +425,23 @@ body{
   margin-top: 20px;
 }
 
+.forecast-icon{
+  height: 130px;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.forecast-temp{
+  text-align: center;
+  font-size: 130px;
+}
+
+.forecast-precip{
+  text-align: center;
+  font-size: 50px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .narrative-text{
   margin: 20px 40px 0px 40px;
   font-size: 55px;
