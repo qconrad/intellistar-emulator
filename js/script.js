@@ -158,14 +158,12 @@ function setInformation(){
   document.getElementById("hello-location-text").innerHTML = CITY_NAME + ",";
   document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
   document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
-  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
-  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
-  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
-  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+
   document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setForecast();
   setOutlook();
 
   var row = document.getElementById('timeline-events')
@@ -178,6 +176,20 @@ function setInformation(){
 
   //start once all the information is set
   setTimeout(startAnimation, 0);
+}
+
+function setForecast(){
+  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
+  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
+  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
+  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+
+  document.getElementById("today-forecast-temp").innerHTML = FORECAST_TEMP[0];
+  document.getElementById("tonight-forecast-temp").innerHTML = FORECAST_TEMP[1];
+  document.getElementById("tomorrow-forecast-temp").innerHTML = FORECAST_TEMP[2];
+  document.getElementById("tomorrow-night-forecast-temp").innerHTML = FORECAST_TEMP[3];
+
+  // TODO: set icons and precip
 }
 
 function setOutlook(){
