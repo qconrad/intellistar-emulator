@@ -8,6 +8,9 @@ var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
 var FORECAST_NARRATIVE = [];
+var FORECAST_TEMP = [];
+var FORECAST_ICON = [];
+var FORECAST_PRECIP = [];
 var OUTLOOK_HIGH = [];
 var OUTLOOK_LOW = [];
 var OUTLOOK_CONDITION = [];
@@ -131,14 +134,17 @@ function fetchForecast(){
 
       // 7 day data
       for (var i = 0; i < 7; i++) {
-        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit.toString();
-        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit.toString();
-        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions.toString();
+        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions;
       }
 
       //narratives
       for (var i = 0; i <= 3; i++){
-        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext.toString();
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
+        FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
+        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
       }
       scheduleTimeline();
     });
