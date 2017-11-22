@@ -181,15 +181,42 @@ function setInformation(){
 }
 
 function setForecast(){
-  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
-  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
-  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
-  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+  var forecastNarrativeElement=
+  [document.getElementById("today-narrative-text"),
+  document.getElementById("tonight-narrative-text"),
+  document.getElementById("tomorrow-narrative-text"),
+  document.getElementById("tomorrow-night-narrative-text")];
 
-  document.getElementById("today-forecast-temp").innerHTML = FORECAST_TEMP[0];
-  document.getElementById("tonight-forecast-temp").innerHTML = FORECAST_TEMP[1];
-  document.getElementById("tomorrow-forecast-temp").innerHTML = FORECAST_TEMP[2];
-  document.getElementById("tomorrow-night-forecast-temp").innerHTML = FORECAST_TEMP[3];
+  var forecastTempElement =
+  [document.getElementById("today-forecast-temp"),
+  document.getElementById("tonight-forecast-temp"),
+  document.getElementById("tomorrow-forecast-temp"),
+  document.getElementById("tomorrow-night-forecast-temp")];
+
+  var forecastIconElement =
+  [document.getElementById("today-forecast-icon"),
+  document.getElementById("tonight-forecast-icon"),
+  document.getElementById("tomorrow-forecast-icon"),
+  document.getElementById("tomorrow-night-forecast-icon")];
+
+  var forecastIconElement =
+  [document.getElementById("today-forecast-icon"),
+  document.getElementById("tonight-forecast-icon"),
+  document.getElementById("tomorrow-forecast-icon"),
+  document.getElementById("tomorrow-night-forecast-icon")];
+
+  for (var i = 0; i < 4; i++) {
+    forecastNarrativeElement[i].innerHTML = FORECAST_NARRATIVE[i];
+    forecastTempElement[i].innerHTML = FORECAST_TEMP[i];
+
+
+    var icon = new Image();
+    icon.style.width = '100%';
+    icon.style.height = '100%';
+    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
+    forecastIconElement[i].innerHTML = '';
+    forecastIconElement[i].appendChild(icon);
+  }
 
   // TODO: set icons and precip
 }

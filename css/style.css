@@ -207,7 +207,7 @@ body{
 .strong-text{
   font-family: caliFont;
   font-weight: bold;
-  font-size: 62px;
+  font-size: 60px;
   color:white;
   text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
 }
@@ -427,7 +427,10 @@ body{
 
 .forecast-icon{
   height: 130px;
-  background-color: rgba(0, 0, 0, 0.25);
+  width: 130px;
+  width: 50%;
+  margin: 0 auto;
+  margin-top: 5px;
 }
 
 .forecast-temp{
