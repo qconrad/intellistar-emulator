@@ -147,6 +147,28 @@ function fetchForecast(){
         FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
         FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
         FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
+
+        var precipType = "Precip";
+        var precipValue = FORECAST_NARRATIVE[i].match(/\S+(?=%)/g); // returns chance of precip if any found in description
+        if(precipValue != null){
+          if(FORECAST_NARRATIVE[i].toLower().includes("rain")){
+            precipType = "Rain";
+          }
+          else if(FORECAST_NARRATIVE[i].toLower().includes("slow")){
+            precipType = "Snow";
+          }
+          else{
+            if(FORECAST_TEMP[i] > 40){
+              precipType = "Rain";
+            }
+            else if(FORECAST_TEMP[i] < 20){
+              precipType = "Snow";
+            }
+          }
+        }else{
+          precipValue = "0";
+        }
+        FORECAST_PRECIP[i] = precipValue + "% Chance of " + precipType;
       }
       scheduleTimeline();
     });
@@ -199,16 +221,16 @@ function setForecast(){
   document.getElementById("tomorrow-forecast-icon"),
   document.getElementById("tomorrow-night-forecast-icon")];
 
-  var forecastIconElement =
-  [document.getElementById("today-forecast-icon"),
-  document.getElementById("tonight-forecast-icon"),
-  document.getElementById("tomorrow-forecast-icon"),
-  document.getElementById("tomorrow-night-forecast-icon")];
+  var forecastPrecipElement =
+  [document.getElementById("today-forecast-precip"),
+  document.getElementById("tonight-forecast-precip"),
+  document.getElementById("tomorrow-forecast-precip"),
+  document.getElementById("tomorrow-night-forecast-precip")];
 
   for (var i = 0; i < 4; i++) {
     forecastNarrativeElement[i].innerHTML = FORECAST_NARRATIVE[i];
     forecastTempElement[i].innerHTML = FORECAST_TEMP[i];
-
+    forecastPrecipElement[i].innerHTML = FORECAST_PRECIP[i];
 
     var icon = new Image();
     icon.style.width = '100%';
