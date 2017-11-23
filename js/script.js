@@ -157,15 +157,13 @@ function fetchForecast(){
           else if(FORECAST_NARRATIVE[i].toLower().includes("slow")){
             precipType = "Snow";
           }
-          else{
-            if(FORECAST_TEMP[i] > 40){
-              precipType = "Rain";
-            }
-            else if(FORECAST_TEMP[i] < 20){
-              precipType = "Snow";
-            }
-          }
         }else{
+          if(FORECAST_TEMP[i] > 40){
+            precipType = "Rain";
+          }
+          else if(FORECAST_TEMP[i] < 20){
+            precipType = "Snow";
+          }
           precipValue = "0";
         }
         FORECAST_PRECIP[i] = precipValue + "% Chance of " + precipType;
