@@ -21,6 +21,21 @@ window.onload = function() {
   preLoadMusic();
   resizeWindow();
   setClockTime();
+  guessZipCode();
+}
+
+function guessZipCode(){
+  fetch("http://api.wunderground.com/api/d8585d80376a429e/geolookup/q/autoip.json")
+  .then(function(response) {
+    //check for error
+    if (response.status !== 200) {
+      console.log("conditions request error");
+      return;
+    }
+    response.json().then(function(data) {
+      document.getElementById("zip_code_text").value = data.location.zip;
+    });
+  })
 }
 
 function preloadBackground(){
@@ -47,6 +62,7 @@ function scheduleTimeline(){
   }
   setInformation();
 }
+
 function checkZipCode(){
   var isValidZip = false;
     var input = document.getElementById('zip_code_text').value;
@@ -95,6 +111,9 @@ function fetchAlerts(){
       //PARSE DATA HERE
 
       for(var i = 0; i < data.alerts.length; i++){
+        if(data.alerts[i].type == "SPE"){
+          continue;
+        }
         var now = new Date()/ 1000;
         var alertName = data.alerts[i].description.toUpperCase();
         var expire = data.alerts[i].expires.split(" on ");
