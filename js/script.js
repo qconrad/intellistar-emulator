@@ -190,7 +190,7 @@ function fetchForecast(){
           }
           precipValue = "0";
         }
-        FORECAST_PRECIP[i] = precipValue + "% Chance of " + precipType;
+        FORECAST_PRECIP[i] = precipValue + "% Chance</br>of " + precipType;
       }
       scheduleTimeline();
     });
