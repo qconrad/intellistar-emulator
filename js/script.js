@@ -8,9 +8,13 @@ var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
 var FORECAST_NARRATIVE = [];
+var FORECAST_TEMP = [];
+var FORECAST_ICON = [];
+var FORECAST_PRECIP = [];
 var OUTLOOK_HIGH = [];
 var OUTLOOK_LOW = [];
 var OUTLOOK_CONDITION = [];
+var OUTLOOK_ICON = [];
 var CRAWL_TEXT = "This is an example of crawl text.";
 var PAGE_ORDER;
 var ALERTS = [];
@@ -151,22 +155,54 @@ function fetchForecast(){
       return;
     }
     response.json().then(function(data) {
-      //PARSE DATA HERE
-
       // 7 day data
       for (var i = 0; i < 7; i++) {
-        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit.toString();
-        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit.toString();
-        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions.toString();
+        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions;
+        if(OUTLOOK_CONDITION[i] == "Thunderstorm"){ // Because thunderstorm won't fit in the day box, multiline it
+          OUTLOOK_CONDITION[i] = "Thunder-</br>storm";
+        }
+        OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
       //narratives
       for (var i = 0; i <= 3; i++){
-        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext.toString();
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
+        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
+        FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
+        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
+        FORECAST_PRECIP[i] = guessPrecipitation(FORECAST_NARRATIVE[i], FORECAST_TEMP[i]);
       }
       scheduleTimeline();
     });
   })
+}
+
+function guessPrecipitation(narrativeText, temperature){
+  var precipType = "Precip";
+  var precipValue = "0"
+
+  // GUESS CHANCE
+  var parsedChance = narrativeText.match(/\S+(?=%)/g);
+  if(parsedChance != null){
+    precipValue = parsedChance;
+  }
+  else{
+    if(precipValue === "0" && narrativeText.toLowerCase().includes("slight chance")){
+      precipValue = "20";
+    }
+  }
+
+  // GUESS PRECIPITTATION TYPE
+  if(narrativeText.toLowerCase().includes("rain") || narrativeText.toLowerCase().includes("shower") || temperature > 40){
+    precipType = "Rain";
+  }
+  else if(narrativeText.toLowerCase().includes("snow") || temperature < 20){
+    precipType = "Snow";
+  }
+
+  return precipValue + "% Chance</br>of " + precipType;
 }
 
 function setInformation(){
@@ -176,14 +212,12 @@ function setInformation(){
   document.getElementById("hello-location-text").innerHTML = CITY_NAME + ",";
   document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
   document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
-  document.getElementById("today-narrative-text").innerHTML = FORECAST_NARRATIVE[0];
-  document.getElementById("tonight-narrative-text").innerHTML = FORECAST_NARRATIVE[1];
-  document.getElementById("tomorrow-narrative-text").innerHTML = FORECAST_NARRATIVE[2];
-  document.getElementById("tomorrow-night-narrative-text").innerHTML = FORECAST_NARRATIVE[3];
+
   document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setForecast();
   setOutlook();
 
   var row = document.getElementById('timeline-events')
@@ -198,15 +232,65 @@ function setInformation(){
   setTimeout(startAnimation, 0);
 }
 
+function setForecast(){
+  var forecastNarrativeElement=
+  [document.getElementById("today-narrative-text"),
+  document.getElementById("tonight-narrative-text"),
+  document.getElementById("tomorrow-narrative-text"),
+  document.getElementById("tomorrow-night-narrative-text")];
+
+  var forecastTempElement =
+  [document.getElementById("today-forecast-temp"),
+  document.getElementById("tonight-forecast-temp"),
+  document.getElementById("tomorrow-forecast-temp"),
+  document.getElementById("tomorrow-night-forecast-temp")];
+
+  var forecastIconElement =
+  [document.getElementById("today-forecast-icon"),
+  document.getElementById("tonight-forecast-icon"),
+  document.getElementById("tomorrow-forecast-icon"),
+  document.getElementById("tomorrow-night-forecast-icon")];
+
+  var forecastPrecipElement =
+  [document.getElementById("today-forecast-precip"),
+  document.getElementById("tonight-forecast-precip"),
+  document.getElementById("tomorrow-forecast-precip"),
+  document.getElementById("tomorrow-night-forecast-precip")];
+
+  for (var i = 0; i < 4; i++) {
+    forecastNarrativeElement[i].innerHTML = FORECAST_NARRATIVE[i];
+    forecastTempElement[i].innerHTML = FORECAST_TEMP[i];
+    forecastPrecipElement[i].innerHTML = FORECAST_PRECIP[i];
+
+    var icon = new Image();
+    icon.style.width = '100%';
+    icon.style.height = '100%';
+    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
+    forecastIconElement[i].innerHTML = '';
+    forecastIconElement[i].appendChild(icon);
+  }
+
+  // TODO: set icons and precip
+}
+
 function setOutlook(){
   for (var i = 0; i < 7; i++) {
+    // TODO: change element names to actual elements
     //get all the elements for given day
     var textElement = "day" + i + "-text";
     var highElement = "day" + i + "-high";
     var lowElement = "day" + i + "-low";
     var conditionElement = "day" + i + "-condition";
     var containerElement = "day" + i + "-container";
+    var iconElement = "day" + i + "-icon";
     var dayIndex = (new Date().getDay()+ i) % 7;
+
+    var icon = new Image();
+    icon.style.width = '100%';
+    icon.style.height = '100%';
+    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
+    document.getElementById(iconElement).innerHTML = '';
+    document.getElementById(iconElement).appendChild(icon);
 
     //set weekends to transparent
     if(dayIndex == 0 || dayIndex == 6){

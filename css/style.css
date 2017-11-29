@@ -207,7 +207,7 @@ body{
 .strong-text{
   font-family: caliFont;
   font-weight: bold;
-  font-size: 62px;
+  font-size: 60px;
   color:white;
   text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
 }
@@ -425,6 +425,25 @@ body{
   margin-top: 20px;
 }
 
+.forecast-icon{
+  height: 130px;
+  width: 130px;
+  margin: 0 auto;
+  margin-top: 5px;
+}
+
+.forecast-temp{
+  text-align: center;
+  font-size: 130px;
+}
+
+.forecast-precip{
+  text-align: center;
+  font-size: 42px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 .narrative-text{
   margin: 20px 40px 0px 40px;
   font-size: 55px;
@@ -509,7 +528,7 @@ body{
 }
 
 .day-icon{
-  background-color: rgba(0, 0, 0, 0.25);
+  /*background-color: rgba(0, 0, 0, 0.25);*/
   width: 100%;
   height: 150px;
 }
