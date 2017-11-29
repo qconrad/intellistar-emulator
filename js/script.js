@@ -155,13 +155,14 @@ function fetchForecast(){
       return;
     }
     response.json().then(function(data) {
-      //PARSE DATA HERE
-
       // 7 day data
       for (var i = 0; i < 7; i++) {
         OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
         OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
         OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions;
+        if(OUTLOOK_CONDITION[i] == "Thunderstorm"){ // Because thunderstorm won't fit in the day box, multiline it
+          OUTLOOK_CONDITION[i] = "Thunder-</br>storm";
+        }
         OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
@@ -171,30 +172,37 @@ function fetchForecast(){
         FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
         FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
         FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
-
-        var precipType = "Precip";
-        var precipValue = FORECAST_NARRATIVE[i].match(/\S+(?=%)/g); // returns chance of precip if any found in description
-        if(precipValue != null){
-          if(FORECAST_NARRATIVE[i].toLowerCase().includes("rain")){
-            precipType = "Rain";
-          }
-          else if(FORECAST_NARRATIVE[i].toLower().includes("slow")){
-            precipType = "Snow";
-          }
-        }else{
-          if(FORECAST_TEMP[i] > 40){
-            precipType = "Rain";
-          }
-          else if(FORECAST_TEMP[i] < 20){
-            precipType = "Snow";
-          }
-          precipValue = "0";
-        }
-        FORECAST_PRECIP[i] = precipValue + "% Chance</br>of " + precipType;
+        FORECAST_PRECIP[i] = guessPrecipitation(FORECAST_NARRATIVE[i], FORECAST_TEMP[i]);
       }
       scheduleTimeline();
     });
   })
+}
+
+function guessPrecipitation(narrativeText, temperature){
+  var precipType = "Precip";
+  var precipValue = "0"
+
+  // GUESS CHANCE
+  var parsedChance = narrativeText.match(/\S+(?=%)/g);
+  if(parsedChance != null){
+    precipValue = parsedChance;
+  }
+  else{
+    if(precipValue === "0" && narrativeText.toLowerCase().includes("slight chance")){
+      precipValue = "20";
+    }
+  }
+
+  // GUESS PRECIPITTATION TYPE
+  if(narrativeText.toLowerCase().includes("rain") || narrativeText.toLowerCase().includes("shower") || temperature > 40){
+    precipType = "Rain";
+  }
+  else if(narrativeText.toLowerCase().includes("snow") || temperature < 20){
+    precipType = "Snow";
+  }
+
+  return precipValue + "% Chance</br>of " + precipType;
 }
 
 function setInformation(){
