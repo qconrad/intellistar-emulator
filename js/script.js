@@ -33,7 +33,7 @@ function guessZipCode(){
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
-      console.log("conditions request error");
+      console.log("zip code request error");
       return;
     }
     response.json().then(function(data) {
