@@ -53,6 +53,8 @@ function preLoadMusic(){
   music= new Audio("assets/music/" + index + ".mp3");
 }
 
+/* Set the timeline page order depending on time of day and if
+alerts are present */
 function scheduleTimeline(){
   var currentTime = new Date();
   if(currentTime.getHours() > 4 && currentTime.getHours() < 14){
@@ -67,6 +69,8 @@ function scheduleTimeline(){
   setInformation();
 }
 
+/* Check if zip code is accurate by doing a regex pass and then
+confirming with api request */
 function checkZipCode(){
   var isValidZip = false;
     var input = document.getElementById('zip_code_text').value;
@@ -81,10 +85,6 @@ function checkZipCode(){
     fetchCurrentWeather();
 }
 
-function hideZipCodeElement(){
-  document.getElementById('zip-prompt').style.display = 'none';
-}
-
 function fetchCurrentWeather(){
   fetch("http://api.wunderground.com/api/d8585d80376a429e/conditions/q/" + ZIP_CODE + ".json")
   .then(function(response) {
@@ -97,7 +97,7 @@ function fetchCurrentWeather(){
       try{CITY_NAME = data.current_observation.display_location.city.toString().toUpperCase();}
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
       CURRENT_TEMPERATURE = Math.round(data.current_observation.temp_f).toString().toUpperCase();
-      hideZipCodeElement();
+      document.getElementById('zip-prompt').style.display = 'none';
       fetchAlerts();
     });
   })
@@ -112,12 +112,10 @@ function fetchAlerts(){
       return;
     }
     response.json().then(function(data) {
-      //PARSE DATA HERE
-
       for(var i = 0; i < data.alerts.length; i++){
-        // Take the most important alert message and set it as crawl text
-        // This will supply more information i.e. tornado warning coverage
-        CRAWL_TEXT = data.alerts[0].message;
+        /* Take the most important alert message and set it as crawl text
+           This will supply more information i.e. tornado warning coverage */
+        CRAWL_TEXT = data.alerts[0].message.replace("*", "");
 
         // ignore special weather statements
         if(data.alerts[i].type == "SPE"){
@@ -132,15 +130,14 @@ function fetchAlerts(){
         var expireTime = expire[0].toUpperCase();
         var expireDate = weekday[new Date(expire[1]).getDay()].toUpperCase();
         if(data.alerts[i].date_epoch > now){
-          //in future
+          // in future
           ALERTS[i] = alertName + " FROM " + issueTime + " " + issueDate + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
         }
         else{
-          //already issued
+          // already issued
           ALERTS[i] = alertName + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
         }
       }
-
       fetchForecast();
     });
   })
@@ -166,7 +163,7 @@ function fetchForecast(){
         OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
-      //narratives
+      // narratives
       for (var i = 0; i <= 3; i++){
         FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
         FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
@@ -179,11 +176,13 @@ function fetchForecast(){
   })
 }
 
+/* Because this particular API doesn't seem to have day by day precipitation,
+we use things like the temperature and narrative to try and guess it */
 function guessPrecipitation(narrativeText, temperature){
   var precipType = "Precip";
   var precipValue = "0"
 
-  // GUESS CHANCE
+  // Guess percent chance
   var parsedChance = narrativeText.match(/\S+(?=%)/g);
   if(parsedChance != null){
     precipValue = parsedChance;
@@ -194,7 +193,7 @@ function guessPrecipitation(narrativeText, temperature){
     }
   }
 
-  // GUESS PRECIPITTATION TYPE
+  // Guess type of precipitation (i.e. rain, snow)
   if(narrativeText.toLowerCase().includes("rain") || narrativeText.toLowerCase().includes("shower") || temperature > 40){
     precipType = "Rain";
   }
@@ -205,10 +204,9 @@ function guessPrecipitation(narrativeText, temperature){
   return precipValue + "% Chance</br>of " + precipType;
 }
 
+/* Now that all the fetched information is stored in memory, display them in
+the appropriate elements */
 function setInformation(){
-  //Put all the information fetched to the appropriate elements
-
-  setAlertPage();
   document.getElementById("hello-location-text").innerHTML = CITY_NAME + ",";
   document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
   document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
@@ -217,6 +215,7 @@ function setInformation(){
   document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setAlertPage();
   setForecast();
   setOutlook();
 
@@ -228,11 +227,13 @@ function setInformation(){
     cell.innerHTML = PAGE_ORDER[i].name;
   }
 
-  //start once all the information is set
+  // start animation sequence once all the information is set
   setTimeout(startAnimation, 0);
 }
 
+// This is the invidual day stuff (Today, Tomorrow, etc.)
 function setForecast(){
+  // Store all the needed elements as arrays so that they can be referenced in loops
   var forecastNarrativeElement=
   [document.getElementById("today-narrative-text"),
   document.getElementById("tonight-narrative-text"),
@@ -269,38 +270,34 @@ function setForecast(){
     forecastIconElement[i].innerHTML = '';
     forecastIconElement[i].appendChild(icon);
   }
-
-  // TODO: set icons and precip
 }
 
-function setOutlook(){
+function setOutlook(){ // Also known as 7day page
   for (var i = 0; i < 7; i++) {
-    // TODO: change element names to actual elements
-    //get all the elements for given day
-    var textElement = "day" + i + "-text";
-    var highElement = "day" + i + "-high";
-    var lowElement = "day" + i + "-low";
-    var conditionElement = "day" + i + "-condition";
-    var containerElement = "day" + i + "-container";
-    var iconElement = "day" + i + "-icon";
+    var textElement = document.getElementById("day" + i + "-text");
+    var highElement = document.getElementById("day" + i + "-high");
+    var lowElement = document.getElementById("day" + i + "-low");
+    var conditionElement = document.getElementById("day" + i + "-condition");
+    var containerElement = document.getElementById("day" + i + "-container");
+    var iconElement = document.getElementById("day" + i + "-icon");
     var dayIndex = (new Date().getDay()+ i) % 7;
 
     var icon = new Image();
     icon.style.width = '100%';
     icon.style.height = '100%';
     icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
-    document.getElementById(iconElement).innerHTML = '';
-    document.getElementById(iconElement).appendChild(icon);
+    iconElement.innerHTML = '';
+    iconElement.appendChild(icon);
 
-    //set weekends to transparent
+    // Set weekends to transparent
     if(dayIndex == 0 || dayIndex == 6){
-      document.getElementById(containerElement).style.backgroundColor = "transparent"; //weekend
+      containerElement.style.backgroundColor = "transparent"; //weekend
     }
-    document.getElementById(textElement).innerHTML = weekday[dayIndex];
+    textElement.innerHTML = weekday[dayIndex];
 
-    document.getElementById(highElement).innerHTML = OUTLOOK_HIGH[i];
-    document.getElementById(lowElement).innerHTML = OUTLOOK_LOW[i];
-    document.getElementById(conditionElement).innerHTML = OUTLOOK_CONDITION[i];
+    highElement.innerHTML = OUTLOOK_HIGH[i];
+    lowElement.innerHTML = OUTLOOK_LOW[i];
+    conditionElement.innerHTML = OUTLOOK_CONDITION[i];
   }
 }
 
@@ -320,6 +317,8 @@ function setAlertPage(){
 }
 
 function startAnimation(){
+  /* Because the first page always animates in from bottom, check if
+     current page is first and set either left or top to 0px. */
   if(PAGE_ORDER[0].subpages[0].name == 'current-page'){
     document.getElementById('current-page').style.left = '0px';
   }
@@ -342,11 +341,11 @@ function startGreetingPage(){
 }
 
 function clearGreetingPage(){
-  //remove transition delay from greeting
+  // Remove transition delay from greeting
   document.getElementById('greeting-text').classList.remove('shown');
   document.getElementById('local-logo-container').classList.remove('shown');
 
-  //hide everything
+  // Hide everything
   document.getElementById('greeting-text').classList.add('hidden');
   document.getElementById('hello-text-container').classList.add('hidden');
   document.getElementById("hello-location-container").classList.add("hidden");
@@ -358,6 +357,7 @@ function clearGreetingPage(){
   loadInfoBar();
 }
 
+// Set start and end times for every sub page.
 function schedulePages(){
   var cumlativeTime = 0;
   for(var p = 0; p < PAGE_ORDER.length; p++){
@@ -419,10 +419,12 @@ function clearPage(pageIndex, subPageIndex){
   }
 }
 
+// Called at end of sequence. Animates everything out and shows ending text
 function itsAmazingOutThere(){
   clearElements();
 }
 
+// Animates everything out (not including main background)
 function clearElements(){
   document.getElementById("outlook-titlebar").classList.add('hidden');
   document.getElementById("forecast-left-container").classList.add('hidden');
@@ -436,17 +438,16 @@ function clearElements(){
   setTimeout(clearEnd, 2000);
 }
 
+// Final background animate out
 function clearEnd(){
   document.getElementById('background-image').classList.add("above-screen");
   document.getElementById('content-container').classList.add("above-screen");
 }
 
-
 function startScrollingText(){
   document.getElementById('crawl-text').start();
   document.getElementById("crawl-text").innerHTML = CRAWL_TEXT.toUpperCase();
   document.getElementById('crawl-text').style.opacity = "1";
-
 }
 
 function loadInfoBar(){
@@ -471,14 +472,16 @@ function setClockTime(){
   if(m < 10){
     m = "0" + m;
   }
-  var finalString = h + ":" + m;
 
+  var finalString = h + ":" + m;
   document.getElementById("infobar-time-text").innerHTML = finalString;
 
-  //refresh clock every 5 seconds
+  // Refresh clock every 5 seconds
   setTimeout(setClockTime, 5000);
 }
 
+/* Used to linearly animate a numeric value. In contex, the temperature and
+   other current conditions at beginning are animated this way */
 function animateValue(id, start, end, duration, beforeText, afterText) {
   var range = end - start;
   var current = start;
@@ -494,7 +497,7 @@ function animateValue(id, start, end, duration, beforeText, afterText) {
   }, stepTime);
 }
 
-var baseSize = {
+const baseSize = {
     w: 1920,
     h: 1080
 }
