@@ -156,10 +156,9 @@ function fetchForecast(){
       for (var i = 0; i < 7; i++) {
         OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
         OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
-        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions;
-        if(OUTLOOK_CONDITION[i] == "Thunderstorm"){ // Because thunderstorm won't fit in the day box, multiline it
-          OUTLOOK_CONDITION[i] = "Thunder-</br>storm";
-        }
+        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions
+        // Because thunderstorm won't fit in the day box, multiline it
+        OUTLOOK_CONDITION[i] = OUTLOOK_CONDITION[i].replace("Thunderstorm", "Thunder</br>storm");
         OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
