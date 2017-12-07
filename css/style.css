@@ -461,7 +461,8 @@ body{
   font-size: 40px;
 }
 
-#zip-prompt{
+#settings-prompt{
+  background-color: rgba(0, 0, 0, 0.25);
   font-size: 40px;
   margin: 0 auto;
   width: 250px;
@@ -470,10 +471,9 @@ body{
   text-align: center;
 }
 
-.zip-item{
-  font-size: 40px;
+.settings-item{
+  font-size: 25px;
   width: 100%;
-  margin: 2px;
 }
 
 .forecast-container{
