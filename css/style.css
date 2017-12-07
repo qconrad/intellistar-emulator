@@ -464,8 +464,6 @@ body{
 #settings-prompt{
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   background-color: rgb(50, 50, 65);
-  vertical-align: center;
-  top: 250px;
   border: 1px solid black;
   font-size: 40px;
   margin: 0 auto;
@@ -476,8 +474,12 @@ body{
 }
 
 .settings-item{
-  font-size: 25px;
-  width: 100%;
+  width: 75%;
+  margin: 0 auto;
+}
+
+.settings-text{
+  font-size: 30px;
 }
 
 .forecast-container{
