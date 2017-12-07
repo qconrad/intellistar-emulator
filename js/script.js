@@ -97,7 +97,7 @@ function fetchCurrentWeather(){
       try{CITY_NAME = data.current_observation.display_location.city.toString().toUpperCase();}
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
       CURRENT_TEMPERATURE = Math.round(data.current_observation.temp_f).toString().toUpperCase();
-      document.getElementById('settings-prompt').style.display = 'none';
+      document.getElementById('settings-prompt').style.top = '-100%';
       fetchAlerts();
     });
   })
