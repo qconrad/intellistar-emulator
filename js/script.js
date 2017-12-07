@@ -192,12 +192,13 @@ function guessPrecipitation(narrativeText, temperature){
     }
   }
 
+  var narrativeLowerCase = narrativeText.toLowerCase();
   // Guess type of precipitation (i.e. rain, snow)
-  if(narrativeText.toLowerCase().includes("rain") || narrativeText.toLowerCase().includes("shower") || temperature > 40){
-    precipType = "Rain";
-  }
-  else if(narrativeText.toLowerCase().includes("snow") || temperature < 20){
+  if(narrativeLowerCase.includes("snow") || temperature < 20){
     precipType = "Snow";
+  }
+  else if(narrativeLowerCase.includes("rain") || temperature > 40 || narrativeLowerCase.includes("shower")){
+    precipType = "Rain";
   }
 
   return precipValue + "% Chance</br>of " + precipType;
