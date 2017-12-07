@@ -194,7 +194,7 @@ function guessPrecipitation(narrativeText, temperature){
 
   var narrativeLowerCase = narrativeText.toLowerCase();
   // Guess type of precipitation (i.e. rain, snow)
-  if(narrativeLowerCase.includes("snow") || temperature < 20){
+  if(narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr") || temperature < 20){
     precipType = "Snow";
   }
   else if(narrativeLowerCase.includes("rain") || temperature > 40 || narrativeLowerCase.includes("shower")){
