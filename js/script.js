@@ -228,7 +228,7 @@ function setInformation(){
   }
 
   // start animation sequence once all the information is set
-  setTimeout(startAnimation, 0);
+  setTimeout(startAnimation, 1000);
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
