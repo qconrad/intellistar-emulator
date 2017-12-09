@@ -7,6 +7,16 @@ const weekday = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 var CITY_NAME = "CITY_NAME";
 var CURRENT_TEMPERATURE = "0";
 var GREETING_TEXT = "This is your weather.";
+var CURRENT_ICON = "sunny";
+var CURRENT_CONDITION = "Sunny";
+var WIND_SPEED = "N 0mph";
+var GUSTS = "NONE";
+var FEELS_LIKE = "0";
+var VISIBILITY = "0 Miles"
+var HUMIDITY = "0%";
+var DEW_POINT = "0";
+var PRESSURE = '29.92"';
+var PRESSURE_TREND = "+";
 var FORECAST_NARRATIVE = [];
 var FORECAST_TEMP = [];
 var FORECAST_ICON = [];
@@ -94,9 +104,21 @@ function fetchCurrentWeather(){
       return;
     }
     response.json().then(function(data) {
-      try{CITY_NAME = data.current_observation.display_location.city.toString().toUpperCase();}
+      try{CITY_NAME = data.current_observation.display_location.city.toUpperCase();}
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
       CURRENT_TEMPERATURE = Math.round(data.current_observation.temp_f).toString().toUpperCase();
+      CURRENT_CONDITION = data.current_observation.weather;
+      CURRENT_ICON = data.current_observation.icon;
+      WIND_SPEED = data.current_observation.wind_dir + " " + data.current_observation.wind_mph + "mph";
+      GUSTS = data.current_observation.wind_gust_mph;
+      FEELS_LIKE = data.current_observation.feelslike_f;
+      VISIBILITY = Math.round(data.current_observation.visibility_mi).toString() + " Miles";
+      HUMIDITY = data.current_observation.relative_humidity;
+      DEW_POINT = data.current_observation.dewpoint_f;
+      PRESSURE = data.current_observation.pressure_in;
+      PRESSURE_TREND = data.current_observation.pressure_trend;
+
+      // Animate settings prompt out
       document.getElementById('settings-prompt').style.top = '-100%';
       fetchAlerts();
     });
@@ -218,6 +240,7 @@ function setInformation(){
   setAlertPage();
   setForecast();
   setOutlook();
+  setCurrentConditionsDEBUG();
 
   var row = document.getElementById('timeline-events')
   for(var i = 0; i < PAGE_ORDER.length; i++){
@@ -229,6 +252,19 @@ function setInformation(){
 
   // start animation sequence once all the information is set
   setTimeout(startAnimation, 1000);
+}
+
+// This is temporary to display current information fetched until I have time to do it properly.
+function setCurrentConditionsDEBUG(){
+  document.getElementById('debug-info').innerHTML = CURRENT_CONDITION + "</br>" +
+                                                    WIND_SPEED + "</br>" +
+                                                    GUSTS + "</br>" +
+                                                    FEELS_LIKE + "</br>" +
+                                                    VISIBILITY + "</br>" +
+                                                    HUMIDITY + "</br>" +
+                                                    DEW_POINT + "</br>" +
+                                                    PRESSURE + "</br>" +
+                                                    PRESSURE_TREND + "</br>"
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
