@@ -1,3 +1,4 @@
+const apiKey = "d8585d80376a429e";
 const morning = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Today", subpages: [{name: "today-page", duration: 10000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
 const night = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "tomorrow-night-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
 const single = [{name: "Alert", subpages: [{name: "single-alert-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
@@ -39,7 +40,7 @@ window.onload = function() {
 }
 
 function guessZipCode(){
-  fetch("http://api.wunderground.com/api/d8585d80376a429e/geolookup/q/autoip.json")
+  fetch('http://api.wunderground.com/api/' + apiKey + '/geolookup/q/autoip.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -96,7 +97,7 @@ function checkZipCode(){
 }
 
 function fetchCurrentWeather(){
-  fetch("http://api.wunderground.com/api/d8585d80376a429e/conditions/q/" + ZIP_CODE + ".json")
+  fetch('http://api.wunderground.com/api/' + apiKey + '/conditions/q/' + ZIP_CODE + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -126,7 +127,7 @@ function fetchCurrentWeather(){
 }
 
 function fetchAlerts(){
-  fetch("http://api.wunderground.com/api/d8585d80376a429e/alerts/q/" + ZIP_CODE + ".json")
+  fetch('http://api.wunderground.com/api/' + apiKey + '/alerts/q/' + ZIP_CODE + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -166,7 +167,7 @@ function fetchAlerts(){
 }
 
 function fetchForecast(){
-  fetch("http://api.wunderground.com/api/d8585d80376a429e/forecast10day/q/" + ZIP_CODE + ".json")
+  fetch('http://api.wunderground.com/api/' + apiKey + '/forecast10day/q/' + ZIP_CODE + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -233,8 +234,8 @@ function setInformation(){
   document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
   document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
 
-  document.getElementById("radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
-  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/d8585d80376a429e/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("radar-image").src = 'http://api.wunderground.com/api/' + apiKey + '/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/' + apiKey + '/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
   setAlertPage();
