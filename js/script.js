@@ -1,34 +1,34 @@
-const apiKey = "d8585d80376a429e";
-const morning = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Today", subpages: [{name: "today-page", duration: 10000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
-const night = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "tomorrow-night-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
-const single = [{name: "Alert", subpages: [{name: "single-alert-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
-const multiple = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
-const weekday = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
-﻿var ZIP_CODE = "00000";
-var CITY_NAME = "CITY_NAME";
-var CURRENT_TEMPERATURE = "0";
-var GREETING_TEXT = "This is your weather.";
-var CURRENT_ICON = "sunny";
-var CURRENT_CONDITION = "Sunny";
-var WIND_SPEED = "N 0mph";
-var GUSTS = "NONE";
-var FEELS_LIKE = "0";
-var VISIBILITY = "0 Miles"
-var HUMIDITY = "0%";
-var DEW_POINT = "0";
-var PRESSURE = '29.92"';
-var PRESSURE_TREND = "+";
-var FORECAST_NARRATIVE = [];
-var FORECAST_TEMP = [];
-var FORECAST_ICON = [];
-var FORECAST_PRECIP = [];
-var OUTLOOK_HIGH = [];
-var OUTLOOK_LOW = [];
-var OUTLOOK_CONDITION = [];
-var OUTLOOK_ICON = [];
-var CRAWL_TEXT = "This is an example of crawl text.";
-var PAGE_ORDER;
-var ALERTS = [];
+const APIKEY = "d8585d80376a429e";
+const MORNING = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Today", subpages: [{name: "today-page", duration: 10000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const NIGHT = [{name: "Now", subpages: [{name: "current-page", duration: 9000}, {name: "radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 10000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 10000}, {name: "tomorrow-night-page", duration: 10000}, {name: "7day-page", duration: 13000}]},]
+const SINGLE = [{name: "Alert", subpages: [{name: "single-alert-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
+const MULTIPLE = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
+const WEEKDAY = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
+﻿var zipCode;
+var cityName;
+var currentTemperature;
+var greetingText = "This is your weather.";
+var currentIcon = "sunny";
+var currentCondition = "Sunny";
+var windSpeed = "N 0mph";
+var gusts = "NONE";
+var feelsLike = "0";
+var visibility = "0 Miles"
+var humidity = "0%";
+var dewPoint = "0";
+var pressure = '29.92"';
+var pressureTrend = "+";
+var forecastNarrative = [];
+var forecastTemp = [];
+var forecastIcon = [];
+var forecastPrecip = [];
+var outlookHigh = [];
+var outlookLow = [];
+var outlookCondition = [];
+var outlookIcon = [];
+var crawlText = "This is an example of crawl text.";
+var pageOrder;
+var alerts = [];
 var music;
 
 window.onload = function() {
@@ -40,7 +40,7 @@ window.onload = function() {
 }
 
 function guessZipCode(){
-  fetch('http://api.wunderground.com/api/' + apiKey + '/geolookup/q/autoip.json')
+  fetch('http://api.wunderground.com/api/' + APIKEY + '/geolookup/q/autoip.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -69,13 +69,13 @@ alerts are present */
 function scheduleTimeline(){
   var currentTime = new Date();
   if(currentTime.getHours() > 4 && currentTime.getHours() < 14){
-    PAGE_ORDER = morning;
-  }else if(ALERTS.length == 1){
-    PAGE_ORDER = single;
-  }else if(ALERTS.length > 1){
-    PAGE_ORDER = multiple;
+    pageOrder = MORNING;
+  }else if(alerts.length == 1){
+    pageOrder = SINGLE;
+  }else if(alerts.length > 1){
+    pageOrder = MULTIPLE;
   }else{
-    PAGE_ORDER = night;
+    pageOrder = NIGHT;
   }
   setInformation();
 }
@@ -87,7 +87,7 @@ function checkZipCode(){
     var input = document.getElementById('zip-code-text').value;
     if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(input)){
       isValidZip = true;
-      ZIP_CODE = input;
+      zipCode = input;
     }
     else{
       alert("Enter valid ZIP code");
@@ -97,7 +97,7 @@ function checkZipCode(){
 }
 
 function fetchCurrentWeather(){
-  fetch('http://api.wunderground.com/api/' + apiKey + '/conditions/q/' + ZIP_CODE + '.json')
+  fetch('http://api.wunderground.com/api/' + APIKEY + '/conditions/q/' + zipCode + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -105,19 +105,19 @@ function fetchCurrentWeather(){
       return;
     }
     response.json().then(function(data) {
-      try{CITY_NAME = data.current_observation.display_location.city.toUpperCase();}
+      try{cityName = data.current_observation.display_location.city.toUpperCase();}
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
-      CURRENT_TEMPERATURE = Math.round(data.current_observation.temp_f).toString().toUpperCase();
-      CURRENT_CONDITION = data.current_observation.weather;
-      CURRENT_ICON = data.current_observation.icon;
-      WIND_SPEED = data.current_observation.wind_dir + " " + data.current_observation.wind_mph + "mph";
-      GUSTS = data.current_observation.wind_gust_mph;
-      FEELS_LIKE = data.current_observation.feelslike_f;
-      VISIBILITY = Math.round(data.current_observation.visibility_mi).toString() + " Miles";
-      HUMIDITY = data.current_observation.relative_humidity;
-      DEW_POINT = data.current_observation.dewpoint_f;
-      PRESSURE = data.current_observation.pressure_in;
-      PRESSURE_TREND = data.current_observation.pressure_trend;
+      currentTemperature = Math.round(data.current_observation.temp_f).toString().toUpperCase();
+      currentCondition = data.current_observation.weather;
+      currentIcon = data.current_observation.icon;
+      windSpeed = data.current_observation.wind_dir + " " + data.current_observation.wind_mph + "mph";
+      gusts = data.current_observation.wind_gust_mph;
+      feelsLike = data.current_observation.feelslike_f;
+      visibility = Math.round(data.current_observation.visibility_mi).toString() + " Miles";
+      humidity = data.current_observation.relative_humidity;
+      dewPoint = data.current_observation.dewpoint_f;
+      pressure = data.current_observation.pressure_in;
+      pressureTrend = data.current_observation.pressure_trend;
 
       // Animate settings prompt out
       document.getElementById('settings-prompt').style.top = '-100%';
@@ -127,7 +127,7 @@ function fetchCurrentWeather(){
 }
 
 function fetchAlerts(){
-  fetch('http://api.wunderground.com/api/' + apiKey + '/alerts/q/' + ZIP_CODE + '.json')
+  fetch('http://api.wunderground.com/api/' + APIKEY + '/alerts/q/' + zipCode + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -138,7 +138,7 @@ function fetchAlerts(){
       for(var i = 0; i < data.alerts.length; i++){
         /* Take the most important alert message and set it as crawl text
            This will supply more information i.e. tornado warning coverage */
-        CRAWL_TEXT = data.alerts[0].message.replace("*", "");
+        crawlText = data.alerts[0].message.replace("*", "");
 
         // ignore special weather statements
         if(data.alerts[i].type == "SPE"){
@@ -149,16 +149,16 @@ function fetchAlerts(){
         var expire = data.alerts[i].expires.split(" on ");
         var issue = data.alerts[i].date.split(" on ");
         var issueTime = issue[0].toUpperCase();
-        var issueDate = weekday[new Date(issue[1]).getDay()].toUpperCase();
+        var issueDate = WEEKDAY[new Date(issue[1]).getDay()].toUpperCase();
         var expireTime = expire[0].toUpperCase();
-        var expireDate = weekday[new Date(expire[1]).getDay()].toUpperCase();
+        var expireDate = WEEKDAY[new Date(expire[1]).getDay()].toUpperCase();
         if(data.alerts[i].date_epoch > now){
           // in future
-          ALERTS[i] = alertName + " FROM " + issueTime + " " + issueDate + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
+          alerts[i] = alertName + " FROM " + issueTime + " " + issueDate + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
         }
         else{
           // already issued
-          ALERTS[i] = alertName + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
+          alerts[i] = alertName + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
         }
       }
       fetchForecast();
@@ -167,7 +167,7 @@ function fetchAlerts(){
 }
 
 function fetchForecast(){
-  fetch('http://api.wunderground.com/api/' + apiKey + '/forecast10day/q/' + ZIP_CODE + '.json')
+  fetch('http://api.wunderground.com/api/' + APIKEY + '/forecast10day/q/' + zipCode + '.json')
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -177,21 +177,21 @@ function fetchForecast(){
     response.json().then(function(data) {
       // 7 day data
       for (var i = 0; i < 7; i++) {
-        OUTLOOK_HIGH[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
-        OUTLOOK_LOW[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
-        OUTLOOK_CONDITION[i] = data.forecast.simpleforecast.forecastday[i].conditions
+        outlookHigh[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+        outlookLow[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+        outlookCondition[i] = data.forecast.simpleforecast.forecastday[i].conditions
         // Because thunderstorm won't fit in the day box, multiline it
-        OUTLOOK_CONDITION[i] = OUTLOOK_CONDITION[i].replace("Thunderstorm", "Thunder</br>storm");
-        OUTLOOK_ICON[i] = data.forecast.simpleforecast.forecastday[i].icon;
+        outlookCondition[i] = outlookCondition[i].replace("Thunderstorm", "Thunder</br>storm");
+        outlookIcon[i] = data.forecast.simpleforecast.forecastday[i].icon;
       }
 
       // narratives
       for (var i = 0; i <= 3; i++){
-        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
-        FORECAST_TEMP.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
-        FORECAST_ICON[i] = data.forecast.txt_forecast.forecastday[i].icon;
-        FORECAST_NARRATIVE[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
-        FORECAST_PRECIP[i] = guessPrecipitation(FORECAST_NARRATIVE[i], FORECAST_TEMP[i]);
+        forecastTemp.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
+        forecastTemp.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
+        forecastIcon[i] = data.forecast.txt_forecast.forecastday[i].icon;
+        forecastNarrative[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
+        forecastPrecip[i] = guessPrecipitation(forecastNarrative[i], forecastTemp[i]);
       }
       scheduleTimeline();
     });
@@ -230,12 +230,12 @@ function guessPrecipitation(narrativeText, temperature){
 /* Now that all the fetched information is stored in memory, display them in
 the appropriate elements */
 function setInformation(){
-  document.getElementById("hello-location-text").innerHTML = CITY_NAME + ",";
-  document.getElementById("infobar-location-text").innerHTML = CITY_NAME;
-  document.getElementById("greeting-text").innerHTML = GREETING_TEXT;
+  document.getElementById("hello-location-text").innerHTML = cityName + ",";
+  document.getElementById("infobar-location-text").innerHTML = cityName;
+  document.getElementById("greeting-text").innerHTML = greetingText;
 
-  document.getElementById("radar-image").src = 'http://api.wunderground.com/api/' + apiKey + '/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
-  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/' + apiKey + '/animatedradar/q/MI/'+ ZIP_CODE + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("radar-image").src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
   setAlertPage();
@@ -244,11 +244,11 @@ function setInformation(){
   setCurrentConditionsDEBUG();
 
   var row = document.getElementById('timeline-events')
-  for(var i = 0; i < PAGE_ORDER.length; i++){
+  for(var i = 0; i < pageOrder.length; i++){
     var cell = row.insertCell(i);
     cell.style.width = '280px';
     cell.align = 'left';
-    cell.innerHTML = PAGE_ORDER[i].name;
+    cell.innerHTML = pageOrder[i].name;
   }
 
   // start animation sequence once all the information is set
@@ -257,15 +257,15 @@ function setInformation(){
 
 // This is temporary to display current information fetched until I have time to do it properly.
 function setCurrentConditionsDEBUG(){
-  document.getElementById('debug-info').innerHTML = CURRENT_CONDITION + "</br>" +
-                                                    WIND_SPEED + "</br>" +
-                                                    GUSTS + "</br>" +
-                                                    FEELS_LIKE + "</br>" +
-                                                    VISIBILITY + "</br>" +
-                                                    HUMIDITY + "</br>" +
-                                                    DEW_POINT + "</br>" +
-                                                    PRESSURE + "</br>" +
-                                                    PRESSURE_TREND + "</br>"
+  document.getElementById('debug-info').innerHTML = currentCondition + "</br>" +
+                                                    windSpeed + "</br>" +
+                                                    gusts + "</br>" +
+                                                    feelsLike + "</br>" +
+                                                    visibility + "</br>" +
+                                                    humidity + "</br>" +
+                                                    dewPoint + "</br>" +
+                                                    pressure + "</br>" +
+                                                    pressureTrend + "</br>"
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
@@ -296,14 +296,14 @@ function setForecast(){
   document.getElementById("tomorrow-night-forecast-precip")];
 
   for (var i = 0; i < 4; i++) {
-    forecastNarrativeElement[i].innerHTML = FORECAST_NARRATIVE[i];
-    forecastTempElement[i].innerHTML = FORECAST_TEMP[i];
-    forecastPrecipElement[i].innerHTML = FORECAST_PRECIP[i];
+    forecastNarrativeElement[i].innerHTML = forecastNarrative[i];
+    forecastTempElement[i].innerHTML = forecastTemp[i];
+    forecastPrecipElement[i].innerHTML = forecastPrecip[i];
 
     var icon = new Image();
     icon.style.width = '100%';
     icon.style.height = '100%';
-    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
+    icon.src = 'assets/icons/conditions/' + outlookIcon[i] +'.svg';
     forecastIconElement[i].innerHTML = '';
     forecastIconElement[i].appendChild(icon);
   }
@@ -322,7 +322,7 @@ function setOutlook(){ // Also known as 7day page
     var icon = new Image();
     icon.style.width = '100%';
     icon.style.height = '100%';
-    icon.src = 'assets/icons/conditions/' + OUTLOOK_ICON[i] +'.svg';
+    icon.src = 'assets/icons/conditions/' + outlookIcon[i] +'.svg';
     iconElement.innerHTML = '';
     iconElement.appendChild(icon);
 
@@ -330,25 +330,25 @@ function setOutlook(){ // Also known as 7day page
     if(dayIndex == 0 || dayIndex == 6){
       containerElement.style.backgroundColor = "transparent"; //weekend
     }
-    textElement.innerHTML = weekday[dayIndex];
+    textElement.innerHTML = WEEKDAY[dayIndex];
 
-    highElement.innerHTML = OUTLOOK_HIGH[i];
-    lowElement.innerHTML = OUTLOOK_LOW[i];
-    conditionElement.innerHTML = OUTLOOK_CONDITION[i];
+    highElement.innerHTML = outlookHigh[i];
+    lowElement.innerHTML = outlookLow[i];
+    conditionElement.innerHTML = outlookCondition[i];
   }
 }
 
 function setAlertPage(){
-  if(ALERTS.length === 0)
+  if(alerts.length === 0)
     return;
 
-  if(ALERTS.length == 1){
-    document.getElementById("single-alert0").innerHTML = ALERTS[0];
+  if(alerts.length == 1){
+    document.getElementById("single-alert0").innerHTML = alerts[0];
   }
   else{
-    for(var i = 0; i < Math.min(3, ALERTS.length); i++){
+    for(var i = 0; i < Math.min(3, alerts.length); i++){
       var idName = 'alert' + i;
-      document.getElementById(idName).innerHTML = ALERTS[i];
+      document.getElementById(idName).innerHTML = alerts[i];
     }
   }
 }
@@ -356,7 +356,7 @@ function setAlertPage(){
 function startAnimation(){
   /* Because the first page always animates in from bottom, check if
      current page is first and set either left or top to 0px. */
-  if(PAGE_ORDER[0].subpages[0].name == 'current-page'){
+  if(pageOrder[0].subpages[0].name == 'current-page'){
     document.getElementById('current-page').style.left = '0px';
   }
   else{
@@ -397,11 +397,11 @@ function clearGreetingPage(){
 // Set start and end times for every sub page.
 function schedulePages(){
   var cumlativeTime = 0;
-  for(var p = 0; p < PAGE_ORDER.length; p++){
-    for (var s = 0; s < PAGE_ORDER[p].subpages.length; s++) {
+  for(var p = 0; p < pageOrder.length; p++){
+    for (var s = 0; s < pageOrder[p].subpages.length; s++) {
       //for every single sub page
       var startTime = cumlativeTime;
-      var clearTime = cumlativeTime + PAGE_ORDER[p].subpages[s].duration;
+      var clearTime = cumlativeTime + pageOrder[p].subpages[s].duration;
       setTimeout(executePage, startTime, p, s);
       setTimeout(clearPage, clearTime, p, s);
       cumlativeTime = clearTime;
@@ -410,13 +410,13 @@ function schedulePages(){
 }
 
 function executePage(pageIndex, subPageIndex){
-  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageName = pageOrder[pageIndex].subpages[subPageIndex].name;
   var pageElement = document.getElementById(pageName);
   // console.log(pageName);
   if(subPageIndex === 0){
       var pageTime = 0;
-      for (var i = 0; i < PAGE_ORDER[pageIndex].subpages.length; i++) {
-        pageTime += PAGE_ORDER[pageIndex].subpages[i].duration;
+      for (var i = 0; i < pageOrder[pageIndex].subpages.length; i++) {
+        pageTime += pageOrder[pageIndex].subpages[i].duration;
       }
       void document.getElementById('progressbar').offsetWidth;
       document.getElementById('progressbar').style.transitionDuration = pageTime + "ms";
@@ -432,22 +432,22 @@ function executePage(pageIndex, subPageIndex){
     pageElement.style.left = '0px';
   }
 
-  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1)
+  if(pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1)
       document.getElementById('crawler-container').classList.add("hidden");
   else if(pageName == "current-page"){
-    animateValue('cc-temperature-text', -12, CURRENT_TEMPERATURE, 2500, "", "°");
+    animateValue('cc-temperature-text', -12, currentTemperature, 2500, "", "°");
   }
 }
 
 function clearPage(pageIndex, subPageIndex){
-  var pageName = PAGE_ORDER[pageIndex].subpages[subPageIndex].name;
+  var pageName = pageOrder[pageIndex].subpages[subPageIndex].name;
   var pageElement = document.getElementById(pageName);
-  if(PAGE_ORDER[pageIndex].subpages.length-1 == subPageIndex){
+  if(pageOrder[pageIndex].subpages.length-1 == subPageIndex){
     document.getElementById('progressbar').style.transitionDuration = '0ms';
     document.getElementById('progressbar').classList.remove('progress');
   }
 
-  if(pageIndex >= PAGE_ORDER.length-1 && subPageIndex >= PAGE_ORDER[PAGE_ORDER.length-1].subpages.length-1){
+  if(pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1){
     itsAmazingOutThere();
   }
   else{
@@ -483,7 +483,7 @@ function clearEnd(){
 
 function startScrollingText(){
   document.getElementById('crawl-text').start();
-  document.getElementById("crawl-text").innerHTML = CRAWL_TEXT.toUpperCase();
+  document.getElementById("crawl-text").innerHTML = crawlText.toUpperCase();
   document.getElementById('crawl-text').style.opacity = "1";
 }
 
