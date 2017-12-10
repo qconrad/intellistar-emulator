@@ -42,7 +42,6 @@ window.onload = function() {
 function guessZipCode(){
   fetch('http://api.wunderground.com/api/' + APIKEY + '/geolookup/q/autoip.json')
   .then(function(response) {
-    //check for error
     if (response.status !== 200) {
       console.log("zip code request error");
       return;
@@ -99,7 +98,6 @@ function checkZipCode(){
 function fetchCurrentWeather(){
   fetch('http://api.wunderground.com/api/' + APIKEY + '/conditions/q/' + zipCode + '.json')
   .then(function(response) {
-    //check for error
     if (response.status !== 200) {
       console.log("conditions request error");
       return;
@@ -129,7 +127,6 @@ function fetchCurrentWeather(){
 function fetchAlerts(){
   fetch('http://api.wunderground.com/api/' + APIKEY + '/alerts/q/' + zipCode + '.json')
   .then(function(response) {
-    //check for error
     if (response.status !== 200) {
       console.log("forecast request error");
       return;
@@ -169,7 +166,6 @@ function fetchAlerts(){
 function fetchForecast(){
   fetch('http://api.wunderground.com/api/' + APIKEY + '/forecast10day/q/' + zipCode + '.json')
   .then(function(response) {
-    //check for error
     if (response.status !== 200) {
       console.log("forecast request error");
       return;
