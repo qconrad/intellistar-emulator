@@ -143,15 +143,15 @@ function setInformation(){
 
 // This is temporary to display current information fetched until I have time to do it properly.
 function setCurrentConditionsDEBUG(){
-  document.getElementById('debug-info').innerHTML = currentCondition + "</br>" +
-                                                    windSpeed + "</br>" +
-                                                    gusts + "</br>" +
-                                                    feelsLike + "</br>" +
-                                                    visibility + "</br>" +
-                                                    humidity + "</br>" +
-                                                    dewPoint + "</br>" +
-                                                    pressure + "</br>" +
-                                                    pressureTrend + "</br>"
+  document.getElementById('debug-info').innerHTML = "Current Condition: " + currentCondition + "</br>" +
+                                                    "Wind Speed: " + windSpeed + "</br>" +
+                                                    "Gusts: " + gusts + "</br>" +
+                                                    "Feels Like: " + feelsLike + "</br>" +
+                                                    "Visibility: " + visibility + "</br>" +
+                                                    "Humidity: " + humidity + "</br>" +
+                                                    "Dew Point: " + dewPoint + "</br>" +
+                                                    "Pressure: " + pressure + "</br>" +
+                                                    "Pressure Trend : " + pressureTrend + "</br>"
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
