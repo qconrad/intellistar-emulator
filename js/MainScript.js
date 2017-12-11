@@ -93,9 +93,11 @@ function guessPrecipitation(narrativeText, temperature){
   if(parsedChance != null){
     precipValue = parsedChance;
   }
-  else{
-    if(precipValue === "0" && narrativeText.toLowerCase().includes("slight chance")){
+  else if(precipValue === "0"){
+    if(narrativeText.toLowerCase().includes("slight chance")){
       precipValue = "20";
+    }else if (narrativeText.toLowerCase().includes("a few") && narrativeText.toLowerCase().includes("possible")){
+      precipValue = "10";
     }
   }
 
