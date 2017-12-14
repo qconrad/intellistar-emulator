@@ -101,17 +101,26 @@ function guessPrecipitation(narrativeText, temperature){
     }
   }
 
-  var narrativeLowerCase = narrativeText.toLowerCase();
   // Guess type of precipitation (i.e. rain, snow)
-  if(narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr") || temperature <= 32){
+    var narrativeLowerCase = narrativeText.toLowerCase();
+  if(narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr")){
     precipType = "Snow";
   }
-  else if(narrativeLowerCase.includes("rain") || temperature >= 32 || narrativeLowerCase.includes("shower")){
+  else if(narrativeLowerCase.includes("rain") || narrativeLowerCase.includes("shower")){
     precipType = "Rain";
   }
+
   /* Just because the temperature is below the freezing point of 32 degress, doesn't neccesarly
-     mean that precipitatino would be snow, however if there is no text to indicate pricpitation (i.e. 0% chance)
+     mean that precipitation would be snow, however if there is no text to indicate pricpitation (i.e. 0% chance)
      then it doesn't really matter if it says 0% chance of snow or rain because neither would happen anyway */
+     if(precipType == "Precip"){
+       if(temperature <= 32){
+         precipType = "Snow";
+       }
+       else{
+         precipType = "Rain"
+       }
+     }
 
   return precipValue + "% Chance</br>of " + precipType;
 }
