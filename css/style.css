@@ -205,7 +205,7 @@ body{
 }
 
 .strong-text{
-  font-family: caliFont;
+  font-family: akkoLight;
   font-weight: bold;
   font-size: 60px;
   color:white;
@@ -224,7 +224,7 @@ body{
 
 .regular-text{
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-  font-family: caliFont;
+  font-family: akkoThin;
   font-size: 62px;
   color: white;
 }
@@ -356,8 +356,13 @@ body{
 }
 
 @font-face {
-  font-family: caliFont;
-  src: url(../fonts/calibril.ttf);
+  font-family: akkoThin;
+  src: url(../fonts/akkopro-thin.otf);
+}
+
+@font-face {
+  font-family: akkoLight;
+  src: url(../fonts/akkopro-light.ttf);
 }
 
 .cc-container{
