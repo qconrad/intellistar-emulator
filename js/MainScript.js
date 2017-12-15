@@ -252,6 +252,7 @@ function setAlertPage(){
 }
 
 function startAnimation(){
+  document.getElementById("settings-container").style.display = 'none';
   /* Because the first page always animates in from bottom, check if
      current page is first and set either left or top to 0px. */
   if(pageOrder[0].subpages[0].name == 'current-page'){
