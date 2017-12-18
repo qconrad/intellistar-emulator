@@ -386,7 +386,7 @@ body{
 }
 
 .page-title-bar{
-  padding-left: 20px;
+  padding-left: 28px;
   font-size: 50px;
   height: 65px;
   line-height: 65px;
@@ -410,39 +410,39 @@ body{
   background-color: rgba(0, 0, 0, 0.25);
 }
 
-.forecast{
+.narrative{
   height: 525px;
 }
 
-.forecast-left{
-  width: 400px;
+.narrative-left{
+  width: 410px;
   float: left;
 }
 
-.forecast-right{
-  width: 825px;
+.narrative-right{
+  width: 820px;
   float: right;
 }
 
-.forecast-date{
+.narrative-date{
   text-align: center;
   width: 100%;
   margin-top: 20px;
 }
 
-.forecast-icon{
+.narrative-icon{
   height: 130px;
   width: 130px;
   margin: 0 auto;
   margin-top: 5px;
 }
 
-.forecast-temp{
+.narrative-temp{
   text-align: center;
   font-size: 130px;
 }
 
-.forecast-precip{
+.narrative-precip{
   text-align: center;
   font-size: 42px;
   margin-left: 5px;
@@ -451,7 +451,7 @@ body{
 
 .narrative-text{
   margin: 20px 40px 0px 40px;
-  font-size: 55px;
+  font-size: 52px;
 }
 
 #cc-dial{
