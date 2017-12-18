@@ -86,7 +86,6 @@ body{
   position: relative;
   top: 100%;
   float: left;
-  vertical-align: center;
   height: 100%;
   transition: top 0.4s;
   background-color: rgba(0, 0, 0, 0.5);
@@ -463,7 +462,7 @@ body{
 }
 
 .tomorrow-night-text{
-  font-size: 40px;
+  font-size: 48px;
 }
 
 #settings-container{
