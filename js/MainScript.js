@@ -334,7 +334,7 @@ function executePage(pageIndex, subPageIndex){
   if(pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1)
       document.getElementById('crawler-container').classList.add("hidden");
   else if(pageName == "current-page"){
-    animateValue('cc-temperature-text', -12, currentTemperature, 2500, "", "°");
+    animateValue('cc-temperature-text', -20, currentTemperature, 2500, "", "°");
   }
 }
 
