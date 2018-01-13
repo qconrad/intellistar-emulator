@@ -397,6 +397,14 @@ body{
   top: 100%;
 }
 
+#ccicon{
+  width: 200px;
+  height: 200px;
+  position: relative;
+  left: 10px;
+  top: 10px;
+}
+
 .alert-title-bar{
   background-color: #ae1d0b;
 }

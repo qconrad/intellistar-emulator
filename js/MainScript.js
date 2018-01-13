@@ -164,6 +164,8 @@ function setCurrentConditionsDEBUG(){
                                                     "Dew Point: " + dewPoint + "</br>" +
                                                     "Pressure: " + pressure + "</br>" +
                                                     "Pressure Trend : " + pressureTrend + "</br>"
+                                                    
+  document.getElementById('ccicon').src = 'assets/icons/conditions/' + currentIcon +'.svg';
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
