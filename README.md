@@ -18,16 +18,16 @@ Most of core animation and logic has been replicated including severe weather al
 The background blur will not work by default. It is a feature that is disabled in chrome by default due to poor performance. To enable, go to chrome://flags and enable  *Experimental Web Platform features*.
 
 ## Screenshots
-![Screenshot 1](/screenshots/1.png)
+![Screenshot 1](/screens/1.png)
 
-![Screenshot 2](/screenshots/2.png)
+![Screenshot 2](/screens/2.png)
 
-![Screenshot 3](/screenshots/3.png)
+![Screenshot 3](/screens/3.png)
 
-![Screenshot 4](/screenshots/4.png)
+![Screenshot 4](/screens/4.png)
 
-![Screenshot 5](/screenshots/5.png)
+![Screenshot 5](/screens/5.png)
 
-![Screenshot 6](/screenshots/6.png)
+![Screenshot 6](/screens/6.png)
 
-![Screenshot 7](/screenshots/7.png)
+![Screenshot 7](/screens/7.png)
