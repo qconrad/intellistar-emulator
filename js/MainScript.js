@@ -201,7 +201,7 @@ function setForecast(){
     var icon = new Image();
     icon.style.width = '100%';
     icon.style.height = '100%';
-    icon.src = 'assets/icons/conditions/' + outlookIcon[i] +'.svg';
+    icon.src = 'assets/icons/conditions/' + forecastIcon[i] +'.svg';
     forecastIconElement[i].innerHTML = '';
     forecastIconElement[i].appendChild(icon);
   }
