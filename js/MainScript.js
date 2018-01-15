@@ -32,17 +32,10 @@ var alerts = [];
 var music;
 
 window.onload = function() {
-  preloadBackground();
   preLoadMusic();
   resizeWindow();
   setClockTime();
   guessZipCode();
-}
-
-function preloadBackground(){
-  var index = Math.floor(Math.random() * 25) + 1;
-  var filePath = 'assets/backgrounds/' + index + '.jpg';
-  document.getElementById('background-image').style.backgroundImage = "url('" + filePath + "')";
 }
 
 function preLoadMusic(){
@@ -136,6 +129,7 @@ function setInformation(){
   document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   document.getElementById('crawl-text').stop();
 
+  setMainBackground();
   setAlertPage();
   setForecast();
   setOutlook();
@@ -149,8 +143,11 @@ function setInformation(){
     cell.innerHTML = pageOrder[i].name;
   }
 
-  // start animation sequence once all the information is set
-  setTimeout(startAnimation, 1000);
+  startAnimation();
+}
+
+function startAnimation(){
+  setTimeout(startAnimation, 2000);
 }
 
 // This is temporary to display current information fetched until I have time to do it properly.
@@ -164,7 +161,7 @@ function setCurrentConditionsDEBUG(){
                                                     "Dew Point: " + dewPoint + "</br>" +
                                                     "Pressure: " + pressure + "</br>" +
                                                     "Pressure Trend : " + pressureTrend + "</br>"
-                                                    
+
   document.getElementById('ccicon').src = 'assets/icons/conditions/' + currentIcon +'.svg';
 }
 
