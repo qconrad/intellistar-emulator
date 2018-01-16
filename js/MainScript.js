@@ -78,7 +78,7 @@ function checkZipCode(){
 /* Because this particular API doesn't seem to have day by day precipitation,
 we use things like the temperature and narrative to try and guess it */
 function guessPrecipitation(narrativeText, temperature){
-  var precipType = "Precip";
+  var precipType = "";
   var precipValue = "0"
 
   // Guess percent chance
@@ -96,17 +96,20 @@ function guessPrecipitation(narrativeText, temperature){
 
   // Guess type of precipitation (i.e. rain, snow)
     var narrativeLowerCase = narrativeText.toLowerCase();
-  if(narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr")){
+  if(narrativeLowerCase.includes("chance of precip")){
+    precipType = "Precip";
+  }
+  else if(  narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr")){
     precipType = "Snow";
   }
   else if(narrativeLowerCase.includes("rain") || narrativeLowerCase.includes("shower")){
-    precipType = "Rain";
+    precipType = "Rain"
   }
 
   /* Just because the temperature is below the freezing point of 32 degress, doesn't neccesarly
      mean that precipitation would be snow, however if there is no text to indicate pricpitation (i.e. 0% chance)
      then it doesn't really matter if it says 0% chance of snow or rain because neither would happen anyway */
-     if(precipType == "Precip"){
+     if(precipType == ""){
        if(temperature <= 32){
          precipType = "Snow";
        }
