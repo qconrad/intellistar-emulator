@@ -94,7 +94,6 @@ function fetchCurrentWeather(){
       catch(err){alert("Enter valid ZIP code"); getZipCodeFromUser(); return;}
       currentTemperature = Math.round(data.current_observation.temp_f).toString().toUpperCase();
       currentCondition = data.current_observation.weather;
-      currentIcon = data.current_observation.icon;
       windSpeed = data.current_observation.wind_dir + " " + data.current_observation.wind_mph + "mph";
       gusts = data.current_observation.wind_gust_mph;
       feelsLike = data.current_observation.feelslike_f;
@@ -103,6 +102,14 @@ function fetchCurrentWeather(){
       dewPoint = data.current_observation.dewpoint_f;
       pressure = data.current_observation.pressure_in;
       pressureTrend = data.current_observation.pressure_trend;
+      currentIcon = data.current_observation.icon;
+
+      // This API only gives day icons for current conditions (for some reason?)
+      // So if the time is between 7pm and 5am, we use the night icon
+      var currentTime = new Date();
+      if(currentTime.getHours() < 5 && currentTime.getHours() > 19){
+        currentIcon = "nt_" + currentIcon;
+      }
 
       // Animate settings prompt out
       document.getElementById('settings-prompt').style.top = '-100%';
