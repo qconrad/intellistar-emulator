@@ -28,6 +28,8 @@ var outlookCondition = [];
 var outlookIcon = [];
 var crawlText = "This is an example of crawl text.";
 var pageOrder;
+var radarImage;
+var zoomedRadarImage;
 var alerts = [];
 var music;
 
@@ -128,8 +130,14 @@ function setInformation(){
   document.getElementById("infobar-location-text").innerHTML = cityName;
   document.getElementById("greeting-text").innerHTML = greetingText;
 
-  document.getElementById("radar-image").src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
-  document.getElementById("zoomed-radar-image").src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  radarImage = new Image();
+  radarImage.src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+
+  if(pageOrder == SINGLE || pageOrder == MULTIPLE){
+    zoomedRadarImage = new Image();
+    zoomedRadarImage.src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  }
+
   document.getElementById('crawl-text').stop();
 
   setMainBackground();
@@ -337,6 +345,12 @@ function executePage(pageIndex, subPageIndex){
       document.getElementById('crawler-container').classList.add("hidden");
   else if(pageName == "current-page"){
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, "", "°");
+  }
+  else if(pageName == 'radar-page'){
+    document.getElementById('radar-image').appendChild(radarImage);
+  }
+  else if(pageName == 'zoomed-radar-page'){
+    document.getElementById('zoomed-radar-image').appendChild(zoomedRadarImage);
   }
 }
 
