@@ -165,7 +165,19 @@ function setInformation(){
 }
 
 function startAnimation(){
+  var html = document.documentElement;
+  fullscreen(html);
   setTimeout(startAnimation, 2000);
+}
+
+function fullScreen(element) {
+  if(element.requestFullScreen) {
+    element.requestFullScreen();
+  } else if(element.webkitRequestFullScreen ) {
+    element.webkitRequestFullScreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  }
 }
 
 // This is temporary to display current information fetched until I have time to do it properly.
@@ -279,7 +291,7 @@ function startAnimation(){
     document.getElementById('current-page').style.top = '0px';
   }
   jingle.play();
-  setTimeout(StartMusic, 4500)
+  setTimeout(StartMusic, 5000)
   startGreetingPage();
 }
 

@@ -144,7 +144,7 @@ img:after {
   width: auto;
   height: 55px;
   overflow: hidden;
-  transition: top 0.5s, left 0.5s;
+  transition: top 0.3s, left 0.3s;
 }
 
 #hello-location-text{
@@ -174,7 +174,7 @@ img:after {
 }
 
 #greeting-text{
-  transition: opacity .4s, left .4s;
+  transition: opacity .3s, left .3s;
   transition-timing-function: linear;
   opacity: 0;
   top: -10px;
