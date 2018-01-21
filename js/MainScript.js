@@ -131,10 +131,16 @@ function setInformation(){
   document.getElementById("greeting-text").innerHTML = greetingText;
 
   radarImage = new Image();
+  radarImage.onerror = function () {
+    document.getElementById('radar-container').style.display = 'none';
+  }
   radarImage.src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
 
   if(pageOrder == SINGLE || pageOrder == MULTIPLE){
     zoomedRadarImage = new Image();
+    zoomedRadarImage.onerror = function () {
+      document.getElementById('zoomed-radar-container').style.display = 'none';
+    }
     zoomedRadarImage.src = 'http://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
   }
 
@@ -347,10 +353,10 @@ function executePage(pageIndex, subPageIndex){
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, "", "°");
   }
   else if(pageName == 'radar-page'){
-    document.getElementById('radar-image').appendChild(radarImage);
+    var imageElementTest = document.getElementById('radar-container').appendChild(radarImage);
   }
   else if(pageName == 'zoomed-radar-page'){
-    document.getElementById('zoomed-radar-image').appendChild(zoomedRadarImage);
+    document.getElementById('zoomed-radar-container').appendChild(zoomedRadarImage);
   }
 }
 
