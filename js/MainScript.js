@@ -26,7 +26,7 @@ var outlookHigh = [];
 var outlookLow = [];
 var outlookCondition = [];
 var outlookIcon = [];
-var crawlText = "This is an example of crawl text.";
+var crawlText = "Thanks for trying this emulator. It's a work in progress, so it's not perfect. If you have any contributions to the code or you have assets, I encourge you to submit a pull request on github. And finally, if you enjoyed this, please star the repository on github and share with others so other people can find this.";
 var pageOrder;
 var radarImage;
 var zoomedRadarImage;
