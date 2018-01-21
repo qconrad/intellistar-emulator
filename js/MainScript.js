@@ -375,7 +375,7 @@ function clearPage(pageIndex, subPageIndex){
   }
 
   if(pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1){
-    EndSequence();
+    endSequence();
   }
   else{
     pageElement.style.transitionDelay = '0s';
@@ -384,7 +384,7 @@ function clearPage(pageIndex, subPageIndex){
 }
 
 // Called at end of sequence. Animates everything out and shows ending text
-function EndSequence(){
+function endSequence(){
   clearInfoBar();
 }
 
@@ -393,24 +393,37 @@ function clearInfoBar(){
   document.getElementById("infobar-local-logo").classList.add("hidden");
   document.getElementById("infobar-location-container").classList.add("hidden");
   document.getElementById("infobar-time-container").classList.add("hidden");
-  setTimeout(ClearElements, 200);
+  setTimeout(clearElements, 200);
 }
 
 // Animates everything out (not including main background)
-function ClearElements(){
+function clearElements(){
   document.getElementById("outlook-titlebar").classList.add('hidden');
   document.getElementById("forecast-left-container").classList.add('hidden');
   document.getElementById("forecast-right-container").classList.add('hidden');
   document.getElementById("content-container").classList.add("expand");
   document.getElementById("timeline-container").style.visibility = "hidden";
-  ItsAmazingOutThere();
+
+  if(alerts.length >= 1){
+    stayUpdated();
+  }
+  else{
+    itsAmazingOutThere();
+  }
+
   setTimeout(clearEnd, 2000);
 }
 
-function ItsAmazingOutThere(){
+function itsAmazingOutThere(){
   document.getElementById('amazing-text').classList.add('extend');
   document.getElementById("amazing-logo").classList.add('shown');
   document.getElementById("amazing-container").classList.add('hide');
+}
+
+function stayUpdated(){
+  document.getElementById('updated-text').classList.add('extend');
+  document.getElementById("updated-logo").classList.add('shown');
+  document.getElementById("updated-container").classList.add('hide');
 }
 
 // Final background animate out
