@@ -277,7 +277,7 @@ function startAnimation(){
 
 function startGreetingPage(){
   document.getElementById('background-image').classList.remove("below-screen");
-  document.getElementById('content-frame').classList.add('shown');
+  document.getElementById('content-container').classList.add('shown');
   document.getElementById('infobar-twc-logo').classList.add('shown');
   document.getElementById('hello-text').classList.add('shown');
   document.getElementById('hello-location-text').classList.add('shown');
@@ -373,7 +373,15 @@ function clearPage(pageIndex, subPageIndex){
 
 // Called at end of sequence. Animates everything out and shows ending text
 function itsAmazingOutThere(){
-  clearElements();
+  clearInfoBar();
+}
+
+function clearInfoBar(){
+  document.getElementById("infobar-twc-logo").classList.add("hidden");
+  document.getElementById("infobar-local-logo").classList.add("hidden");
+  document.getElementById("infobar-location-container").classList.add("hidden");
+  document.getElementById("infobar-time-container").classList.add("hidden");
+  setTimeout(clearElements, 200);
 }
 
 // Animates everything out (not including main background)
@@ -381,10 +389,6 @@ function clearElements(){
   document.getElementById("outlook-titlebar").classList.add('hidden');
   document.getElementById("forecast-left-container").classList.add('hidden');
   document.getElementById("forecast-right-container").classList.add('hidden');
-  document.getElementById("infobar-twc-logo").classList.add("hidden");
-  document.getElementById("infobar-local-logo").classList.add("hidden");
-  document.getElementById("infobar-location-container").classList.add("hidden");
-  document.getElementById("infobar-time-container").classList.add("hidden");
   document.getElementById("content-container").classList.add("expand");
   document.getElementById("timeline-container").style.visibility = "hidden";
   setTimeout(clearEnd, 2000);
