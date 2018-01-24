@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 85 85">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #fff;
+      }
+
+      .cls-2 {
+        fill: none;
+        stroke: #fff;
+        stroke-miterlimit: 10;
+        stroke-width: 4px;
+      }
+    </style>
+  </defs>
+  <title>radar1_1</title>
+  <g id="Layer_2" data-name="Layer 2">
+    <g id="Layer_1-2" data-name="Layer 1">
+      <path class="cls-1" d="M42.5,4A38.5,38.5,0,1,1,4,42.5,38.54,38.54,0,0,1,42.5,4m0-4A42.5,42.5,0,1,0,85,42.5,42.5,42.5,0,0,0,42.5,0Z"/>
+      <path class="cls-1" d="M42.5,21.38A21.12,21.12,0,1,1,21.38,42.5,21.14,21.14,0,0,1,42.5,21.38m0-4A25.12,25.12,0,1,0,67.62,42.5,25.12,25.12,0,0,0,42.5,17.38Z"/>
+      <line class="cls-2" x1="83.05" y1="42.5" x2="2.54" y2="42.5"/>
+      <line class="cls-2" x1="42.8" y1="2.24" x2="42.8" y2="81.35"/>
+      <path class="cls-2" d="M42.8,42.5"/>
+      <path class="cls-1" d="M42.8,42.5,70.88,14.41S82.27,27,82.27,42.5Z"/>
+    </g>
+  </g>
+</svg>

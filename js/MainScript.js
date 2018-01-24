@@ -5,6 +5,8 @@ const SINGLE = [{name: "Alert", subpages: [{name: "single-alert-page", duration:
 const MULTIPLE = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
 const WEEKDAY = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 const jingle = new Audio("assets/music/jingle.wav")
+var currentLogo;
+var currentLogoIndex = 0;
 ﻿var zipCode;
 var cityName;
 var currentTemperature;
@@ -152,6 +154,7 @@ function setInformation(){
   setForecast();
   setOutlook();
   setCurrentConditionsDEBUG();
+  createLogoElements();
 
   var row = document.getElementById('timeline-events')
   for(var i = 0; i < pageOrder.length; i++){
@@ -162,6 +165,26 @@ function setInformation(){
   }
 
   startAnimation();
+}
+
+function createLogoElements(){
+  var alreadyAddedLogos = [];
+  for(var p = 0; p < pageOrder.length; p++){
+    for (var s = 0; s < pageOrder[p].subpages.length; s++) {
+      //for every single sub page
+      var currentPage = getPageLogoFileName(pageOrder[p].subpages[s].name);
+
+      if(!alreadyAddedLogos.includes(currentPage)){
+        var logo = new Image();
+        logo.style.width = '85px';
+        logo.style.height = '85px';
+        logo.style.marginRight = '20px'
+        logo.src = 'assets/timeline/' + currentPage;
+        document.getElementById('logo-stack').appendChild(logo);
+        alreadyAddedLogos.push(currentPage);
+      }
+    }
+  }
 }
 
 function startAnimation(){
@@ -345,6 +368,12 @@ function executePage(pageIndex, subPageIndex){
       document.getElementById('timeline-events-container').style.left = ((-280*pageIndex)-(pageIndex*3)).toString() + "px";
   }
 
+  if(currentLogo != getPageLogoFileName(pageName)){
+    document.getElementById('logo-stack').style.left = ((-85*currentLogoIndex)-(20*currentLogoIndex)).toString() + "px";
+    currentLogo = getPageLogoFileName(pageName);
+    currentLogoIndex++;
+  }
+
   pageElement.style.transitionDelay = '0.5s';
   if(pageIndex === 0 && subPageIndex == 0){
     pageElement.style.top = '0px';
@@ -380,6 +409,50 @@ function clearPage(pageIndex, subPageIndex){
   else{
     pageElement.style.transitionDelay = '0s';
     pageElement.style.left = '-101%';
+  }
+}
+
+function getPageLogoFileName(pageName){
+  switch (pageName) {
+    case "single-alert-page":
+      return "8logo.svg";
+    break;
+
+    case "multiple-alert-page":
+      return "8logo.svg";
+    break;
+
+    case "current-page":
+      return "thermometer.svg";
+    break;
+
+    case "radar-page":
+      return "radar1.svg";
+    break;
+
+    case "zoomed-radar-page":
+      return "radar2.svg";
+    break;
+
+    case "today-page":
+      return "calendar.svg";
+    break;
+
+    case "tonight-page":
+      return "calendar.svg";
+    break;
+
+    case "tomorrow-page":
+      return "calendar.svg";
+    break;
+
+    case "tomorrow-night-page":
+      return "calendar.svg";
+    break;
+
+    case "7day-page":
+      return "week.svg";
+    break;
   }
 }
 
