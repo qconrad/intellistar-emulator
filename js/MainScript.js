@@ -77,6 +77,8 @@ function checkZipCode(){
       alert("Enter valid ZIP code");
       return;
     }
+    // Animate settings prompt out
+    getElement('settings-prompt').style.top = '-100%';
     fetchCurrentWeather();
 }
 
@@ -138,7 +140,7 @@ function setInformation(){
   createLogoElements();
   setCurrentConditions();
   setTimelineEvents();
-  setTimeout(startAnimation, 2000);
+  startAnimation();
 }
 
 function startAnimation(){

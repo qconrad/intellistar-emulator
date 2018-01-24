@@ -115,9 +115,6 @@ function fetchCurrentWeather(){
       if(currentTime.getHours() < 5 && currentTime.getHours() > 19){
         currentIcon = "nt_" + currentIcon;
       }
-
-      // Animate settings prompt out
-      getElement('settings-prompt').style.top = '-100%';
       fetchAlerts();
     });
   })
