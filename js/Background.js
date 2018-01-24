@@ -36,7 +36,7 @@ function getFolderCount(folderName){
     case 'tstorm':
       return 9;
     case 'other':
-      return 11;
+      return 6;
     default:
       return 0;
   }
