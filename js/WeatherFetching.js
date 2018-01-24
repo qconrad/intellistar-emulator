@@ -7,7 +7,7 @@ function guessZipCode(){
       return;
     }
     response.json().then(function(data) {
-      document.getElementById("zip-code-text").value = data.location.zip;
+      getElement("zip-code-text").value = data.location.zip;
     });
   })
 }
@@ -117,7 +117,7 @@ function fetchCurrentWeather(){
       }
 
       // Animate settings prompt out
-      document.getElementById('settings-prompt').style.top = '-100%';
+      getElement('settings-prompt').style.top = '-100%';
       fetchAlerts();
     });
   })

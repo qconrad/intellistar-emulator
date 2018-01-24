@@ -1,5 +1,5 @@
 function setMainBackground(){
-  document.getElementById('background-image').style.backgroundImage = 'url(' + getRandomBackgroundPath() + ')';
+  getElement('background-image').style.backgroundImage = 'url(' + getRandomBackgroundPath() + ')';
 }
 
 function getRandomBackgroundPath(){
