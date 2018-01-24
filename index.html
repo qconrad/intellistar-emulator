@@ -88,10 +88,57 @@
         <div class="page-content-container shaded-page-content">
           <div style="width: 300px; float: left;">
             <img id="ccicon"/>
+            <div class="regular-text"><span id="cc-temperature-text">0</span>°</div>
           </div>
-          <div style="float: right; width: 500px;">
-            <div id="cc-temperature-text" class="regular-text">0</div>
-            <div style="font-size: 35px" id="debug-info" class="regular-text">current conditions</div>
+          <div id="cc-container">
+            <div class="cc-line-container">
+              <div class="cc-vertical-group">
+                <div id="cc-condition" class="regular-text cc-text">Condition</div>
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">VISIBILITY</div>
+                  <div class="regular-text cc-text"><span id="cc-visibility">0</span> Miles</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cc-line-container">
+              <div class="cc-vertical-group cc-line2">
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">WIND</div>
+                  <div id="cc-wind" class="regular-text cc-text">N 0mph</div>
+                </div>
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">HUMIDITY</div>
+                  <div class="regular-text cc-text"><span id="cc-humidity">0</span>%</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cc-line-container">
+              <div class="cc-vertical-group cc-line3">
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">GUSTS</div>
+                  <div id="cc-gusts" class="regular-text cc-text">NONE</div>
+                </div>
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">DEW POINT</div>
+                  <div class="regular-text cc-text"><span id="cc-dewpoint">0</span>°</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cc-line-container">
+              <div class="cc-vertical-group cc-line4">
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">FEELS LIKE</div>
+                  <div class="regular-text cc-text"><span id="cc-feelslike">0</span>°</div>
+                </div>
+                <div class="cc-horizontal-group">
+                  <div class="regular-text cc-text cc-left">PRESSURE</div>
+                  <div class="regular-text cc-text"><span id="cc-pressure1">29</span>.<span id="cc-pressure2">92</span><span id="cc-pressuretrend">▲</span></div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

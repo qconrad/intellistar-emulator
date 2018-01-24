@@ -96,12 +96,17 @@ function fetchCurrentWeather(){
       currentCondition = data.current_observation.weather;
       windSpeed = data.current_observation.wind_dir + " " + data.current_observation.wind_mph + "mph";
       gusts = data.current_observation.wind_gust_mph;
+      if(gusts == "0"){gusts = "NONE";}
       feelsLike = data.current_observation.feelslike_f;
-      visibility = Math.round(data.current_observation.visibility_mi).toString() + " Miles";
-      humidity = data.current_observation.relative_humidity;
+      visibility = Math.round(data.current_observation.visibility_mi);
+      humidity = data.current_observation.relative_humidity.replace("%", "");
       dewPoint = data.current_observation.dewpoint_f;
       pressure = data.current_observation.pressure_in;
-      pressureTrend = data.current_observation.pressure_trend;
+      if(data.current_observation.pressure_trend == "+"){
+        pressureTrend = "▲"
+      }else{
+        pressureTrend = "▼"
+      }
       currentIcon = data.current_observation.icon;
 
       // This API only gives day icons for current conditions (for some reason?)

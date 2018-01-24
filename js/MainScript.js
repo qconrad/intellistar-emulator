@@ -153,8 +153,8 @@ function setInformation(){
   setAlertPage();
   setForecast();
   setOutlook();
-  setCurrentConditionsDEBUG();
   createLogoElements();
+  setCurrentConditions();
 
   var row = document.getElementById('timeline-events')
   for(var i = 0; i < pageOrder.length; i++){
@@ -165,6 +165,15 @@ function setInformation(){
   }
 
   startAnimation();
+}
+
+function setCurrentConditions(){
+  document.getElementById('cc-condition').innerHTML = currentCondition;
+  document.getElementById('cc-wind').innerHTML = windSpeed;
+  document.getElementById('cc-gusts').innerHTML = gusts;
+  document.getElementById('cc-feelslike').innerHTML = feelsLike;
+  document.getElementById('cc-pressuretrend').innerHTML = pressureTrend;
+  document.getElementById('ccicon').src = 'assets/icons/conditions/' + currentIcon +'.svg';
 }
 
 function createLogoElements(){
@@ -189,21 +198,6 @@ function createLogoElements(){
 
 function startAnimation(){
   setTimeout(startAnimation, 2000);
-}
-
-// This is temporary to display current information fetched until I have time to do it properly.
-function setCurrentConditionsDEBUG(){
-  document.getElementById('debug-info').innerHTML = "Current Condition: " + currentCondition + "</br>" +
-                                                    "Wind Speed: " + windSpeed + "</br>" +
-                                                    "Gusts: " + gusts + "</br>" +
-                                                    "Feels Like: " + feelsLike + "</br>" +
-                                                    "Visibility: " + visibility + "</br>" +
-                                                    "Humidity: " + humidity + "</br>" +
-                                                    "Dew Point: " + dewPoint + "</br>" +
-                                                    "Pressure: " + pressure + "</br>" +
-                                                    "Pressure Trend : " + pressureTrend + "</br>"
-
-  document.getElementById('ccicon').src = 'assets/icons/conditions/' + currentIcon +'.svg';
 }
 
 // This is the invidual day stuff (Today, Tomorrow, etc.)
@@ -358,10 +352,10 @@ function executePage(pageIndex, subPageIndex){
   var pageElement = document.getElementById(pageName);
   // console.log(pageName);
   if(subPageIndex === 0){
-      var pageTime = 0;
-      for (var i = 0; i < pageOrder[pageIndex].subpages.length; i++) {
-        pageTime += pageOrder[pageIndex].subpages[i].duration;
-      }
+    var pageTime = 0;
+    for (var i = 0; i < pageOrder[pageIndex].subpages.length; i++) {
+      pageTime += pageOrder[pageIndex].subpages[i].duration;
+    }
       void document.getElementById('progressbar').offsetWidth;
       document.getElementById('progressbar').style.transitionDuration = pageTime + "ms";
       document.getElementById('progressbar').classList.add('progress');
@@ -385,7 +379,9 @@ function executePage(pageIndex, subPageIndex){
   if(pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1)
       document.getElementById('crawler-container').classList.add("hidden");
   else if(pageName == "current-page"){
-    animateValue('cc-temperature-text', -20, currentTemperature, 2500, "", "°");
+    setTimeout(loadCC, 1000);
+    setTimeout(scrollCC, pageOrder[pageIndex].subpages[subPageIndex].duration / 2);
+    animateValue('cc-temperature-text', -20, currentTemperature, 2500);
   }
   else if(pageName == 'radar-page'){
     var imageElementTest = document.getElementById('radar-container').appendChild(radarImage);
@@ -410,6 +406,26 @@ function clearPage(pageIndex, subPageIndex){
     pageElement.style.transitionDelay = '0s';
     pageElement.style.left = '-101%';
   }
+}
+
+function loadCC(){
+  var myElements = document.querySelectorAll(".cc-vertical-group");
+  for (var i = 0; i < myElements.length; i++) {
+    myElements[i].style.top = '0px';
+  }
+}
+
+function scrollCC(){
+  var myElements = document.querySelectorAll(".cc-vertical-group");
+  for (var i = 0; i < myElements.length; i++) {
+    myElements[i].style.top = '-80px';
+  }
+  var pressureArray = pressure.toString().split('.');
+  animateValue("cc-visibility", 0, visibility, 800);
+  animateValue("cc-humidity", 0, humidity, 1000);
+  animateValue("cc-dewpoint", 0, dewPoint, 1200);
+  animateValue("cc-pressure1", 0, pressureArray[0], 1400);
+  animateValue("cc-pressure2", 0, pressureArray[1], 1400);
 }
 
 function getPageLogoFileName(pageName){
@@ -543,7 +559,7 @@ function setClockTime(){
 
 /* Used to linearly animate a numeric value. In contex, the temperature and
    other current conditions at beginning are animated this way */
-function animateValue(id, start, end, duration, beforeText, afterText) {
+function animateValue(id, start, end, duration) {
   var range = end - start;
   var current = start;
   var increment = end > start? 1 : -1;
@@ -551,7 +567,7 @@ function animateValue(id, start, end, duration, beforeText, afterText) {
   var obj = document.getElementById(id);
   var timer = setInterval(function() {
       current += increment;
-      obj.innerHTML = beforeText + current + afterText;
+      obj.innerHTML = current;
       if (current == end) {
           clearInterval(timer);
       }
