@@ -238,7 +238,7 @@ img:after {
 
 #timeline-events-container{
   position: relative;
-  transition: left 1s;
+  transition: left 1s .2s;
   left: 0px;
 }
 
