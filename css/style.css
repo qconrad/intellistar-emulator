@@ -6,6 +6,21 @@ img:after {
   display: none;
 }
 
+.regular-text{
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+  font-family: akkoThin;
+  font-size: 62px;
+  color: white;
+}
+
+.strong-text{
+  font-family: akkoLight;
+  font-weight: bold;
+  font-size: 60px;
+  color:white;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+}
+
 #input_form{
   text-align: center;
 }
@@ -203,50 +218,50 @@ img:after {
   white-space: nowrap;
 }
 
+#timeline{
+  margin-left: 95px;
+  height: 100%;
+  overflow: hidden;
+}
+
 #timeline-container{
   height: 85px;
   width: 1235px;
   position: absolute;
   top: 930px;
   left: 150px;
-  display: inline-block;
 }
 
-#progressbar{
-  background-color: white;
-  width: 0%;
-  font-size: 10px;
+.progress-container{
+  height: 100%;
+  overflow: hidden;
+  float: left;
 }
 
-#progressbar.progress{
-  transition-property: width;
-  transition-timing-function: linear;
-  width: 100%;
+.progress-bar{
+  margin-top: 5px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+  background-color: rgba(255, 255, 255, 0.25);
+  width: 275px;
+  height: 100%;
+  float: left;
 }
 
-.strong-text{
-  font-family: akkoLight;
-  font-weight: bold;
-  font-size: 60px;
-  color:white;
-  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
-}
-
-#timeline-events{
-  font-size: 43px;
-}
-
-#timeline-events-container{
+.timeline-item{
   position: relative;
-  transition: left 1s .2s;
-  left: 0px;
+  font-size: 43px;
+  line-height: 70px;
+  width: 280px;
+  float: left;
 }
 
-.regular-text{
-  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-  font-family: akkoThin;
-  font-size: 62px;
-  color: white;
+#timeline-event-container{
+  height: 80%;
+  position: relative;
+  left: 0px;
+  overflow: hidden;
+  transition: left 1s .2s;
 }
 
 #background-image.below-screen{
@@ -647,10 +662,6 @@ img:after {
 .multiple-alert-text{
   font-size: 40px;
   padding: 20px;
-}
-
-#timeline{
-  margin-left: 95px;
 }
 
 #amazing-container{
