@@ -334,55 +334,20 @@
 
       <!-- Timeline -->
       <div id="timeline">
-        <!-- <table width="200%;" height="100%">
-          <tr>
-            <th>
-              <div style="overflow: hidden;">
-                <div id="timeline-events-container">
-                  <table>
-                    <tr id="timeline-events" class="regular-text"></tr>
-                  </table>
-                </div>
-              </div>
-            </th>
-          </tr>
-          <tr height="25%">
-            <th>
-              <table>
-                <tr>
-                  <td width="280px">
-                    <div style="background-color: rgba(255, 255, 255, 0.25);">
-                      <div id="progressbar">&nbsp;</div>
-                    </div>
-                  </td>
-                </tr>
-              </table>
-            </th>
-          </tr>
-        </table> -->
-        <div id="timeline-event-container">
-          <div class="regular-text timeline-item">Alert</div>
-          <div class="regular-text timeline-item">Now</div>
-          <div class="regular-text timeline-item">Tonight</div>
-          <div class="regular-text timeline-item">Beyond</div>
-        </div>
-        <div style="height: 20%;">
+        <div id="timeline-event-container"></div>
+        <div style="height: 15%;">
           <div class="progress-container" style="width: 280px;">
-            <!-- Left progress bar -->
-            <div class="progress-bar"></div>
+            <div class="timeline-bar">
+              <div id="progressbar"></div>
+            </div>
           </div>
           <div class="progress-container" style="width: 860px;">
-            <!-- Remaining progress bars -->
-            <div id="progress-stack" style="width: 100%; height: 100%; position: relative; left: 0px;">
-              <div class="progress-bar"></div>
-              <div class="progress-bar"></div>
-              <div class="progress-bar"></div>
-            </div>
+            <div id="progress-stack"></div>
           </div>
         </div>
         </div>
       </div>
-
+      
     </div>
   </div>
   <!-- Settings Prompt -->

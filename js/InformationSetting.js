@@ -5,12 +5,20 @@ function setGreetingPage(){
 }
 
 function setTimelineEvents(){
-  var row = getElement('timeline-events')
+  var eventContainer = getElement('timeline-event-container');
+  var progreessBarStack = getElement('progress-stack');
   for(var i = 0; i < pageOrder.length; i++){
-    var cell = row.insertCell(i);
-    cell.style.width = '280px';
-    cell.align = 'left';
-    cell.innerHTML = pageOrder[i].name;
+    var eventElement = document.createElement("div");
+    eventElement.innerHTML = pageOrder[i].name;
+    eventElement.classList.add("regular-text");
+    eventElement.classList.add("timeline-item");
+    eventContainer.appendChild(eventElement);
+
+    if(i != 0){
+      var progressElement = document.createElement("div");
+      progressElement.classList.add("timeline-bar");
+      progreessBarStack.appendChild(progressElement);
+    }
   }
 }
 

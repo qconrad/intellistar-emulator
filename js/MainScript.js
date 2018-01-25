@@ -216,10 +216,10 @@ function executePage(pageIndex, subPageIndex){
     for (var i = 0; i < subPageCount; i++) {
       pageTime += currentPage.subpages[i].duration;
     }
-      void getElement('progressbar').offsetWidth;
       getElement('progressbar').style.transitionDuration = pageTime + "ms";
       getElement('progressbar').classList.add('progress');
-      getElement('timeline-events-container').style.left = ((-280*pageIndex)-(pageIndex*3)).toString() + "px";
+      getElement('timeline-event-container').style.left = (-280*pageIndex).toString() + "px";
+      getElement('progress-stack').style.left = (-280*pageIndex).toString() + "px";
   }
 
   if(currentLogo != getPageLogoFileName(currentSubPageName)){
@@ -260,11 +260,12 @@ function clearPage(pageIndex, subPageIndex){
   var currentSubPageDuration = currentPage.subpages[subPageIndex].duration;
 
   var isNewPage = subPageCount-1 == subPageIndex;
-  if(isNewPage){
+  var isLastPage = pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1;
+
+  if(isNewPage && !isLastPage){
     resetProgressBar();
   }
 
-  var isLastPage = pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1;
   if(isLastPage){
     endSequence();
   }
@@ -277,6 +278,7 @@ function clearPage(pageIndex, subPageIndex){
 function resetProgressBar(){
   getElement('progressbar').style.transitionDuration = '0ms';
   getElement('progressbar').classList.remove('progress');
+  void getElement('progressbar').offsetWidth;
 }
 
 function hideCrawlContainer(){

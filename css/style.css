@@ -238,10 +238,28 @@ img:after {
   float: left;
 }
 
-.progress-bar{
-  margin-top: 5px;
+#progressbar{
+  background-color: white;
+  width: 0%;
+  height: 100%;
+  transition-property: width;
+  transition-timing-function: linear;
+}
+
+#progressbar.progress{
+  width: 100%;
+}
+
+#progress-stack{
+  width: 100%;
+  height: 100%;
+  position: relative;
+  left: 0px;
+  transition: left 1s .2s;
+}
+
+.timeline-bar{
   margin-right: 5px;
-  margin-bottom: 5px;
   background-color: rgba(255, 255, 255, 0.25);
   width: 275px;
   height: 100%;
@@ -257,7 +275,7 @@ img:after {
 }
 
 #timeline-event-container{
-  height: 80%;
+  height: 85%;
   position: relative;
   left: 0px;
   overflow: hidden;
