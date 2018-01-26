@@ -128,6 +128,16 @@ function guessPrecipitation(narrativeText, temperature){
   return precipValue + "% Chance</br>of " + precipType;
 }
 
+function revealTimeline(){
+  getElement('timeline-event-container').classList.add('shown');
+  getElement('progressbar-container').classList.add('shown');
+  getElement('logo-stack').classList.add('shown');
+  var timelineElements = document.querySelectorAll(".timeline-item");
+  for (var i = 0; i < timelineElements.length; i++) {
+    timelineElements[i].style.top = '0px';
+  }
+}
+
 /* Now that all the fetched information is stored in memory, display them in
 the appropriate elements */
 function setInformation(){
@@ -187,6 +197,7 @@ function clearGreetingPage(){
   setTimeout(startScrollingText, 3000);
   schedulePages();
   loadInfoBar();
+  revealTimeline();
 }
 
 // Set start and end times for every sub page.

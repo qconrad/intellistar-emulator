@@ -12,6 +12,7 @@ function setTimelineEvents(){
     eventElement.innerHTML = pageOrder[i].name;
     eventElement.classList.add("regular-text");
     eventElement.classList.add("timeline-item");
+    eventElement.style.transitionDelay = (i*200).toString() + "ms";
     eventContainer.appendChild(eventElement);
 
     if(i != 0){
