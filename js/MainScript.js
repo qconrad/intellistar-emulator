@@ -416,11 +416,15 @@ function setClockTime(){
 /* Used to linearly animate a numeric value. In contex, the temperature and
    other current conditions at beginning are animated this way */
 function animateValue(id, start, end, duration) {
+  var obj = getElement(id);
+  if(start == end){
+    obj.innerHTML = end;
+    return;
+  }
   var range = end - start;
   var current = start;
   var increment = end > start? 1 : -1;
   var stepTime = Math.abs(Math.floor(duration / range));
-  var obj = getElement(id);
   var timer = setInterval(function() {
       current += increment;
       obj.innerHTML = current;
