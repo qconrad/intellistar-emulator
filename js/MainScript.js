@@ -253,7 +253,7 @@ function executePage(pageIndex, subPageIndex){
   else if(currentSubPageName == "current-page"){
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
-    animateValue('cc-temperature-text', -20, currentTemperature, 2500);
+    animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
   }
   else if(currentSubPageName == 'radar-page'){
     startRadar();
@@ -318,11 +318,11 @@ function scrollCC(){
   }
   // Split decimal into 2 objects so that we can animate them individually.
   var pressureArray = pressure.toString().split('.');
-  animateValue("cc-visibility", 0, visibility, 800);
-  animateValue("cc-humidity", 0, humidity, 1000);
-  animateValue("cc-dewpoint", 0, dewPoint, 1200);
-  animateValue("cc-pressure1", 0, pressureArray[0], 1400);
-  animateValue("cc-pressure2", 0, pressureArray[1], 1400);
+  animateValue("cc-visibility", 0, visibility, 800, 1);
+  animateValue("cc-humidity", 0, humidity, 1000, 1);
+  animateValue("cc-dewpoint", 0, dewPoint, 1200, 1);
+  animateValue("cc-pressure1", 0, pressureArray[0], 1400, 2);
+  animateValue("cc-pressure2", 0, pressureArray[1], 1400, 1);
 }
 
 // Called at end of sequence. Animates everything out and shows ending text
@@ -415,7 +415,7 @@ function setClockTime(){
 
 /* Used to linearly animate a numeric value. In contex, the temperature and
    other current conditions at beginning are animated this way */
-function animateValue(id, start, end, duration) {
+function animateValue(id, start, end, duration, pad) {
   var obj = getElement(id);
   if(start == end){
     obj.innerHTML = end;
@@ -427,11 +427,17 @@ function animateValue(id, start, end, duration) {
   var stepTime = Math.abs(Math.floor(duration / range));
   var timer = setInterval(function() {
       current += increment;
-      obj.innerHTML = current;
+      obj.innerHTML = current.pad(pad);
       if (current == end) {
           clearInterval(timer);
       }
   }, stepTime);
+}
+
+Number.prototype.pad = function(size) {
+    var s = String(this);
+    while (s.length < (size || 2)) {s = "0" + s;}
+    return s;
 }
 
 const baseSize = {
