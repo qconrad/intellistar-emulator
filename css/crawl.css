@@ -1,0 +1,32 @@
+#crawl-text{
+  opacity: 0;
+  line-height: 50px;
+  vertical-align: middle;
+  transition: opacity 0.1s;
+  transition-delay: 5ms;
+  white-space: nowrap;
+}
+
+#crawler-container{
+  visibility: hidden;
+  height: 50px;
+  width: 1px;
+  position: absolute;
+  top: 820px;
+  left: 150px;
+  overflow: hidden;
+  transition: width 0.8s, visibility 0s;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#crawler-container.shown{
+  width: 1235px;
+  transition-delay: 2s;
+  visibility: visible;
+}
+
+#crawler-container.hidden{
+  visibility: visible;
+  transition-delay: 3s;
+  width: 0px;
+}

@@ -1,0 +1,26 @@
+.page-title-bar{
+  padding-left: 28px;
+  font-size: 50px;
+  height: 65px;
+  line-height: 65px;
+  vertical-align: middle;
+}
+
+.page-container{
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  transition: left 0.7s, top 0.7s;
+}
+
+.regular-page-container{
+  left: 101%;
+}
+
+.page-content-container{
+  height: 525px;
+}
+
+.shaded-page-content{
+  background-color: rgba(0, 0, 0, 0.25);
+}

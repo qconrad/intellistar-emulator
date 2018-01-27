@@ -1,0 +1,65 @@
+#current-page{
+  left: 100%;
+  top: 100%;
+}
+
+#ccicon{
+  width: 200px;
+  height: 200px;
+  position: relative;
+  left: 10px;
+  top: 10px;
+}
+
+#cc-container{
+  float: right;
+  width: 680px;
+  height: 320px;
+  top: 100px;
+  position: relative;
+}
+
+/* #cc-dial{
+  width: 450px;
+  height: 450px;
+  left: 50px;
+  top: 15px;
+  position: relative;
+} */
+
+.cc-line-container{
+  height: 80px;
+  overflow:hidden;
+}
+
+.cc-vertical-group{
+  height: 160px;
+  position: relative;
+  top: 80px;
+  transition: top .6s linear;
+}
+
+.cc-horizontal-group{
+  display: flex;
+}
+
+.cc-text{
+  line-height: 80px;
+  font-size: 60px;
+}
+
+.cc-left{
+  width: 300px;
+}
+
+.cc-line2{
+  transition-delay: 200ms;
+}
+
+.cc-line3{
+  transition-delay: 400ms;
+}
+
+.cc-line4{
+  transition-delay: 600ms;
+}

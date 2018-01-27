@@ -321,8 +321,8 @@ function scrollCC(){
   animateValue("cc-visibility", 0, visibility, 800, 1);
   animateValue("cc-humidity", 0, humidity, 1000, 1);
   animateValue("cc-dewpoint", 0, dewPoint, 1200, 1);
-  animateValue("cc-pressure1", 0, pressureArray[0], 1400, 2);
-  animateValue("cc-pressure2", 0, pressureArray[1], 1400, 1);
+  animateValue("cc-pressure1", 0, pressureArray[0], 1400, 1);
+  animateValue("cc-pressure2", 0, pressureArray[1], 1400, 2);
 }
 
 // Called at end of sequence. Animates everything out and shows ending text

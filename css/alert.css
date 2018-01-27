@@ -1,0 +1,19 @@
+.alert-title-bar{
+  background-color: #ae1d0b;
+}
+
+.alert-container{
+  width: 100%;
+  height: 33%;
+  border-bottom: 3px solid rgba(255, 255, 255, 0.75);
+}
+
+.alert-page-container{
+  top: 101%;
+  left: 0px;
+}
+
+.multiple-alert-text{
+  font-size: 40px;
+  padding: 20px;
+}

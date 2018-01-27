@@ -1,0 +1,9 @@
+.broken-radar-text{
+  background-color: rgba(0, 0, 0, .75);
+  position: absolute;
+  width: 100%;
+  height: 75px;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}

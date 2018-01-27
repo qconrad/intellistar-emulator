@@ -1,0 +1,24 @@
+@font-face {
+  font-family: akkoThin;
+  src: url(../fonts/akkopro-thin.otf);
+}
+
+@font-face {
+  font-family: akkoLight;
+  src: url(../fonts/akkopro-light.ttf);
+}
+
+.regular-text{
+  text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
+  font-family: akkoThin;
+  font-size: 62px;
+  color: white;
+}
+
+.strong-text{
+  font-family: akkoLight;
+  font-weight: bold;
+  font-size: 60px;
+  color:white;
+  text-shadow: 5px 5px 5px rgba(0, 0, 0, 0.25);
+}
