@@ -153,6 +153,12 @@ function setInformation(){
   startAnimation();
 }
 
+function checkStormMusic(){
+  if(condition.includes("storm")){
+    music= new Audio("assets/music/storm.wav");
+  }
+}
+
 function startAnimation(){
   hideSettings();
   setInitialPositionCurrentPage();
