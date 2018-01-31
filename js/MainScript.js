@@ -144,6 +144,7 @@ function setInformation(){
   setRadarImages();
   setGreetingPage();
   setMainBackground();
+  checkStormMusic();
   setAlertPage();
   setForecast();
   setOutlook();
