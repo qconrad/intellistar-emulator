@@ -171,7 +171,7 @@ function getPageLogoFileName(subPageName){
       return "8logo.svg";
     break;
 
-    case "multiple-alert-page":
+    case "multiple-alerts-page":
       return "8logo.svg";
     break;
 
