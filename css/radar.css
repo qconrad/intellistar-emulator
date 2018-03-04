@@ -7,3 +7,46 @@
   transform: translateY(-50%);
   text-align: center;
 }
+
+.key{
+  display: inline-block;
+  float: right;
+  height: 100%;
+}
+
+.key-item{
+  margin-left: 10px;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
+.key-item-rain{
+  width: 160px;
+}
+
+.key-item-mix{
+  width: 115px;
+}
+
+.key-item-snow{
+  width: 125px;
+}
+
+.key-color-group{
+  width: 100%;
+  height: 30%;
+  display: table;
+}
+
+.key-color{
+  display: table-cell;
+}
+
+.key-label{
+  width: 100%;
+  height: 70%;
+  font-size: 30px;
+  line-height: 30px;
+  margin-top: 10px;
+  margin-left: 2px;
+}
