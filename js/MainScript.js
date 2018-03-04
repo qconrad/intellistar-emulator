@@ -155,7 +155,7 @@ function setInformation(){
 }
 
 function checkStormMusic(){
-  if(condition.includes("storm")){
+  if(currentCondition.includes("storm")){
     music= new Audio("assets/music/storm.wav");
   }
 }
