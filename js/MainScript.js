@@ -5,6 +5,7 @@ const SINGLE = [{name: "Alert", subpages: [{name: "single-alert-page", duration:
 const MULTIPLE = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", duration: 7000}]},{name: "Now", subpages: [{name: "current-page", duration: 8000}, {name: "radar-page", duration: 8000}, {name: "zoomed-radar-page", duration: 8000}]},{name: "Tonight", subpages: [{name: "tonight-page", duration: 8000}]},{name: "Beyond", subpages: [{name: "tomorrow-page", duration: 8000}, {name: "7day-page", duration: 13000}]},]
 const WEEKDAY = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 const jingle = new Audio("assets/music/jingle.wav")
+const crawlSpeed = 150;
 var currentLogo;
 var currentLogoIndex = 0;
 ﻿var zipCode;
@@ -199,12 +200,10 @@ function clearGreetingPage(){
   getElement("hello-location-container").classList.add("hidden");
   getElement("local-logo-container").classList.add("hidden");
 
-  // Show crawl container
-  getElement('crawler-container').classList.add("shown");
-  setTimeout(startScrollingText, 3000);
   schedulePages();
   loadInfoBar();
   revealTimeline();
+  setTimeout(showCrawl, 3000);
 }
 
 // Set start and end times for every sub page.
@@ -256,7 +255,7 @@ function executePage(pageIndex, subPageIndex){
 
   var isLastPage = pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1;
   if(isLastPage)
-      hideCrawlContainer();
+    setTimeout(hideCrawl, 2000);
 
 
   if(currentSubPageName == "current-page"){
@@ -304,10 +303,6 @@ function resetProgressBar(){
   getElement('progressbar').style.transitionDuration = '0ms';
   getElement('progressbar').classList.remove('progress');
   void getElement('progressbar').offsetWidth;
-}
-
-function hideCrawlContainer(){
-  getElement('crawler-container').classList.add("hidden");
 }
 
 function startRadar(){
@@ -391,12 +386,6 @@ function clearEnd(){
   getElement('content-container').classList.add("above-screen");
 }
 
-function startScrollingText(){
-  getElement('crawl-text').start();
-  getElement("crawl-text").innerHTML = crawlText.toUpperCase();
-  getElement('crawl-text').style.opacity = "1";
-}
-
 function loadInfoBar(){
   getElement("infobar-local-logo").classList.add("shown");
   getElement("infobar-location-container").classList.add("shown");
@@ -477,4 +466,25 @@ function resizeWindow(){
 
 function getElement(id){
   return document.getElementById(id);
+}
+
+function showCrawl(){
+  getElement('crawler-container').classList.add("shown");
+  setTimeout(startCrawl, 1000); // wait for it to fully animate out before starting
+}
+
+function hideCrawl(){
+  getElement('crawler-container').classList.add("hidden");
+}
+
+function startCrawl(){
+  calculateCrawlSpeed();
+  getElement('crawl-text').classList.add('animate');
+}
+
+function calculateCrawlSpeed() {
+  var crawlTextElement = getElement('crawl-text');
+  var elementLength = crawlTextElement.offsetWidth;
+  var timeTaken = elementLength / crawlSpeed;
+  crawlTextElement.style.animationDuration = timeTaken + "s";
 }
