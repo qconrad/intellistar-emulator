@@ -23,6 +23,10 @@
   float: left;
 }
 
+#infobar-time-container{
+  background-color: rgba(0, 0, 0, 0.25);
+}
+
 .infobar-item-container{
   position: relative;
   top: 100%;
@@ -35,8 +39,7 @@
 .infobar-text{
   line-height: 95px;
   vertical-align: middle;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin: auto 25px;
 }
 
 #infobar-twc-logo.shown{
