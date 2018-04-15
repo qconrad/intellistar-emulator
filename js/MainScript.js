@@ -53,11 +53,12 @@ function preLoadMusic(){
 alerts are present */
 function scheduleTimeline(){
   var currentTime = new Date();
+  var isDay = currentTime.getHours() > 4 && currentTime.getHours() < 14
   if(alerts.length == 1){
     pageOrder = SINGLE;
   }else if(alerts.length > 1){
     pageOrder = MULTIPLE;
-  }else if(currentTime.getHours() > 4 && currentTime.getHours() < 14){
+  }else if(isDay){
     pageOrder = MORNING;
   }else{
     pageOrder = NIGHT;
