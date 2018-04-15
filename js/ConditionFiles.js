@@ -372,13 +372,13 @@ var conditionFile = {
     return "CLEARsky";
   },
   "Partly Cloudy": function() {
-    return "PARTLYCLOUDYsky";
+    return "PARTCLOUDYsky";
   },
   "Mostly Cloudy": function() {
-    return "MOSTLYCLOUDYsky";
+    return "MOSTCLOUDYsky";
   },
   "Scattered Clouds": function() {
-    return "PARTLYCLOUDYsky";
+    return "PARTCLOUDYsky";
   },
   "Small Hail": function() {
     return "TSTORMstrng";
