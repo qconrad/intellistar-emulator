@@ -29,7 +29,7 @@ var outlookHigh = [];
 var outlookLow = [];
 var outlookCondition = [];
 var outlookIcon = [];
-var crawlText = "Thanks for trying this emulator. It's a work in progress, so it's not perfect. If you have any contributions to the code or you have assets, I encourge you to submit a pull request on github. And finally, if you enjoyed this, please star the repository on github and share with others so other people can find this.";
+var crawlText = "Thanks to all the contributors of this project. While it's not completely finished, the community effort has made this possible. Stars, contributions, and feedback are welcome and appreciated. Thanks for trying out this emulator.";
 var pageOrder;
 var radarImage;
 var zoomedRadarImage;
@@ -45,7 +45,7 @@ window.onload = function() {
 
 function preLoadMusic(){
   var index = Math.floor(Math.random() * 12) + 1;
-  music= new Audio("assets/music/" + index + ".wav");
+  music = new Audio("assets/music/" + index + ".wav");
 }
 
 /* Set the timeline page order depending on time of day and if
@@ -257,16 +257,23 @@ function executePage(pageIndex, subPageIndex){
   var isLastPage = pageIndex >= pageOrder.length-1 && subPageIndex >= pageOrder[pageOrder.length-1].subpages.length-1;
   if(isLastPage)
       hideCrawlContainer();
-  else if(currentSubPageName == "current-page"){
+
+
+  if(currentSubPageName == "current-page"){
+    setTimeout(playCurrentConditionsNarration, 2500);
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
   }
   else if(currentSubPageName == 'radar-page'){
     startRadar();
+    setTimeout(playRadarNarration, 1000);
   }
   else if(currentSubPageName == 'zoomed-radar-page'){
     startZoomedRadar();
+  }
+  else if(currentSubPageName == "7day-page"){
+    setTimeout(playOutlookNarration, 1000);
   }
 }
 

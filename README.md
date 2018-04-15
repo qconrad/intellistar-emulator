@@ -12,7 +12,7 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 5. Press F11 for fullscreen
 
 ## Features
-Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map. Some things are still missing such as most icons and the narrations.
+Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map.
 
 ## Background Blur
 The background blur will not work by default. It is a feature that is disabled in chrome by default due to poor performance. To enable, go to chrome://flags and enable  *Experimental Web Platform features*.
