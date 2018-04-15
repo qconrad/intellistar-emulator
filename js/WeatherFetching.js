@@ -23,28 +23,13 @@ function fetchAlerts(){
       for(var i = 0; i < data.alerts.length; i++){
         /* Take the most important alert message and set it as crawl text
            This will supply more information i.e. tornado warning coverage */
-        crawlText = data.alerts[0].message;
+        crawlText = data.alerts[0].message.replace("...", "");
 
         // ignore special weather statements
         if(data.alerts[i].type == "SPE"){
           continue;
         }
-        var now = new Date()/ 1000;
-        var alertName = data.alerts[i].description.toUpperCase();
-        var expire = data.alerts[i].expires.split(" on ");
-        var issue = data.alerts[i].date.split(" on ");
-        var issueTime = issue[0].toUpperCase();
-        var issueDate = WEEKDAY[new Date(issue[1]).getDay()].toUpperCase();
-        var expireTime = expire[0].toUpperCase();
-        var expireDate = WEEKDAY[new Date(expire[1]).getDay()].toUpperCase();
-        if(data.alerts[i].date_epoch > now){
-          // in future
-          alerts[i] = alertName + " FROM " + issueTime + " " + issueDate + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
-        }
-        else{
-          // already issued
-          alerts[i] = alertName + " UNTIL " + expireTime + " " + expireDate; //FINAL DESCRIPTION
-        }
+        alerts[i] = data.alerts[0].message.replace("...", "").split("...", 1)[0].split("*", 1)[0].replace(/\n/g, " ").replace("...", "").toUpperCase();
       }
       fetchForecast();
     });
