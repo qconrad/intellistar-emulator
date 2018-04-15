@@ -13,6 +13,7 @@ function guessZipCode(){
 }
 
 function fetchAlerts(){
+  var alertCrawl = "";
   fetch('http://api.wunderground.com/api/' + APIKEY + '/alerts/q/' + zipCode + '.json')
   .then(function(response) {
     if (response.status !== 200) {
@@ -23,13 +24,16 @@ function fetchAlerts(){
       for(var i = 0; i < data.alerts.length; i++){
         /* Take the most important alert message and set it as crawl text
            This will supply more information i.e. tornado warning coverage */
-        crawlText = data.alerts[0].message.replace("...", "");
+        alertCrawl = alertCrawl + " " + data.alerts[i].message.replace("...", "");
 
         // ignore special weather statements
         if(data.alerts[i].type == "SPE"){
           continue;
         }
         alerts[i] = data.alerts[i].message.replace("...", "").split("...", 1)[0].split("*", 1)[0].split("for", 1)[0].replace(/\n/g, " ").replace("...", "").toUpperCase();
+      }
+      if(alertCrawl != ""){
+        crawlText = alertCrawl;
       }
       fetchForecast();
     });
