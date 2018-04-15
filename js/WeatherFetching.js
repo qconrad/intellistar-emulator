@@ -29,7 +29,7 @@ function fetchAlerts(){
         if(data.alerts[i].type == "SPE"){
           continue;
         }
-        alerts[i] = data.alerts[0].message.replace("...", "").split("...", 1)[0].split("*", 1)[0].replace(/\n/g, " ").replace("...", "").toUpperCase();
+        alerts[i] = data.alerts[i].message.replace("...", "").split("...", 1)[0].split("*", 1)[0].split("for", 1)[0].replace(/\n/g, " ").replace("...", "").toUpperCase();
       }
       fetchForecast();
     });
