@@ -24,22 +24,6 @@ function setTimelineEvents(){
   }
 }
 
-function setRadarImages(){
-  radarImage = new Image();
-  radarImage.onerror = function () {
-    getElement('radar-container').style.display = 'none';
-  }
-  radarImage.src = 'https://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
-
-  if(pageOrder == SINGLE || pageOrder == MULTIPLE){
-    zoomedRadarImage = new Image();
-    zoomedRadarImage.onerror = function () {
-      getElement('zoomed-radar-container').style.display = 'none';
-    }
-    zoomedRadarImage.src = 'https://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
-  }
-}
-
 function setCurrentConditions(){
   getElement('cc-condition').innerHTML = currentCondition;
   getElement('cc-wind').innerHTML = windSpeed;

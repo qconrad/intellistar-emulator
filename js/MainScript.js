@@ -33,6 +33,7 @@ var outlookIcon = [];
 var crawlText = "Thanks to all the contributors of this project. While it's not completely finished, the community effort has made this possible. Stars, contributions, and feedback are welcome and appreciated. Thanks for trying out this emulator.";
 var pageOrder;
 var radarImage;
+var alertsActive;
 var zoomedRadarImage;
 var alerts = [];
 var music;
@@ -143,7 +144,6 @@ function revealTimeline(){
 /* Now that all the fetched information is stored in memory, display them in
 the appropriate elements */
 function setInformation(){
-  setRadarImages();
   setGreetingPage();
   setMainBackground();
   checkStormMusic();
@@ -360,7 +360,6 @@ function clearElements(){
 }
 
 function showEnding(){
-  var alertsActive = alerts.length >= 1;
   if(alertsActive){
     stayUpdated();
   }
