@@ -31,7 +31,6 @@ var outlookHigh = [];
 var outlookLow = [];
 var outlookCondition = [];
 var outlookIcon = [];
-var crawlText = "Thanks to all the contributors of this project. While it's not completely finished, the community effort has made this possible. Stars, contributions, and feedback are welcome and appreciated. Thanks for trying out this emulator.";
 var pageOrder;
 var radarImage;
 var alertsActive;
@@ -40,6 +39,9 @@ var alerts = [];
 var music;
 
 window.onload = function() {
+  CONFIG.addOption('zip-code', 'ZIP Code')
+  CONFIG.addOption('crawlText', 'Crawl Text')
+  CONFIG.load();
   preLoadMusic();
   resizeWindow();
   setClockTime();
@@ -66,24 +68,6 @@ function scheduleTimeline(){
     pageOrder = NIGHT;
   }
   setInformation();
-}
-
-/* Check if zip code is accurate by doing a regex pass and then
-confirming with api request */
-function checkZipCode(){
-  var isValidZip = false;
-    var input = getElement('zip-code-text').value;
-    if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(input)){
-      isValidZip = true;
-      zipCode = input;
-    }
-    else{
-      alert("Enter valid ZIP code");
-      return;
-    }
-    // Animate settings prompt out
-    getElement('settings-prompt').style.top = '-100%';
-    fetchCurrentWeather();
 }
 
 /* Because this particular API doesn't seem to have day by day precipitation,

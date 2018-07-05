@@ -44,7 +44,7 @@ function fetchAlerts(){
         alerts[i] = data.alerts[i].message.replace("...", "").split("...", 1)[0].split("*", 1)[0].split("for", 1)[0].replace(/\n/g, " ").replace("...", "").toUpperCase();
       }
       if(alertCrawl != ""){
-        crawlText = alertCrawl;
+        CONFIG.crawl = alertCrawl;
       }
       alertsActive = alerts.length > 0;
       fetchForecast();

@@ -8,6 +8,59 @@ window.CONFIG = {
   secrets: {
     wundergroundAPIKey: 'd8585d80376a429e',
     twcAPIKey: 'd522aa97197fd864d36b418f39ebb323'
+  },
+
+  // Config Functions (index.html settings manager)
+  options: [],
+  addOption: (id, name) => {
+    CONFIG.options.push({
+      id,
+      name
+    })
+  },
+  submit: (btn, e) => {
+    let args = {}
+    CONFIG.options.forEach((opt) => {
+      args[opt.id] = getElement(`${opt.id}-text`).value
+    })
+    CONFIG.crawl = args.crawlText == '' ? CONFIG.crawl : args.crawlText
+    if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
+      zipCode = args['zip-code'];
+    } else {
+      alert("Enter valid ZIP code");
+      return;
+    }
+    // Animate settings prompt out
+    getElement('settings-prompt').style.top = '-100%';
+    fetchCurrentWeather();
+  },
+  load: () => {
+    let settingsPrompt = document.getElementById('settings-prompt')
+    CONFIG.options.forEach((option) => {
+      //<div class="regular-text settings-item settings-text">Zip Code</div>
+      let label = document.createElement('div')
+      label.classList.add('regular-text', 'settings-item', 'settings-text')
+      label.appendChild(document.createTextNode(option.name))
+      label.id = `${option.id}-label`
+      //<input class="settings-item settings-text" type="text" id="zip-code-text">
+      let textbox = document.createElement('input')
+      textbox.classList.add('settings-item', 'settings-text')
+      textbox.type = 'text'
+      textbox.id = `${option.id}-text`
+      //<br>
+      let br = document.createElement('br')
+      settingsPrompt.appendChild(label)
+      settingsPrompt.appendChild(textbox)
+      settingsPrompt.appendChild(br)
+    })
+    //<button class="setting-item settings-text" id="submit-button" onclick="checkZipCode();" style="margin-bottom: 10px;">Start</button>-->
+    let btn = document.createElement('button')
+    btn.classList.add('setting-item', 'settings-text')
+    btn.id = 'submit-button'
+    btn.onclick = CONFIG.submit
+    btn.style = 'margin-bottom: 10px;'
+    btn.appendChild(document.createTextNode('Start'))
+    settingsPrompt.appendChild(btn)
   }
 }
 
