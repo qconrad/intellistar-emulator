@@ -8,6 +8,8 @@ const crawlSpeed = 150;
 var currentLogo;
 var currentLogoIndex = 0;
 var zipCode;
+var longitude;
+var latitude;
 var cityName;
 var currentTemperature;
 var greetingText = "This is your weather.";
