@@ -23,13 +23,16 @@ window.CONFIG = {
     CONFIG.options.forEach((opt) => {
       args[opt.id] = getElement(`${opt.id}-text`).value
     })
-    CONFIG.crawl = args.crawlText == '' ? CONFIG.crawl : args.crawlText
+    if (args.crawlText !== '') CONFIG.crawl = args.crawlText
+    if (args.language !== '') CONFIG.language = args.language
+    if (args.units !== '') CONFIG.units = args.units
     if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
       zipCode = args['zip-code'];
     } else {
       alert("Enter valid ZIP code");
       return;
     }
+    CONFIG.unitField = CONFIG.units === 'm' ? 'metric' : (CONFIG.units === 'h' ? 'uk_hybrid' : 'imperial')
     // Animate settings prompt out
     getElement('settings-prompt').style.top = '-100%';
     fetchCurrentWeather();

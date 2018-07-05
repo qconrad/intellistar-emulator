@@ -41,7 +41,11 @@ var music;
 window.onload = function() {
   CONFIG.addOption('zip-code', 'ZIP Code')
   CONFIG.addOption('crawlText', 'Crawl Text')
+  CONFIG.addOption('language', 'Language')
+  CONFIG.addOption('units', 'Units')
   CONFIG.load();
+  getElement('language-text').value = CONFIG.language
+  getElement('units-text').value = CONFIG.units
   preLoadMusic();
   resizeWindow();
   setClockTime();
