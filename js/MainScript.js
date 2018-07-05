@@ -253,6 +253,7 @@ function executePage(pageIndex, subPageIndex){
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
+    animateDialFill('cc-dial-color', 0, 1000, 15);
   }
   else if(currentSubPageName == 'radar-page'){
     startRadar();
@@ -425,7 +426,56 @@ function animateValue(id, start, end, duration, pad) {
       }
   }, stepTime);
 }
-
+function animateDialFill(id, start, end, duration) {
+  var obj = getElement(id);
+  var range = end - start;
+  var current = start;
+  var increment = end > start? 1 : -1;
+  var stepTime = Math.abs(Math.floor(duration / range));
+  var r = 100
+  var g = 100
+  var b = 225
+  
+  // 1 = blue
+  // 2 = orange
+  // 3 = orange2
+  // 4 = red
+  var incType = 1;
+  var f = `rgb(${r}, ${g}, ${b})`
+  var timer = setInterval(function() {
+      //current += increment;
+      if (incType == 1) {
+        b += increment;
+        r -= increment;
+        g -= increment;
+        if (r == 0) {
+          incType = 2
+        }
+      } else if (incType == 2) {
+        r += increment;
+        g += increment;
+        b -= increment;
+        if (g == 180) {
+          incType = 3;
+        }
+      } else if (incType == 3) {
+        r += increment;
+        g -= increment * 0.8;
+        if (g < 85) {
+          incType = 4;
+        }
+      } else {
+        r += increment;
+        g -= increment;
+        b -= increment;
+      }
+      f = `rgb(${r}, ${g}, ${b})`
+      obj.style.fill = f;
+      if (current == end) {
+          clearInterval(timer);
+      }
+  }, stepTime);
+}
 Number.prototype.pad = function(size) {
     var s = String(this);
     while (s.length < (size || 2)) {s = "0" + s;}
