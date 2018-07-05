@@ -101,31 +101,32 @@ function fetchCurrentWeather(){
           getZipCodeFromUser(); 
           return; 
         }
-      })
-      fetch(`https://api.weather.com/v1/geocode/${latitude}/${longitude}/observations/current.json?language=${CONFIG.language}&units=${CONFIG.units}&apiKey=${CONFIG.secrets.twcAPIKey}`)
-      .then(function(response) {
-        if (response.status !== 200) {
-          console.log("conditions request error");
-          return;
-        }
-        response.json().then(function(data) {
-          // cityName is set in the above fetch call and not this one
-          let unit = data.observation[CONFIG.unitField];
-          currentTemperature = Math.round(unit.temp);
-          currentCondition = data.observation.phrase_32char;
-          windSpeed = `${data.observation.wdir_cardinal} ${unit.wspd} ${CONFIG.unit === 'm' ? 'km/h' : 'mph'}`;
-          gusts = unit.gust || 'NONE';
-          feelsLike = unit.feels_like
-          visibility = Math.round(unit.vis)
-          humidity = unit.rh
-          dewPoint = unit.dewpt
-          pressure = unit.altimeter
-          let ptendCode = data.observation.ptend_code
-          pressureTrend = (ptendCode == 1 || ptendCode == 3) ? '▲' : ptendCode == 0 ? '' : '▼'; // if ptendCode == 1 or 3 (rising/rising rapidly) up arrow else its steady then nothing else (falling (rapidly)) down arrow
-          currentIcon = data.observation.icon_code
-          fetchAlerts();
+        fetch(`https://api.weather.com/v1/geocode/${latitude}/${longitude}/observations/current.json?language=${CONFIG.language}&units=${CONFIG.units}&apiKey=${CONFIG.secrets.twcAPIKey}`)
+        .then(function(response) {
+          if (response.status !== 200) {
+            console.log("conditions request error");
+            return;
+          }
+          response.json().then(function(data) {
+            // cityName is set in the above fetch call and not this one
+            let unit = data.observation[CONFIG.unitField];
+            currentTemperature = Math.round(unit.temp);
+            currentCondition = data.observation.phrase_32char;
+            windSpeed = `${data.observation.wdir_cardinal} ${unit.wspd} ${CONFIG.unit === 'm' ? 'km/h' : 'mph'}`;
+            gusts = unit.gust || 'NONE';
+            feelsLike = unit.feels_like
+            visibility = Math.round(unit.vis)
+            humidity = unit.rh
+            dewPoint = unit.dewpt
+            pressure = unit.altimeter
+            let ptendCode = data.observation.ptend_code
+            pressureTrend = (ptendCode == 1 || ptendCode == 3) ? '▲' : ptendCode == 0 ? '' : '▼'; // if ptendCode == 1 or 3 (rising/rising rapidly) up arrow else its steady then nothing else (falling (rapidly)) down arrow
+            currentIcon = data.observation.icon_code
+            fetchAlerts();
+          });
         });
-      });
+      })
+      
     });
   } else {
     fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/conditions/q/${zipCode}.json`)
