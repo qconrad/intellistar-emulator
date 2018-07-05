@@ -80,7 +80,7 @@ function fetchForecast(){
           let fc = forecasts[i]
           outlookHigh[i] = fc.max_temp
           outlookLow[i] = fc.min_temp
-          outlookCondition[i] = (fc.day ? fc.day : fc.night).phrase_12char.split(' ').join('<br/>')
+          outlookCondition[i] = (fc.day ? fc.day : fc.night).phrase_32char.split(' ').join('<br/>')
           outlookIcon[i] = (fc.day ? fc.day : fc.night).icon_code
         }
         fetchRadarImages();
