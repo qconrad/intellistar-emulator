@@ -1,5 +1,5 @@
 function guessZipCode(){
-  fetch('https://api.wunderground.com/api/' + APIKEY + '/geolookup/q/autoip.json')
+  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/geolookup/q/autoip.json`)
   .then(function(response) {
     //check for error
     if (response.status !== 200) {
@@ -14,7 +14,7 @@ function guessZipCode(){
 
 function fetchAlerts(){
   var alertCrawl = "";
-  fetch('https://api.wunderground.com/api/' + APIKEY + '/alerts/q/' + zipCode + '.json')
+  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/alerts/q/${zipCode}.json`)
   .then(function(response) {
     if (response.status !== 200) {
       console.log("forecast request error");
@@ -42,7 +42,7 @@ function fetchAlerts(){
 }
 
 function fetchForecast(){
-  fetch('https://api.wunderground.com/api/' + APIKEY + '/forecast10day/q/' + zipCode + '.json')
+  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/forecast10day/q/${zipCode}.json`)
   .then(function(response) {
     if (response.status !== 200) {
       console.log("forecast request error");
@@ -73,7 +73,7 @@ function fetchForecast(){
 }
 
 function fetchCurrentWeather(){
-  fetch('https://api.wunderground.com/api/' + APIKEY + '/conditions/q/' + zipCode + '.json')
+  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/conditions/q/${zipCode}.json`)
   .then(function(response) {
     if (response.status !== 200) {
       console.log("conditions request error");
@@ -115,14 +115,14 @@ function fetchRadarImages(){
   radarImage.onerror = function () {
     getElement('radar-container').style.display = 'none';
   }
-  radarImage.src = 'https://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+  radarImage.src = `https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/animatedradar/q/MI/${zipCode}.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1`;
 
   if(alertsActive){
     zoomedRadarImage = new Image();
     zoomedRadarImage.onerror = function () {
       getElement('zoomed-radar-container').style.display = 'none';
     }
-    zoomedRadarImage.src = 'https://api.wunderground.com/api/' + APIKEY + '/animatedradar/q/MI/'+ zipCode + '.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1';
+    zoomedRadarImage.src = `https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/animatedradar/q/MI/${zipCode}.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=50&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1`;
   }
 
   scheduleTimeline();
