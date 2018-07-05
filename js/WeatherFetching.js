@@ -77,11 +77,12 @@ function fetchForecast(){
         }
         // 7 day outlook
         for (var i = 0; i < 7; i++) {
-          let fc = forecasts[i]
+          let fc = forecasts[i+1]
           outlookHigh[i] = fc.max_temp
           outlookLow[i] = fc.min_temp
           outlookCondition[i] = (fc.day ? fc.day : fc.night).phrase_32char.split(' ').join('<br/>')
-          
+          // thunderstorm doesn't fit in the 7 day outlook boxes
+          // so I multilined it similar to that of the original
           outlookCondition[i] = outlookCondition[i].replace("Thunderstorm", "Thunder</br>storm");
           outlookIcon[i] = (fc.day ? fc.day : fc.night).icon_code
         }

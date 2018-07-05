@@ -249,7 +249,6 @@ function executePage(pageIndex, subPageIndex){
 
 
   if(currentSubPageName == "current-page"){
-    setTimeout(playCurrentConditionsNarration, 2500);
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
@@ -257,13 +256,11 @@ function executePage(pageIndex, subPageIndex){
   }
   else if(currentSubPageName == 'radar-page'){
     startRadar();
-    setTimeout(playRadarNarration, 1000);
   }
   else if(currentSubPageName == 'zoomed-radar-page'){
     startZoomedRadar();
   }
   else if(currentSubPageName == "7day-page"){
-    setTimeout(playOutlookNarration, 1000);
   }
 }
 
@@ -435,7 +432,7 @@ function animateDialFill(id, start, end, duration) {
   var r = 100
   var g = 100
   var b = 225
-  
+
   // 1 = blue
   // 2 = orange
   // 3 = orange2
