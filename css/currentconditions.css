@@ -4,11 +4,11 @@
 }
 
 #ccicon{
-  width: 200px;
+  /*width: 200px;
   height: 200px;
   position: relative;
   left: 10px;
-  top: 10px;
+  top: 10px;*/
 }
 
 #cc-container{
@@ -19,13 +19,13 @@
   position: relative;
 }
 
-/* #cc-dial{
+#cc-dial{
   width: 450px;
   height: 450px;
   left: 50px;
   top: 15px;
   position: relative;
-} */
+}
 
 .cc-line-container{
   height: 80px;
