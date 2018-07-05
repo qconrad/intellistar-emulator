@@ -53,34 +53,69 @@ function fetchAlerts(){
 }
 
 function fetchForecast(){
-  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/forecast10day/q/${zipCode}.json`)
-  .then(function(response) {
-    if (response.status !== 200) {
-      console.log("forecast request error");
-      return;
-    }
-    response.json().then(function(data) {
-      // 7 day data
-      for (var i = 0; i < 7; i++) {
-        outlookHigh[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
-        outlookLow[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
-        outlookCondition[i] = data.forecast.simpleforecast.forecastday[i].conditions
-        // Because thunderstorm won't fit in the day box, multiline it
-        outlookCondition[i] = outlookCondition[i].replace("Thunderstorm", "Thunder</br>storm");
-        outlookIcon[i] = data.forecast.simpleforecast.forecastday[i].icon;
+  if (CONFIG.useTWC) {
+    fetch(`https://api.weather.com/v1/geocode/${latitude}/${longitude}/forecast/daily/10day.json?language=${CONFIG.language}&units=${CONFIG.units}&apiKey=${CONFIG.secrets.twcAPIKey}`)
+    .then(function(response) {
+      if (response.status !== 200) {
+        console.log('forecast request error');
+        return;
       }
+      response.json().then(function(data) {
+        let forecasts = data.forecasts
+        // narratives
+        let ns = []
+        ns.push(forecasts[0].day || forecasts[0].night)
+        ns.push(forecasts[0].day ? forecasts[0].night : forecasts[1].day)
+        ns.push(forecasts[0].day ? forecasts[1].day : forecasts[1].night)
+        ns.push(forecasts[0].day ? forecasts[1].night : forecasts[2].day)
+        for (let i = 0; i <= 3; i++) {
+          let n = ns[i]
+          forecastTemp[i] = n.temp
+          forecastIcon[i] = n.icon_code
+          forecastNarrative[i] = n.narrative
+          forecastPrecip[i] = `${n.pop}% Chance<br/> of ${n.precip_type.charAt(0).toUpperCase() + n.precip_type.substr(1).toLowerCase()}`
+        }
+        // 7 day outlook
+        for (var i = 0; i < 7; i++) {
+          let fc = forecasts[i]
+          outlookHigh[i] = fc.max_temp
+          outlookLow[i] = fc.min_temp
+          outlookCondition[i] = (fc.day ? fc.day : fc.night).phrase_12char.split(' ').join('<br/>')
+          outlookIcon[i] = (fc.day ? fc.day : fc.night).icon_code
+        }
+        fetchRadarImages();
+      })
+    })
+  } else {
+    fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/forecast10day/q/${zipCode}.json`)
+    .then(function(response) {
+      if (response.status !== 200) {
+        console.log("forecast request error");
+        return;
+      }
+      response.json().then(function(data) {
+        // 7 day data
+        for (var i = 0; i < 7; i++) {
+          outlookHigh[i] = data.forecast.simpleforecast.forecastday[i].high.fahrenheit;
+          outlookLow[i] = data.forecast.simpleforecast.forecastday[i].low.fahrenheit;
+          outlookCondition[i] = data.forecast.simpleforecast.forecastday[i].conditions
+          // Because thunderstorm won't fit in the day box, multiline it
+          outlookCondition[i] = outlookCondition[i].replace("Thunderstorm", "Thunder</br>storm");
+          outlookIcon[i] = data.forecast.simpleforecast.forecastday[i].icon;
+        }
 
-      // narratives
-      for (var i = 0; i <= 3; i++){
-        forecastTemp.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
-        forecastTemp.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
-        forecastIcon[i] = data.forecast.txt_forecast.forecastday[i].icon;
-        forecastNarrative[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
-        forecastPrecip[i] = guessPrecipitation(forecastNarrative[i], forecastTemp[i]);
-      }
-      fetchRadarImages();
-    });
-  })
+        // narratives
+        for (var i = 0; i <= 3; i++){
+          forecastTemp.push(data.forecast.simpleforecast.forecastday[i].high.fahrenheit);
+          forecastTemp.push(data.forecast.simpleforecast.forecastday[i].low.fahrenheit);
+          forecastIcon[i] = data.forecast.txt_forecast.forecastday[i].icon;
+          forecastNarrative[i] = data.forecast.txt_forecast.forecastday[i].fcttext;
+          forecastPrecip[i] = guessPrecipitation(forecastNarrative[i], forecastTemp[i]);
+        }
+        fetchRadarImages();
+      });
+    })
+  }
 }
 
 function fetchCurrentWeather(){
@@ -93,11 +128,13 @@ function fetchCurrentWeather(){
       }
       response.json().then(function(data) {
         try {
-          cityName = (data.location.adminDistrict || data.location.display[0]).toUpperCase();
+          // which LOCALE?!
+          cityName = ((data.location.locale.locale1 || data.location.locale.locale2 || data.location.locale.locale3 || data.location.locale.locale4) || data.location.display[0]).toUpperCase();
           latitude = data.location.latitude;
           longitude = data.location.longitude;
         } catch (err) { 
           alert('Enter valid ZIP code'); 
+          console.error(err)
           getZipCodeFromUser(); 
           return; 
         }
