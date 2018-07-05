@@ -154,42 +154,32 @@ function getPageLogoFileName(subPageName){
   switch (subPageName) {
     case "single-alert-page":
       return "8logo.svg";
-    break;
 
     case "multiple-alerts-page":
       return "8logo.svg";
-    break;
 
     case "current-page":
       return "thermometer.svg";
-    break;
 
     case "radar-page":
       return "radar1.svg";
-    break;
 
     case "zoomed-radar-page":
       return "radar2.svg";
-    break;
 
     case "today-page":
       return "calendar.svg";
-    break;
 
     case "tonight-page":
       return "calendar.svg";
-    break;
 
     case "tomorrow-page":
       return "calendar.svg";
-    break;
 
     case "tomorrow-night-page":
       return "calendar.svg";
-    break;
 
     case "7day-page":
       return "week.svg";
-    break;
   }
 }
