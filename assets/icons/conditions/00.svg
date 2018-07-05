@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 17.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 200 200" enable-background="new 0 0 200 200" xml:space="preserve">
+<g id="sun">
+</g>
+<g id="clear-night">
+</g>
+<g id="mostly-sunny">
+</g>
+<g id="mostly-clear-night">
+</g>
+<g id="fog">
+</g>
+<g id="wind">
+</g>
+<g id="cloudy">
+</g>
+<g id="partly-cloudy">
+</g>
+<g id="partly-cloudy-night">
+</g>
+<g id="mostly-cloudy">
+</g>
+<g id="mostly-cloudy-night">
+</g>
+<g id="default">
+</g>
+<g id="light-rain">
+</g>
+<g id="rain">
+</g>
+<g id="heavy-rain">
+</g>
+<g id="scattered-showers-night">
+</g>
+<g id="isolated-t-storms">
+</g>
+<g id="scattered-t-storms">
+</g>
+<g id="scattered-t-storms-night">
+</g>
+<g id="strong-t-storms">
+</g>
+<g id="flurries">
+</g>
+<g id="snow">
+</g>
+<g id="heavy-snow">
+</g>
+<g id="blowing-snow">
+</g>
+<g id="scattered-snow">
+</g>
+<g id="scattered-snow-night">
+</g>
+<g id="freezing-drizzle">
+</g>
+<g id="freezing-rain">
+</g>
+<g id="wintry-mix">
+</g>
+<g id="sleet">
+</g>
+<g id="tornado">
+	<g>
+		<path fill="#D3D3D3" d="M71.5,179.3l36.2-5.1c5.1-0.7,9.8,2.8,10.5,7.9c0.7,5.1-2.8,9.8-7.9,10.5c-0.9,0.1-1.8,0.1-2.6,0
+			l-36.2-5.1c-2.3-0.3-3.8-2.4-3.5-4.7C68.2,180.9,69.7,179.5,71.5,179.3z"/>
+		<path fill="#D3D3D3" d="M76.1,146l66.2-5.1c5.1-0.4,9.5,3.4,9.9,8.5c0.4,5.1-3.4,9.5-8.5,9.9c-0.5,0-1,0-1.4,0l-66.2-5.1
+			c-2.3-0.2-3.9-2.1-3.8-4.4C72.5,147.7,74.1,146.1,76.1,146z"/>
+		<path fill="#D3D3D3" d="M38.8,112.7l98.9-5.1c5.1-0.2,9.4,3.7,9.7,8.8c0.3,5.1-3.7,9.4-8.7,9.7c-0.3,0-0.6,0-1,0l-98.9-5.1
+			c-2.3-0.1-4-2.1-3.9-4.3C35,114.5,36.7,112.8,38.8,112.7z"/>
+		<path fill="#D3D3D3" d="M4.9,79.2l114.9-5.1c5.1-0.2,9.4,3.7,9.6,8.8c0.2,5.1-3.7,9.4-8.8,9.6c-0.3,0-0.6,0-0.8,0L4.9,87.4
+			c-2.3-0.1-4-2-3.9-4.3C1.1,81,2.8,79.3,4.9,79.2z"/>
+		<path fill="#D3D3D3" d="M15.1,45.9l140.7-5.1c5.1-0.2,9.4,3.8,9.6,8.9c0.2,5.1-3.8,9.4-8.9,9.5c-0.2,0-0.5,0-0.7,0L15.1,54.1
+			c-2.3-0.1-4-2-3.9-4.2C11.2,47.7,13,46,15.1,45.9z"/>
+		<path fill="#D3D3D3" d="M27.4,12.5l162.1-5.2c5.1-0.2,9.4,3.8,9.5,8.9c0.2,5.1-3.8,9.3-8.9,9.5c-0.2,0-0.4,0-0.6,0L27.4,20.6
+			c-2.3-0.1-4-2-4-4.2C23.5,14.3,25.3,12.5,27.4,12.5z"/>
+	</g>
+</g>
+<g id="hurricane">
+</g>
+</svg>
