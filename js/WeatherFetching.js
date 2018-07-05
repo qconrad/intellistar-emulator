@@ -81,6 +81,8 @@ function fetchForecast(){
           outlookHigh[i] = fc.max_temp
           outlookLow[i] = fc.min_temp
           outlookCondition[i] = (fc.day ? fc.day : fc.night).phrase_32char.split(' ').join('<br/>')
+          
+          outlookCondition[i] = outlookCondition[i].replace("Thunderstorm", "Thunder</br>storm");
           outlookIcon[i] = (fc.day ? fc.day : fc.night).icon_code
         }
         fetchRadarImages();
@@ -132,11 +134,11 @@ function fetchCurrentWeather(){
           cityName = ((data.location.locale.locale1 || data.location.locale.locale2 || data.location.locale.locale3 || data.location.locale.locale4) || data.location.display[0]).toUpperCase();
           latitude = data.location.latitude;
           longitude = data.location.longitude;
-        } catch (err) { 
-          alert('Enter valid ZIP code'); 
+        } catch (err) {
+          alert('Enter valid ZIP code');
           console.error(err)
-          getZipCodeFromUser(); 
-          return; 
+          getZipCodeFromUser();
+          return;
         }
         fetch(`https://api.weather.com/v1/geocode/${latitude}/${longitude}/observations/current.json?language=${CONFIG.language}&units=${CONFIG.units}&apiKey=${CONFIG.secrets.twcAPIKey}`)
         .then(function(response) {
@@ -163,7 +165,7 @@ function fetchCurrentWeather(){
           });
         });
       })
-      
+
     });
   } else {
     fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/conditions/q/${zipCode}.json`)
@@ -202,7 +204,7 @@ function fetchCurrentWeather(){
       });
     })
   }
-  
+
 }
 
 function fetchRadarImages(){
