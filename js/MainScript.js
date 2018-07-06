@@ -41,8 +41,8 @@ var music;
 window.onload = function() {
   CONFIG.addOption('zip-code', 'ZIP Code')
   CONFIG.addOption('crawlText', 'Crawl Text')
-  CONFIG.addOption('loop', 'Loop (y for yes, anything for no)')
-  CONFIG.addOption('otherBg', 'Other BGs from picsum.photos')
+  CONFIG.addOption('loop', 'Loop (y for yes, else no)')
+  CONFIG.addOption('otherBg', 'Other BGs from picsum.photos (y for yes, else no)')
   CONFIG.addOption('language', 'Language')
   CONFIG.addOption('units', 'Units')
   CONFIG.load();
@@ -51,7 +51,10 @@ window.onload = function() {
   preLoadMusic();
   resizeWindow();
   setClockTime();
-  guessZipCode();
+  if (localStorage.getItem('loop') !== 'y') {
+    getElement("settings-container").style.display = 'block';
+    guessZipCode();
+  }
 }
 
 function preLoadMusic(){
@@ -326,7 +329,15 @@ function scrollCC(){
 
 // Called at end of sequence. Animates everything out and shows ending text
 function endSequence(){
-  clearInfoBar();
+  if (CONFIG.loop) {
+    location.reload()
+  } else {
+    clearInfoBar();
+  }
+}
+
+function twcLogoClick() {
+  localStorage.setItem('loop', 'n')
 }
 
 function clearInfoBar(){
