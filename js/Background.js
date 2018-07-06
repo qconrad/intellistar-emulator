@@ -6,6 +6,7 @@ function getRandomBackgroundPath(){
   var backgroundFolder = getBackgroundFolder();
   var folderCount = getFolderCount(backgroundFolder);
   var index = randomNumber(folderCount);
+  if (backgroundFolder === 'other' && CONFIG.picsumBackground) return 'https://picsum.photos/1920/1080/?random'
   var filePath = 'assets/backgrounds/' + backgroundFolder + "/" + index + '.jpg';
   return filePath;
 }
