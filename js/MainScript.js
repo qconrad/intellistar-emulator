@@ -41,6 +41,8 @@ var music;
 window.onload = function() {
   CONFIG.addOption('zip-code', 'ZIP Code')
   CONFIG.addOption('crawlText', 'Crawl Text')
+  CONFIG.addOption('loop', 'Loop (y for yes, anything for no)')
+  CONFIG.addOption('otherBg', 'Other BGs from picsum.photos')
   CONFIG.addOption('language', 'Language')
   CONFIG.addOption('units', 'Units')
   CONFIG.load();
