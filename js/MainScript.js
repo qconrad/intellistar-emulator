@@ -49,7 +49,10 @@ window.onload = function() {
   preLoadMusic();
   resizeWindow();
   setClockTime();
-  guessZipCode();
+  if (localStorage.getItem('loop') !== 'y') {
+    getElement("settings-container").style.display = 'block';
+    guessZipCode();
+  }
 }
 
 function preLoadMusic(){
@@ -327,6 +330,14 @@ function endSequence(){
   clearInfoBar();
 }
 
+function twcLogoClick() {
+  var loopStatus = localStorage.getItem('loop');
+  if(loopStatus == "n"){
+    localStorage.setItem('loop', 'y');}
+  else{
+    localStorage.setItem('loop', 'n');}
+}
+
 function clearInfoBar(){
   getElement("infobar-twc-logo").classList.add("hidden");
   getElement("infobar-local-logo").classList.add("hidden");
@@ -369,8 +380,12 @@ function stayUpdated(){
 
 // Final background animate out
 function clearEnd(){
-  getElement('background-image').classList.add("above-screen");
-  getElement('content-container').classList.add("above-screen");
+  if (CONFIG.loop) {
+    location.reload()
+  } else {
+    getElement('background-image').classList.add("above-screen");
+    getElement('content-container').classList.add("above-screen");
+  }
 }
 
 function loadInfoBar(){

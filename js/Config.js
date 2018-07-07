@@ -5,6 +5,8 @@ window.CONFIG = {
   countryCode: 'US', // Supported in TWC API (for postal key)
   units: 'e', // Supported in TWC API (e = English (imperial), m = Metric, h = Hybrid (UK)),
   unitField: 'imperial', // Supported in TWC API. This field will be filled in automatically. (imperial = e, metric = m, uk_hybrid = h)
+  loop: false,
+  picsumBackground: false,
   secrets: {
     wundergroundAPIKey: 'd8585d80376a429e',
     twcAPIKey: 'd522aa97197fd864d36b418f39ebb323'
@@ -22,10 +24,13 @@ window.CONFIG = {
     let args = {}
     CONFIG.options.forEach((opt) => {
       args[opt.id] = getElement(`${opt.id}-text`).value
+      localStorage.setItem(opt.id, args[opt.id])
     })
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
     if (args.language !== '') CONFIG.language = args.language
     if (args.units !== '') CONFIG.units = args.units
+    if (args.otherBg === 'y') CONFIG.picsumBackground = true
+    if (args.loop === 'y') CONFIG.loop = true
     if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
       zipCode = args['zip-code'];
     } else {
@@ -50,6 +55,7 @@ window.CONFIG = {
       textbox.classList.add('settings-item', 'settings-text')
       textbox.type = 'text'
       textbox.id = `${option.id}-text`
+      if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       //<br>
       let br = document.createElement('br')
       settingsPrompt.appendChild(label)
@@ -64,6 +70,10 @@ window.CONFIG = {
     btn.style = 'margin-bottom: 10px;'
     btn.appendChild(document.createTextNode('Start'))
     settingsPrompt.appendChild(btn)
+    if (localStorage.getItem('loop') === 'y') {
+      hideSettings();
+      CONFIG.submit()
+    }
   }
 }
 

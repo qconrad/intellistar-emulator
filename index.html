@@ -37,7 +37,7 @@
 
     <!-- Top Information Bar -->
     <div id="infobar-container">
-      <img id="infobar-twc-logo" src="assets/logos/twc.svg" />
+      <img id="infobar-twc-logo" src="assets/logos/twc.svg" onclick="twcLogoClick();" />
       <img id="infobar-local-logo" src="assets/logos/local.svg" />
       <div id="infobar-location-container" class="infobar-item-container">
         <div id="infobar-location-text" class="regular-text infobar-text"></div>
@@ -458,7 +458,7 @@
     </div>
   </div>
   <!-- Settings Prompt -->
-  <div id="settings-container">
+  <div id="settings-container" style="display: none;">
     <div id="settings-prompt">
       <!--<div class="regular-text settings-item settings-text">Zip Code</div>
       <input class="settings-item settings-text" type="text" id="zip-code-text"><br>
