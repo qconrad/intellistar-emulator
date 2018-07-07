@@ -4,9 +4,10 @@ function setMainBackground(){
 
 function getRandomBackgroundPath(){
   var backgroundFolder = getBackgroundFolder();
+  if (backgroundFolder === 'other') return 'https://picsum.photos/1920/1080/?random'
+
   var folderCount = getFolderCount(backgroundFolder);
   var index = randomNumber(folderCount);
-  if (backgroundFolder === 'other' && CONFIG.picsumBackground) return 'https://picsum.photos/1920/1080/?random'
   var filePath = 'assets/backgrounds/' + backgroundFolder + "/" + index + '.jpg';
   return filePath;
 }
@@ -27,12 +28,12 @@ function getBackgroundFolder(){
       case 47: // tstorm
         backgroundFolder = 'tstorm'
         break
-      
+
       case 5: // rain / snow
       case 7: // wintry mix
         backgroundFolder = Math.random() >= 0.50 ? 'snow' : 'rain'
         break
-      
+
       case 8: // rain
       case 9:
       case 10:
@@ -43,7 +44,7 @@ function getBackgroundFolder(){
       case 40: // rain
         backgroundFolder = 'rain'
         break
-      
+
       case 13: // snow
       case 14:
       case 15:
@@ -55,7 +56,7 @@ function getBackgroundFolder(){
       case 46: // snow
         backgroundFolder = 'snow'
         break
-      
+
       case 19: // fog / haze
       case 20:
       case 21:
@@ -87,8 +88,6 @@ function getFolderCount(folderName){
       return 8;
     case 'tstorm':
       return 9;
-    case 'other':
-      return 6;
     default:
       return 0;
   }
