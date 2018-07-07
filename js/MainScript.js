@@ -145,7 +145,8 @@ function setInformation(){
   createLogoElements();
   setCurrentConditions();
   setTimelineEvents();
-  startAnimation();
+  hideSettings();
+  setTimeout(startAnimation, 1000);
 }
 
 function checkStormMusic(){
@@ -155,7 +156,6 @@ function checkStormMusic(){
 }
 
 function startAnimation(){
-  hideSettings();
   setInitialPositionCurrentPage();
 
   jingle.play();
