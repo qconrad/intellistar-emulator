@@ -329,11 +329,7 @@ function scrollCC(){
 
 // Called at end of sequence. Animates everything out and shows ending text
 function endSequence(){
-  if (CONFIG.loop) {
-    location.reload()
-  } else {
-    clearInfoBar();
-  }
+  clearInfoBar();
 }
 
 function twcLogoClick() {
@@ -382,8 +378,12 @@ function stayUpdated(){
 
 // Final background animate out
 function clearEnd(){
-  getElement('background-image').classList.add("above-screen");
-  getElement('content-container').classList.add("above-screen");
+  if (CONFIG.loop) {
+    location.reload()
+  } else {
+    getElement('background-image').classList.add("above-screen");
+    getElement('content-container').classList.add("above-screen");
+  }
 }
 
 function loadInfoBar(){
