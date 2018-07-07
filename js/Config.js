@@ -38,8 +38,6 @@ window.CONFIG = {
       return;
     }
     CONFIG.unitField = CONFIG.units === 'm' ? 'metric' : (CONFIG.units === 'h' ? 'uk_hybrid' : 'imperial')
-    // Animate settings prompt out
-    getElement('settings-prompt').style.top = '-100%';
     fetchCurrentWeather();
   },
   load: () => {

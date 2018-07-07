@@ -166,7 +166,6 @@ function fetchCurrentWeather(){
           });
         });
       })
-
     });
   } else {
     fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/conditions/q/${zipCode}.json`)

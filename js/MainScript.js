@@ -168,7 +168,8 @@ function startMusic(){
 }
 
 function hideSettings(){
-  getElement("settings-container").style.display = 'none';
+  // Animate settings prompt out
+  getElement('settings-prompt').style.top = '-100%';
 }
 
 function executeGreetingPage(){
