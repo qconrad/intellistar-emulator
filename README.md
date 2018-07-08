@@ -5,6 +5,13 @@ A work in progress web application that displays weather information in the same
 This is a local forecast segment that airs on The Weather Channel called the "Local on the 8s". The name is because it airs at timeslots that end in "8" (9:28, 2:48, etc.). The forecast is approximately a minute long and provides information on current and forecasted weather conditions. This type of forecast started in 1982 using WeatherStar units. It was later upgraded to Intellistar in 2003 and recieved various graphic changes over the years. This emulator uses the style that started in 2013.
 
 ## Instructions
+## Option 1 (easier)
+1. Visit: <https://qconrad.github.io/intellistar-emulator/>.
+2. Enter zip code
+3. Click start
+4. Press F11 for fullscreen
+
+## Option 2 (more customizable)
 1. Extract all contents into folder
 2. Run index.html in Google Chrome
 3. Enter zip code
