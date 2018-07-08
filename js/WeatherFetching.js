@@ -158,7 +158,7 @@ function fetchCurrentWeather(){
             visibility = Math.round(unit.vis)
             humidity = unit.rh
             dewPoint = unit.dewpt
-            pressure = unit.altimeter
+            pressure = unit.altimeter.toPrecision(4);
             let ptendCode = data.observation.ptend_code
             pressureTrend = (ptendCode == 1 || ptendCode == 3) ? '▲' : ptendCode == 0 ? '' : '▼'; // if ptendCode == 1 or 3 (rising/rising rapidly) up arrow else its steady then nothing else (falling (rapidly)) down arrow
             currentIcon = data.observation.icon_code
@@ -186,7 +186,7 @@ function fetchCurrentWeather(){
         visibility = Math.round(data.current_observation.visibility_mi);
         humidity = data.current_observation.relative_humidity.replace("%", "");
         dewPoint = data.current_observation.dewpoint_f;
-        pressure = data.current_observation.pressure_in;
+        pressure = data.current_observation.pressure_in.toPrecision(4);
         if(data.current_observation.pressure_trend == "+"){
           pressureTrend = "▲"
         }else{
