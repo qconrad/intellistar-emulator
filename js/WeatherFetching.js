@@ -1,4 +1,10 @@
 function guessZipCode(){
+  var zipCodeElement = getElement("zip-code-text");
+  // Before filling with auto zip, check and see if
+  // there is already an input
+  if(zipCodeElement.value != ""){
+    return;
+  }
   // always use wunderground API for geolookup
   // only valid equivalent is GET v3/location/search
   // TODO: use TWC API GET v3/location/search instead of wunderground geolookup
@@ -10,7 +16,11 @@ function guessZipCode(){
       return;
     }
     response.json().then(function(data) {
-      getElement("zip-code-text").value = data.location.zip;
+      // Only fill zip if the user didn't touch
+      // the box while the zip was fetching
+      if(zipCodeElement.value == ""){
+        zipCodeElement.value = data.location.zip;
+      }
     });
   })
 }
