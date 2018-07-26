@@ -170,6 +170,7 @@ function startMusic(){
 function hideSettings(){
   // Animate settings prompt out
   getElement('settings-prompt').style.top = '-100%';
+  getElement('settings-container').style.pointerEvents = 'none';
 }
 
 function executeGreetingPage(){
@@ -333,10 +334,10 @@ function endSequence(){
 
 function twcLogoClick() {
   var loopStatus = localStorage.getItem('loop');
-  if(loopStatus == "n"){
-    localStorage.setItem('loop', 'y');}
-  else{
+  if(loopStatus == "y"){
     localStorage.setItem('loop', 'n');}
+  else{
+    localStorage.setItem('loop', 'y');}
 }
 
 function clearInfoBar(){
