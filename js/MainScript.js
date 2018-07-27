@@ -335,9 +335,13 @@ function endSequence(){
 function twcLogoClick() {
   var loopStatus = localStorage.getItem('loop');
   if(loopStatus == "y"){
-    localStorage.setItem('loop', 'n');}
+    localStorage.setItem('loop', 'n');
+    CONFIG.loop = false;
+  }
   else{
-    localStorage.setItem('loop', 'y');}
+    localStorage.setItem('loop', 'y');
+    CONFIG.loop = true;
+  }
 }
 
 function clearInfoBar(){
