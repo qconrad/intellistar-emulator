@@ -2,6 +2,11 @@ body{
   background-color: black;
 }
 
+::selection {
+    color: white;
+    background: #b7b7c8;
+}
+
 #render-frame{
   -webkit-touch-callout: none; /* iOS Safari */
   -webkit-user-select: none; /* Safari */
