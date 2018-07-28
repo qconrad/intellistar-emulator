@@ -69,6 +69,7 @@ window.CONFIG = {
     btn.appendChild(document.createTextNode('Start'))
     settingsPrompt.appendChild(btn)
     if (localStorage.getItem('loop') === 'y') {
+      CONFIG.loop = true;
       hideSettings();
       CONFIG.submit()
     }
