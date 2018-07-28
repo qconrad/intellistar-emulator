@@ -29,10 +29,11 @@
 .settings-item{
   width: 95%;
   margin: 0 auto;
+  height: 35px;
 }
 
 .settings-text{
-  font-size: 25px;
+  font-size: 35px;
 }
 
 .settings-input{
@@ -44,7 +45,7 @@
 }
 
 .settings-input:focus{
-  border: 1px solid #595973;
+  border: 1px solid #b7b7c8;
 }
 
 #submit-button{

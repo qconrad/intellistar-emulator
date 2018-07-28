@@ -53,10 +53,12 @@ window.CONFIG = {
       let textbox = document.createElement('input')
       textbox.classList.add('settings-item', 'settings-text', 'settings-input')
       textbox.type = 'text'
+      textbox.style.fontSize = '20px'
       textbox.placeholder = option.desc
       textbox.id = `${option.id}-text`
       if(textbox.id == "zip-code-text"){
         textbox.setAttribute('maxlength', '5')
+        textbox.style.fontSize = '35px'
       }
       if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       //<br>
