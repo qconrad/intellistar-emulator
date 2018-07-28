@@ -29,8 +29,6 @@ window.CONFIG = {
     })
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
     if (args.greetingText !== '') CONFIG.greeting = args.greetingText
-    if (args.language !== '') CONFIG.language = args.language
-    if (args.units !== '') CONFIG.units = args.units
     if (args.otherBg === 'y') CONFIG.picsumBackground = true
     if (args.loop === 'y') CONFIG.loop = true
     if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
