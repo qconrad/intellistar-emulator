@@ -45,14 +45,15 @@ window.CONFIG = {
     CONFIG.options.forEach((option) => {
       //<div class="regular-text settings-item settings-text">Zip Code</div>
       let label = document.createElement('div')
-      label.classList.add('regular-text', 'settings-item', 'settings-text')
+      label.classList.add('strong-text', 'settings-item', 'settings-text')
       label.appendChild(document.createTextNode(option.name))
       label.id = `${option.id}-label`
       //<input class="settings-item settings-text" type="text" id="zip-code-text">
       let textbox = document.createElement('input')
-      textbox.classList.add('settings-item', 'settings-text')
+      textbox.classList.add('settings-item', 'settings-text', 'settings-input')
       textbox.type = 'text'
       textbox.id = `${option.id}-text`
+      if(textbox.id == "zip-code-text") textbox.setAttribute('maxlength', '5')
       if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       //<br>
       let br = document.createElement('br')
@@ -62,7 +63,7 @@ window.CONFIG = {
     })
     //<button class="setting-item settings-text" id="submit-button" onclick="checkZipCode();" style="margin-bottom: 10px;">Start</button>-->
     let btn = document.createElement('button')
-    btn.classList.add('setting-item', 'settings-text')
+    btn.classList.add('setting-item', 'settings-text', 'settings-input')
     btn.id = 'submit-button'
     btn.onclick = CONFIG.submit
     btn.style = 'margin-bottom: 10px;'

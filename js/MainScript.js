@@ -165,7 +165,7 @@ function startMusic(){
 
 function hideSettings(){
   // Animate settings prompt out
-  getElement('settings-prompt').style.top = '-100%';
+  getElement('settings-prompt').classList.add('hide');
   getElement('settings-container').style.pointerEvents = 'none';
 }
 
@@ -526,7 +526,7 @@ function getElement(id){
 
 function showCrawl(){
   getElement('crawler-container').classList.add("shown");
-  setTimeout(startCrawl, 1000); // wait for it to fully animate out before starting
+  setTimeout(startCrawl, 400); // wait for the settings to fully animate out before starting
 }
 
 function hideCrawl(){
