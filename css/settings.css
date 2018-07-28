@@ -61,10 +61,11 @@
   text-align: center;
 }
 
-#loop-message{
+#alert-message{
   background-color: rgba(0,0,0, 0.50);
-  width: 550px;
   position: absolute;
+  padding-left: 20px;
+  padding-right: 20px;
   height: 50px;
   top: -50px;
   left: 50%;
@@ -75,7 +76,7 @@
   transition: top 500ms;
 }
 
-#loop-message.shown{
+#alert-message.shown{
   top: 0px;
 }
 

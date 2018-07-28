@@ -329,8 +329,8 @@ function endSequence(){
 }
 
 function twcLogoClick() {
-  var loopMessageShown = getElement('loop-message').classList.contains('shown');
-  if(loopMessageShown) return;
+  var alertMessageShown = getElement('alert-message').classList.contains('shown');
+  if(alertMessageShown) return;
   var loopStatus = localStorage.getItem('loop');
   if(loopStatus == "y"){
     localStorage.setItem('loop', 'n');
@@ -547,11 +547,15 @@ function calculateCrawlSpeed() {
 
 function showLoopMessage(){
   var loopStatus = ((CONFIG.loop) ? 'enabled' : 'disabled');
-  getElement('loop-message').innerHTML = "Looping " + loopStatus + ", click TWC logo to toggle";
-  getElement('loop-message').classList.add('shown');
-  setTimeout(hideLoopMessage, 2000);
+  alert("Looping " + loopStatus + ", click TWC logo to toggle");
 }
 
-function hideLoopMessage(){
-  getElement('loop-message').classList.remove('shown');
+function hideAlertMessage(){
+  getElement('alert-message').classList.remove('shown');
+}
+
+function alert(message){
+  getElement('alert-message').innerHTML = message;
+  getElement('alert-message').classList.add('shown');
+  setTimeout(hideAlertMessage, 2000);
 }
