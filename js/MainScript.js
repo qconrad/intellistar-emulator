@@ -385,12 +385,16 @@ function stayUpdated(){
 
 // Final background animate out
 function clearEnd(){
+  getElement('background-image').classList.add("above-screen");
+  getElement('content-container').classList.add("above-screen");
+
   if (CONFIG.loop) {
-    location.reload()
-  } else {
-    getElement('background-image').classList.add("above-screen");
-    getElement('content-container').classList.add("above-screen");
+    setTimeout(reloadPage, 400)
   }
+}
+
+function reloadPage(){
+  location.reload()
 }
 
 function loadInfoBar(){
