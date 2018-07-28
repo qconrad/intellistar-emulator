@@ -12,7 +12,6 @@ var longitude;
 var latitude;
 var cityName;
 var currentTemperature;
-var greetingText = "This is your weather.";
 var currentIcon;
 var currentCondition;
 var windSpeed;
@@ -41,6 +40,7 @@ var music;
 window.onload = function() {
   CONFIG.addOption('zip-code', 'ZIP Code')
   CONFIG.addOption('crawlText', 'Crawl Text')
+  CONFIG.addOption('greetingText', 'Greeting Text')
   CONFIG.addOption('language', 'Language')
   CONFIG.addOption('units', 'Units')
   CONFIG.load();

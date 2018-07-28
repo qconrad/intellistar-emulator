@@ -1,5 +1,6 @@
 window.CONFIG = {
   crawl: `Thanks to all the contributors of this project. While it's not completely finished, the community effort has made this possible. Stars, contributions, and feedback are welcome and appreciated. Thanks for trying out this emulator.`,
+  greeting: 'This is your weather',
   useTWC: true,
   language: 'en-US', // Supported in TWC API
   countryCode: 'US', // Supported in TWC API (for postal key)
@@ -27,6 +28,7 @@ window.CONFIG = {
       localStorage.setItem(opt.id, args[opt.id])
     })
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
+    if (args.greetingText !== '') CONFIG.greeting = args.greetingText
     if (args.language !== '') CONFIG.language = args.language
     if (args.units !== '') CONFIG.units = args.units
     if (args.otherBg === 'y') CONFIG.picsumBackground = true
