@@ -333,6 +333,8 @@ function endSequence(){
 }
 
 function twcLogoClick() {
+  var loopMessageShown = getElement('loop-message').classList.contains('shown');
+  if(loopMessageShown) return;
   var loopStatus = localStorage.getItem('loop');
   if(loopStatus == "y"){
     localStorage.setItem('loop', 'n');
@@ -342,6 +344,7 @@ function twcLogoClick() {
     localStorage.setItem('loop', 'y');
     CONFIG.loop = true;
   }
+  showLoopMessage();
 }
 
 function clearInfoBar(){
@@ -544,4 +547,15 @@ function calculateCrawlSpeed() {
   var elementLength = crawlTextElement.offsetWidth;
   var timeTaken = elementLength / crawlSpeed;
   crawlTextElement.style.animationDuration = timeTaken + "s";
+}
+
+function showLoopMessage(){
+  var loopStatus = ((CONFIG.loop) ? 'enabled' : 'disabled');
+  getElement('loop-message').innerHTML = "Looping " + loopStatus + ", click TWC logo to toggle";
+  getElement('loop-message').classList.add('shown');
+  setTimeout(hideLoopMessage, 2000);
+}
+
+function hideLoopMessage(){
+  getElement('loop-message').classList.remove('shown');
 }
