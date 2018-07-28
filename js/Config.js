@@ -15,10 +15,11 @@ window.CONFIG = {
 
   // Config Functions (index.html settings manager)
   options: [],
-  addOption: (id, name) => {
+  addOption: (id, name, desc) => {
     CONFIG.options.push({
       id,
-      name
+      name,
+      desc
     })
   },
   submit: (btn, e) => {
@@ -52,8 +53,11 @@ window.CONFIG = {
       let textbox = document.createElement('input')
       textbox.classList.add('settings-item', 'settings-text', 'settings-input')
       textbox.type = 'text'
+      textbox.placeholder = option.desc
       textbox.id = `${option.id}-text`
-      if(textbox.id == "zip-code-text") textbox.setAttribute('maxlength', '5')
+      if(textbox.id == "zip-code-text"){
+        textbox.setAttribute('maxlength', '5')
+      }
       if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       //<br>
       let br = document.createElement('br')

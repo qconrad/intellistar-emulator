@@ -38,9 +38,9 @@ var alerts = [];
 var music;
 
 window.onload = function() {
-  CONFIG.addOption('zip-code', 'ZIP Code')
-  CONFIG.addOption('crawlText', 'Crawl Text')
-  CONFIG.addOption('greetingText', 'Greeting Text')
+  CONFIG.addOption('zip-code', 'ZIP Code', '00000')
+  CONFIG.addOption('crawlText', 'Crawl Text', 'Text that scrolls along the bottom')
+  CONFIG.addOption('greetingText', 'Greeting Text', 'Message (or joke) that appears at the start')
   CONFIG.load();
   preLoadMusic();
   resizeWindow();
