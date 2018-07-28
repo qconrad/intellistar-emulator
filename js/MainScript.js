@@ -51,6 +51,22 @@ window.onload = function() {
   }
 }
 
+function toggleAdvancedSettings(){
+  let advancedSettingsOptions = getElement('advanced-settings-options')
+  let advancedOptionsText = getElement('advanced-options-text')
+
+  var advancedSettingsHidden = advancedSettingsOptions.classList.contains('hidden')
+
+  if(advancedSettingsHidden){
+    advancedSettingsOptions.classList.remove('hidden')
+    advancedOptionsText.innerHTML = 'Hide advanced options'
+  }
+  else{
+    advancedSettingsOptions.classList.add('hidden')
+    advancedOptionsText.innerHTML = 'Show advanced options'
+  }
+}
+
 function preLoadMusic(){
   var index = Math.floor(Math.random() * 12) + 1;
   music = new Audio("assets/music/" + index + ".wav");

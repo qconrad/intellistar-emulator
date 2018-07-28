@@ -19,7 +19,7 @@ window.CONFIG = {
     CONFIG.options.push({
       id,
       name,
-      desc
+      desc,
     })
   },
   submit: (btn, e) => {
@@ -42,7 +42,9 @@ window.CONFIG = {
     fetchCurrentWeather();
   },
   load: () => {
-    let settingsPrompt = document.getElementById('settings-prompt')
+    let settingsPrompt = getElement('settings-prompt')
+    let zipContainer = getElement('zip-container')
+    let advancedSettingsOptions = getElement('advanced-settings-options')
     CONFIG.options.forEach((option) => {
       //<div class="regular-text settings-item settings-text">Zip Code</div>
       let label = document.createElement('div')
@@ -56,20 +58,35 @@ window.CONFIG = {
       textbox.style.fontSize = '20px'
       textbox.placeholder = option.desc
       textbox.id = `${option.id}-text`
+      if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
+      let br = document.createElement('br')
       if(textbox.id == "zip-code-text"){
         textbox.setAttribute('maxlength', '5')
         textbox.style.fontSize = '35px'
+        label.style.width = "auto"
+        zipContainer.appendChild(label)
+        zipContainer.appendChild(textbox)
+        zipContainer.appendChild(br)
       }
-      if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
+      else{
+        advancedSettingsOptions.appendChild(label)
+        advancedSettingsOptions.appendChild(textbox)
+        advancedSettingsOptions.appendChild(br)
+      }
       //<br>
-      let br = document.createElement('br')
-      settingsPrompt.appendChild(label)
-      settingsPrompt.appendChild(textbox)
-      settingsPrompt.appendChild(br)
     })
+    let advancedButtonContainer = document.createElement('div')
+    advancedButtonContainer.classList.add('settings-container')
+    settingsPrompt.appendChild(advancedButtonContainer)
+    let advancedButton = document.createElement('button')
+    advancedButton.innerHTML = "Show advanced options"
+    advancedButton.id = "advanced-options-text"
+    advancedButton.setAttribute('onclick', 'toggleAdvancedSettings()')
+    advancedButton.classList.add('regular-text', 'settings-input', 'button')
+    advancedButtonContainer.appendChild(advancedButton)
     //<button class="setting-item settings-text" id="submit-button" onclick="checkZipCode();" style="margin-bottom: 10px;">Start</button>-->
     let btn = document.createElement('button')
-    btn.classList.add('setting-item', 'settings-text', 'settings-input')
+    btn.classList.add('setting-item', 'settings-text', 'settings-input', 'button')
     btn.id = 'submit-button'
     btn.onclick = CONFIG.submit
     btn.style = 'margin-bottom: 10px;'

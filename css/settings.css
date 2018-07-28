@@ -7,7 +7,7 @@
 }
 
 #settings-prompt{
-  transition: top 2s, opacity 300ms;
+  transition: top 1s, opacity 200ms;
   top: 50%;
   transform: translateY(-50%);
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -15,19 +15,32 @@
   border: 1px solid black;
   font-size: 40px;
   margin: 0 auto;
-  width: 500px;
+  width: max-content;
   position: relative;
   overflow: hidden;
   text-align: center;
 }
 
 #settings-prompt.hide{
-  top: -101%;
+  top: 25%;
   opacity: 0;
 }
 
+#advanced-settings-options.hidden{
+  display: none;
+}
+
+#advanced-options-text{
+  font-size: 15px;
+}
+
+.settings-container{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
 .settings-item{
-  width: 95%;
+  width: 400px;
   margin: 0 auto;
   height: 35px;
 }
@@ -48,11 +61,11 @@
   border: 1px solid #b7b7c8;
 }
 
-#submit-button{
+.button{
   transition: 100ms background-color;
 }
 
-#submit-button:hover{
+.button:hover{
   background-color: #595973;
 }
 
