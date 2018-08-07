@@ -269,7 +269,7 @@ function executePage(pageIndex, subPageIndex){
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
     animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
-    animateDialFill('cc-dial-color', 0, 1000, 15);
+    animateDialFill('cc-dial-color', currentTemperature, 2500);
   }
   else if(currentSubPageName == 'radar-page'){
     startRadar();
@@ -463,51 +463,22 @@ function animateValue(id, start, end, duration, pad) {
       }
   }, stepTime);
 }
-function animateDialFill(id, start, end, duration) {
+
+function animateDialFill(id, temperature, duration) {
+  var start = -20;
+  var end = temperature;
   var obj = getElement(id);
+  if(start == end){
+    obj.style.fill = getTemperatureColor(temperature);
+    return;
+  }
   var range = end - start;
   var current = start;
   var increment = end > start? 1 : -1;
   var stepTime = Math.abs(Math.floor(duration / range));
-  var r = 100
-  var g = 100
-  var b = 225
-
-  // 1 = blue
-  // 2 = orange
-  // 3 = orange2
-  // 4 = red
-  var incType = 1;
-  var f = `rgb(${r}, ${g}, ${b})`
   var timer = setInterval(function() {
-      //current += increment;
-      if (incType == 1) {
-        b += increment;
-        r -= increment;
-        g -= increment;
-        if (r == 0) {
-          incType = 2
-        }
-      } else if (incType == 2) {
-        r += increment;
-        g += increment;
-        b -= increment;
-        if (g == 180) {
-          incType = 3;
-        }
-      } else if (incType == 3) {
-        r += increment;
-        g -= increment * 0.8;
-        if (g < 85) {
-          incType = 4;
-        }
-      } else {
-        r += increment;
-        g -= increment;
-        b -= increment;
-      }
-      f = `rgb(${r}, ${g}, ${b})`
-      obj.style.fill = f;
+      current += increment;
+      obj.style.fill = getTemperatureColor(current);
       if (current == end) {
           clearInterval(timer);
       }
@@ -518,6 +489,45 @@ Number.prototype.pad = function(size) {
     while (s.length < (size || 2)) {s = "0" + s;}
     return s;
 }
+
+// Used for the beginning dial in order to map warmer
+// temperatures to warmer colors and vice versa.
+function getTemperatureColor(temperature){
+  if(temperature < -20){
+    return 'rgb(0, 0, 255)';
+  }
+  else if(temperature > 100){
+    return 'rgb(201, 42, 42)';
+  }
+
+  var calculatedColor = [0, 0, 0]
+  if(temperature < 40){
+    var percent = (temperature + 20)/60
+    calculatedColor = interpolateColor([24, 100, 171], [77, 171, 247], percent)
+  }
+  else if(temperature < 60){
+    var percent = (temperature - 40)/20
+    calculatedColor = interpolateColor([77, 171, 247], [255, 212, 59], percent)
+  }
+  else if(temperature < 80){
+    var percent = (temperature - 60)/20
+    calculatedColor = interpolateColor([255, 212, 59], [247, 103, 7], percent)
+  }
+  else{
+    var percent = (temperature - 80)/20
+    calculatedColor = interpolateColor([247, 103, 7], [201, 42, 42], percent)
+  }
+  return 'rgb(' + calculatedColor[0] + ', ' + calculatedColor[1] + ', ' + calculatedColor[2] + ')'
+}
+
+var interpolateColor = function(color1, color2, factor) {
+  if (arguments.length < 3) { factor = 0.5; }
+  var result = color1.slice();
+  for (var i=0;i<3;i++) {
+    result[i] = Math.round(result[i] + factor*(color2[i]-color1[i]));
+  }
+  return result;
+};
 
 const baseSize = {
     w: 1920,
