@@ -404,9 +404,10 @@ function clearEnd(){
   getElement('background-image').classList.add("above-screen");
   getElement('content-container').classList.add("above-screen");
 
-  if (CONFIG.loop) {
-    setTimeout(reloadPage, 400)
-  }
+  // Reload the page after animation has completed
+  // If looping is enabled, the sequence will start again
+  // Otherwise, the zip code prompt will show again
+  setTimeout(reloadPage, 400)
 }
 
 function reloadPage(){
