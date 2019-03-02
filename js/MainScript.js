@@ -76,7 +76,7 @@ function preLoadMusic(){
 alerts are present */
 function scheduleTimeline(){
   var currentTime = new Date();
-  var isDay = currentTime.getHours() > 4 && currentTime.getHours() < 14
+  var isDay = currentTime.getHours() >= 4 && currentTime.getHours() <= 18
   if(alerts.length == 1){
     pageOrder = SINGLE;
   }else if(alerts.length > 1){

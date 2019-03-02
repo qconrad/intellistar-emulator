@@ -76,9 +76,8 @@ function fetchForecast(){
           let ns = []
           ns.push(forecasts[0].day || forecasts[0].night); // there must be a day forecast so if the API doesn't provide one, just make it the night one. It won't show anyway.
           ns.push(forecasts[0].night);
-          ns.push(forecasts[0].day ? forecasts[0].night : forecasts[1].day)
-          ns.push(forecasts[0].day ? forecasts[1].day : forecasts[1].night)
-          ns.push(forecasts[0].day ? forecasts[1].night : forecasts[2].day)
+          ns.push(forecasts[1].day);
+          ns.push(forecasts[1].night);
           for (let i = 0; i <= 3; i++) {
             let n = ns[i]
             forecastTemp[i] = n.temp
