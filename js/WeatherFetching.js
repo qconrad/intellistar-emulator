@@ -73,6 +73,7 @@ function fetchForecast(){
         response.json().then(function(data) {
           let forecasts = data.forecasts
           // narratives
+          isDay = forecasts[0].day; // If the API spits out a day forecast, use the day timings
           let ns = []
           ns.push(forecasts[0].day || forecasts[0].night); // there must be a day forecast so if the API doesn't provide one, just make it the night one. It won't show anyway.
           ns.push(forecasts[0].night);

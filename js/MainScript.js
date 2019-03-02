@@ -5,6 +5,7 @@ const MULTIPLE = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", dur
 const WEEKDAY = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 const jingle = new Audio("assets/music/jingle.wav")
 const crawlSpeed = 150;
+var isDay = true;
 var currentLogo;
 var currentLogoIndex = 0;
 var zipCode;
@@ -75,8 +76,6 @@ function preLoadMusic(){
 /* Set the timeline page order depending on time of day and if
 alerts are present */
 function scheduleTimeline(){
-  var currentTime = new Date();
-  var isDay = currentTime.getHours() >= 4 && currentTime.getHours() <= 18
   if(alerts.length == 1){
     pageOrder = SINGLE;
   }else if(alerts.length > 1){
