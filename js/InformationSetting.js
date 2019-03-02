@@ -2,7 +2,7 @@ function setGreetingPage(){
   getElement("hello-location-text").innerHTML = cityName + ",";
   getElement("infobar-location-text").innerHTML = cityName;
   getElement("greeting-text").innerHTML = CONFIG.greeting;
-  getElement("crawl-text").innerHTML = CONFIG.crawl.toUpperCase();
+  getElement("crawl-text").innerHTML = CONFIG.crawl;
 }
 
 function setTimelineEvents(){
@@ -57,28 +57,28 @@ function createLogoElements(){
 function setForecast(){
   // Store all the needed elements as arrays so that they can be referenced in loops
   var forecastNarrativeElement=
-  [getElement("today-narrative-text"),
-  getElement("tonight-narrative-text"),
-  getElement("tomorrow-narrative-text"),
-  getElement("tomorrow-night-narrative-text")];
+    [getElement("today-narrative-text"),
+     getElement("tonight-narrative-text"),
+     getElement("tomorrow-narrative-text"),
+     getElement("tomorrow-night-narrative-text")];
 
   var forecastTempElement =
-  [getElement("today-forecast-temp"),
-  getElement("tonight-forecast-temp"),
-  getElement("tomorrow-forecast-temp"),
-  getElement("tomorrow-night-forecast-temp")];
+    [getElement("today-forecast-temp"),
+     getElement("tonight-forecast-temp"),
+     getElement("tomorrow-forecast-temp"),
+     getElement("tomorrow-night-forecast-temp")];
 
   var forecastIconElement =
-  [getElement("today-forecast-icon"),
-  getElement("tonight-forecast-icon"),
-  getElement("tomorrow-forecast-icon"),
-  getElement("tomorrow-night-forecast-icon")];
+    [getElement("today-forecast-icon"),
+     getElement("tonight-forecast-icon"),
+     getElement("tomorrow-forecast-icon"),
+     getElement("tomorrow-night-forecast-icon")];
 
   var forecastPrecipElement =
-  [getElement("today-forecast-precip"),
-  getElement("tonight-forecast-precip"),
-  getElement("tomorrow-forecast-precip"),
-  getElement("tomorrow-night-forecast-precip")];
+    [getElement("today-forecast-precip"),
+     getElement("tonight-forecast-precip"),
+     getElement("tomorrow-forecast-precip"),
+     getElement("tomorrow-night-forecast-precip")];
 
   for (var i = 0; i < 4; i++) {
     forecastNarrativeElement[i].innerHTML = forecastNarrative[i];
