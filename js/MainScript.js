@@ -44,6 +44,7 @@ window.onload = function() {
   CONFIG.addOption('greetingText', 'Greeting Text', 'Message (or joke) that appears at the start')
   CONFIG.load();
   preLoadMusic();
+  setMainBackground();
   resizeWindow();
   setClockTime();
   if (localStorage.getItem('loop') !== 'y') {
@@ -88,52 +89,6 @@ function scheduleTimeline(){
   setInformation();
 }
 
-/* Because this particular API doesn't seem to have day by day precipitation,
-we use things like the temperature and narrative to try and guess it */
-function guessPrecipitation(narrativeText, temperature){
-  var precipType = "";
-  var precipValue = "0"
-
-  // Guess percent chance
-  var parsedChance = narrativeText.match(/\S+(?=%)/g);
-  if(parsedChance != null){
-    precipValue = parsedChance;
-  }
-  else if(precipValue === "0"){
-    if(narrativeText.toLowerCase().includes("slight chance")){
-      precipValue = "20";
-    }else if (narrativeText.toLowerCase().includes("a few") && narrativeText.toLowerCase().includes("possible")){
-      precipValue = "10";
-    }
-  }
-
-  // Guess type of precipitation (i.e. rain, snow)
-    var narrativeLowerCase = narrativeText.toLowerCase();
-  if(narrativeLowerCase.includes("chance of precip")){
-    precipType = "Precip";
-  }
-  else if(  narrativeLowerCase.includes("snow") || narrativeLowerCase.includes("flurr")){
-    precipType = "Snow";
-  }
-  else if(narrativeLowerCase.includes("rain") || narrativeLowerCase.includes("shower")){
-    precipType = "Rain"
-  }
-
-  /* Just because the temperature is below the freezing point of 32 degress, doesn't neccesarly
-     mean that precipitation would be snow, however if there is no text to indicate pricpitation (i.e. 0% chance)
-     then it doesn't really matter if it says 0% chance of snow or rain because neither would happen anyway */
-     if(precipType == ""){
-       if(temperature <= 32){
-         precipType = "Snow";
-       }
-       else{
-         precipType = "Rain"
-       }
-     }
-
-  return precipValue + "% Chance</br>of " + precipType;
-}
-
 function revealTimeline(){
   getElement('timeline-event-container').classList.add('shown');
   getElement('progressbar-container').classList.add('shown');
@@ -148,7 +103,6 @@ function revealTimeline(){
 the appropriate elements */
 function setInformation(){
   setGreetingPage();
-  setMainBackground();
   checkStormMusic();
   setAlertPage();
   setForecast();
@@ -158,6 +112,10 @@ function setInformation(){
   setTimelineEvents();
   hideSettings();
   setTimeout(startAnimation, 1000);
+}
+
+function setMainBackground(){
+  getElement('background-image').style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random';
 }
 
 function checkStormMusic(){
