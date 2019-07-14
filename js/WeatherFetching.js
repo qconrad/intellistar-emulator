@@ -1,10 +1,14 @@
 function guessZipCode(){
+  // Skip geolookup until replaced with TWC (wunderground api dead)
+  return;
+
   var zipCodeElement = getElement("zip-code-text");
   // Before filling with auto zip, check and see if
   // there is already an input
   if(zipCodeElement.value != ""){
     return;
   }
+
   // always use wunderground API for geolookup
   // only valid equivalent is GET v3/location/search
   // TODO: use TWC API GET v3/location/search instead of wunderground geolookup
@@ -26,6 +30,10 @@ function guessZipCode(){
 }
 
 function fetchAlerts(){
+  // Skip alert fetching until replaced with TWC (wunderground api dead)
+  fetchForecast();
+  return;
+
   var alertCrawl = "";
   // again, always use wunderground for fetching alerts
   // two api calls are required for one alert
@@ -150,6 +158,10 @@ function fetchCurrentWeather(){
 }
 
 function fetchRadarImages(){
+  // Skip radar until replaced with some other solution (wunderground api dead)
+  scheduleTimeline();
+  return;
+
   radarImage = new Image();
   radarImage.onerror = function () {
     getElement('radar-container').style.display = 'none';

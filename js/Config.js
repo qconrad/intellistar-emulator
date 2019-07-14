@@ -1,14 +1,12 @@
 window.CONFIG = {
-  crawl: `Thanks to all the contributors of this project. While it's not completely finished, the community effort has made this possible. Stars, contributions, and feedback are welcome and appreciated. Thanks for trying out this emulator.`,
+  crawl: `Due to the discontinuation of Weather Underground's API, severe weather alerts, automatic geolookup, and doppler radar imagery are broken for now.`,
   greeting: 'This is your weather',
   language: 'en-US', // Supported in TWC API
   countryCode: 'US', // Supported in TWC API (for postal key)
   units: 'e', // Supported in TWC API (e = English (imperial), m = Metric, h = Hybrid (UK)),
   unitField: 'imperial', // Supported in TWC API. This field will be filled in automatically. (imperial = e, metric = m, uk_hybrid = h)
   loop: false,
-  picsumBackground: false,
   secrets: {
-    wundergroundAPIKey: 'd8585d80376a429e',
     twcAPIKey: 'd522aa97197fd864d36b418f39ebb323'
   },
 
@@ -29,7 +27,6 @@ window.CONFIG = {
     })
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
     if (args.greetingText !== '') CONFIG.greeting = args.greetingText
-    if (args.otherBg === 'y') CONFIG.picsumBackground = true
     if (args.loop === 'y') CONFIG.loop = true
     if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
       zipCode = args['zip-code'];
