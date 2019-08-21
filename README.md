@@ -21,8 +21,7 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 ## Features
 Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map.
 
-## Background Blur
-The background blur will not work by default. It is a feature that is disabled in chrome by default due to poor performance. To enable, go to chrome://flags and enable  *Experimental Web Platform features*.
+*Some of these features are temporarily not working due to the discontinuation of WU's API*
 
 ## Looping
 To enable or disable looping, click on the TWC logo in the info-bar in the top-left corner of the emulator.
