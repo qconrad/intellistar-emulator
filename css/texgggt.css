@@ -10,13 +10,14 @@
 
 .regular-text{
   text-shadow: 3px 3px 3px rgba(0, 0, 0, 0.15);
-  font-family: akkoThin;
+  font-family: roboto;
+  font-weight: 100
   font-size: 62px;
   color: white;
 }
 
 .strong-text{
-  font-family: akkoLight;
+  font-family: roboto;
   font-weight: bold;
   font-size: 60px;
   color:white;
