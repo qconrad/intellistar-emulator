@@ -119,7 +119,7 @@ function fetchCurrentWeather(){
       response.json().then(function(data) {
         try {
           // which LOCALE?!
-          cityName = ((data.location.locale.locale1 || data.location.locale.locale2 || data.location.locale.locale3 || data.location.locale.locale4) || data.location.display[0]).toUpperCase();
+          cityName = data.location.displayName.toUpperCase();
           latitude = data.location.latitude;
           longitude = data.location.longitude;
         } catch (err) {
