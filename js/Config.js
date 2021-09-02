@@ -88,7 +88,7 @@ window.CONFIG = {
     btn.style = 'margin-bottom: 10px;'
     btn.appendChild(document.createTextNode('Start'))
     settingsPrompt.appendChild(btn)
-    if (localStorage.getItem('loop') === 'y') {
+    if (CONFIG.loop || localStorage.getItem('loop') === 'y') {
       CONFIG.loop = true;
       hideSettings();
       CONFIG.submit()

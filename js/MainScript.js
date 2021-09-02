@@ -23,7 +23,7 @@ window.onload = function() {
   setMainBackground();
   resizeWindow();
   setClockTime();
-  if (localStorage.getItem('loop') !== 'y') {
+  if (!CONFIG.loop) {
     getElement("settings-container").style.display = 'block';
     guessZipCode();
   }
