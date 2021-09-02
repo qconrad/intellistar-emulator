@@ -102,7 +102,7 @@ function setOutlook(){ // Also known as 7day page
     var conditionElement = getElement("day" + i + "-condition");
     var containerElement = getElement("day" + i + "-container");
     var iconElement = getElement("day" + i + "-icon");
-    var dayIndex = (new Date().getDay()+ i) % 7;
+    var dayIndex = (new Date().getDay()+ i + 1) % 7;
 
     var icon = new Image();
     icon.style.width = '100%';
