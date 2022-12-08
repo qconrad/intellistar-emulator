@@ -46,8 +46,9 @@ function toggleAdvancedSettings(){
 }
 
 function preLoadMusic(){
-  var index = Math.floor(Math.random() * 12) + 1;
-  music = new Audio("assets/music/" + index + ".wav");
+  // Sets a random track to play
+  var index = Math.floor(Math.random() * 15) + 1;
+  music = new Audio("assets/music/" + "proto" + ".wav");
 }
 
 /* Set the timeline page order depending on time of day and if
@@ -91,7 +92,7 @@ function setInformation(){
 }
 
 function setMainBackground(){
-  getElement('background-image').style.backgroundImage = 'url(https://picsum.photos/1920/1080/?random';
+  getElement('background-image').style.backgroundImage = 'url(https://i.imgur.com/4f9Qb0j.jpg';
 }
 
 function checkStormMusic(){
@@ -201,7 +202,7 @@ function executePage(pageIndex, subPageIndex){
   if(currentSubPageName == "current-page"){
     setTimeout(loadCC, 1000);
     setTimeout(scrollCC, currentSubPageDuration / 2);
-    animateValue('cc-temperature-text', -20, currentTemperature, 2500, 1);
+    animateValue('cc-temperature-text', -50, currentTemperature, 2500, 1);
     animateDialFill('cc-dial-color', currentTemperature, 2500);
   }
   else if(currentSubPageName == 'radar-page'){
@@ -373,8 +374,8 @@ function setClockTime(){
   var finalString = h + ":" + m;
   getElement("infobar-time-text").innerHTML = finalString;
 
-  // Refresh clock every 5 seconds
-  setTimeout(setClockTime, 5000);
+  // Refresh clock every 1 second
+  setTimeout(setClockTime, 1000);
 }
 
 /* Used to linearly animate a numeric value. In contex, the temperature and
