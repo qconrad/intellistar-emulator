@@ -173,7 +173,7 @@ function fetchRadarImages(){
   radarImage.onerror = function () {
     getElement('radar-container').style.display = 'none';
   }
-  radarImage.src = `https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png`;
+  radarImage.src = `https://radar.weather.gov/ridge/standard/CONUS-LARGE_loop.gif?width=1235&height=525`;
   // Use some hacky workarounds the (almost) 4K size of the imagery
   radarImage.width = `1235`
   radarImage.height = `525`
