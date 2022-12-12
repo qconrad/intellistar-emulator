@@ -1,6 +1,9 @@
 # intellistar-emulator
 A web application that displays weather information in the same visual presentation as the cable headend unit [Intellistar](https://en.wikipedia.org/wiki/IntelliStar).
 
+## Works on
+Windows 7-11, ChromeOS, Android, IOS (i have no idea if it works on vista or xp) 
+
 ## Overview
 This is a local forecast segment that airs on The Weather Channel called the "Local on the 8s". The name is because it airs at timeslots that end in "8" (9:28, 2:48, etc.). The forecast is approximately a minute long and provides information on current and forecasted weather conditions. This type of forecast started in 1982 using WeatherStar units. It was later upgraded to Intellistar in 2003 and recieved various graphic changes over the years. This emulator uses the style that started in 2013.
 
