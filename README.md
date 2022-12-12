@@ -12,7 +12,7 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 4. Press F11 for fullscreen
 
 ## Option 2 (more customizable)
-1. Extract all contents into folder
+1. Download Release
 2. Run index.html in Google Chrome
 3. Enter zip code
 4. Click start
