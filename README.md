@@ -20,6 +20,7 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 
 ## Features
 Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map.
+(only doppler radar is working currently)
 
 ## Looping
 To enable or disable looping, click on the TWC logo in the info-bar in the top-left corner of the emulator.
