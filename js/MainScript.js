@@ -48,7 +48,7 @@ function toggleAdvancedSettings(){
 function preLoadMusic(){
   // Sets a random track to play
   var index = Math.floor(Math.random() * 15) + 1;
-  music = new Audio("assets/music/" + "proto" + ".wav");
+  music = new Audio("assets/music/" + index + ".wav");
 }
 
 /* Set the timeline page order depending on time of day and if
