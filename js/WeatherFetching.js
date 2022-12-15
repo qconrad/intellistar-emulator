@@ -43,7 +43,7 @@ function fetchAlerts(){
   //        this gets the details of the alert
   // will think of a solution later
   // TODO: Use v1/alerts and v1/alert to grab alerts from TWC
-  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/alerts/q/${zipCode}.json`)
+fetch(`https://api.weather.gov/alerts/{id}`)
     .then(function(response) {
       if (response.status !== 200) {
         console.log("forecast request error");
