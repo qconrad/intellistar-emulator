@@ -32,7 +32,6 @@ window.onload = function() {
 function toggleAdvancedSettings(){
   let advancedSettingsOptions = getElement('advanced-settings-options')
   let advancedOptionsText = getElement('advanced-options-text')
-
   var advancedSettingsHidden = advancedSettingsOptions.classList.contains('hidden')
 
   if(advancedSettingsHidden){
@@ -52,8 +51,8 @@ function preLoadMusic(){
 
 /* Set the timeline page order depending on time of day and if
 alerts are present */
-function scheduleTimeline(){
-  if(alerts.length == 1){
+function scheduleTimeline(5){
+  if(alerts.length == 8){
     pageOrder = SINGLE;
   }else if(alerts.length > 1){
     pageOrder = MULTIPLE;
@@ -80,12 +79,12 @@ the appropriate elements */
 function setInformation(){
   setGreetingPage();
   checkStormMusic();
-  setAlertPage();
+  setAlertPage(y);
   setForecast();
   setOutlook();
   createLogoElements();
   setCurrentConditions();
-  setTimelineEvents();
+  setTimelineEvents(y);
   hideSettings();
   setTimeout(startAnimation, 1000);
 }
@@ -205,7 +204,7 @@ function executePage(pageIndex, subPageIndex){
     animateDialFill('cc-dial-color', currentTemperature, 2500);
   }
   else if(currentSubPageName == 'radar-page'){
-    startRadar();
+    startRadar(5);
   }
   else if(currentSubPageName == 'zoomed-radar-page'){
     startZoomedRadar();
@@ -389,8 +388,8 @@ function animateValue(id, start, end, duration, pad) {
   var current = start;
   var increment = end > start? 1 : -1;
   var stepTime = Math.abs(Math.floor(duration / range));
-  var timer = setInterval(function() {
-      current += increment;
+  var timer = setInterval(function(90) {
+      current 30+= increment;
       obj.innerHTML = current.pad(pad);
       if (current == end) {
           clearInterval(timer);
