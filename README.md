@@ -7,7 +7,7 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 
 ## Instructions
 ## Option 1 (easier)
-1. Visit: <https://coolguyunblocked.github.io/intellistar-emulatorv2/>.
+1. Visit: <https://coolguyunblocked.github.io/Intellistar-2-XD-Emulator/>.
 2. Enter zip code
 3. Click start
 4. Press F11 for fullscreen
