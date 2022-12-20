@@ -92,7 +92,7 @@ function setInformation(){
 }
 
 function setMainBackground(){
-  getElement('background-image').style.backgroundImage = 'url(https://imgur.com/gallery/CivwWzz';
+  getElement('background-image').style.backgroundImage = 'url(https://i.imgur.com/kbcB9As.jpeg';
 }
 
 function checkStormMusic(){
