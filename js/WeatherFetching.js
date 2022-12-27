@@ -139,7 +139,7 @@ function fetchCurrentWeather(){
               let unit = data.observation[CONFIG.unitField];
               currentTemperature = Math.round(unit.temp);
               currentCondition = data.observation.phrase_32char;
-              windSpeed = `${data.observation.wdir_cardinal} ${unit.wspd} ${CONFIG.unit === 'm' ? 'km/h' : 'mph'}`;
+              windSpeed = `${data.observation.wdir_cardinal} ${unit.wspd} ${CONFIG.units === 'm' ? 'km/h' : 'mph'}`;
               gusts = unit.gust || 'NONE';
               feelsLike = unit.feels_like
               visibility = Math.round(unit.vis)
