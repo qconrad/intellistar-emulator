@@ -21,14 +21,14 @@
   position: absolute;
   top: 120px;
   left: 420px;
-  width: 165px;
+  width: 175px;
   height: 55px;
   overflow: hidden;
 }
 
 #hello-text{
   top: 55px;
-  width: 100%;
+  width: 110%;
   height: 100%;
   position: absolute;
   transition: top .4s;
@@ -37,7 +37,7 @@
 #hello-location-container{
   position: absolute;
   top: 120px;
-  left: 592px;
+  left: 615px;
   width: auto;
   height: 55px;
   overflow: hidden;

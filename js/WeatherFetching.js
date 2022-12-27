@@ -43,7 +43,7 @@ function fetchAlerts(){
   //        this gets the details of the alert
   // will think of a solution later
   // TODO: Use v1/alerts and v1/alert to grab alerts from TWC
-  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/alerts/q/${zipCode}.json`)
+fetch(`https://api.weather.gov/alerts/{zipcode}`)
     .then(function(response) {
       if (response.status !== 200) {
         console.log("forecast request error");
@@ -159,14 +159,25 @@ function fetchCurrentWeather(){
 
 function fetchRadarImages(){
   // Skip radar until replaced with some other solution (wunderground api dead)
-  scheduleTimeline();
-  return;
-
+   //scheduleTimeline();
+   //return;
+/*
   radarImage = new Image();
   radarImage.onerror = function () {
     getElement('radar-container').style.display = 'none';
   }
   radarImage.src = `https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/animatedradar/q/MI/${zipCode}.gif?newmaps=1&timelabel=1&timelabel.y=10&num=5&delay=10&radius=100&num=15&width=1235&height=525&rainsnow=1&smoothing=1&noclutter=1`;
+*/
+// Temporary solution using National NWS mosaic unitll I can get a different free API.
+  radarImage = new Image();
+  radarImage.onerror = function () {
+    getElement('radar-container').style.display = 'none';
+  }
+  radarImage.src = `https://s.w-x.co/staticmaps/wu/wxtype/none/usa/animate.png`;
+  // Use some hacky workarounds the (almost) 4K size of the imagery
+  radarImage.width = `1235`
+  radarImage.height = `525`
+
 
   if(alertsActive){
     zoomedRadarImage = new Image();
