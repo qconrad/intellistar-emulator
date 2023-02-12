@@ -12,7 +12,7 @@ function guessZipCode(){
   // always use wunderground API for geolookup
   // only valid equivalent is GET v3/location/search
   // TODO: use TWC API GET v3/location/search instead of wunderground geolookup
-  fetch(`https://api.wunderground.com/api/${CONFIG.secrets.wundergroundAPIKey}/geolookup/q/autoip.json`)
+  fetch(`https://api.weather.com/v3/location/search`)
     .then(function(response) {
       //check for error
       if (response.status !== 200) {
