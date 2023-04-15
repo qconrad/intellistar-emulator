@@ -506,8 +506,11 @@ function getElement(id){
 }
 
 function showCrawl(){
-  getElement('crawler-container').classList.add("shown");
-  setTimeout(startCrawl, 400); // wait for the settings to fully animate out before starting
+  // only show crawl bar if it contains text
+  if (CONFIG.crawl.length > 0){
+    getElement('crawler-container').classList.add("shown");
+    setTimeout(startCrawl, 400); // wait for the settings to fully animate out before starting
+  }
 }
 
 function hideCrawl(){
