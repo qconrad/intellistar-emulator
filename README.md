@@ -18,6 +18,13 @@ This is a local forecast segment that airs on The Weather Channel called the "Lo
 4. Click start
 5. Press F11 for fullscreen
 
+## Option 3 (Docker)
+1. `docker run -p 8080:80 ghcr.io/qconrad/intellistar-emulator`
+2. Visit: http://localhost:8080
+3. Enter zip code
+4. Click start
+5. Press F11 for fullscreen
+
 ## Features
 Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map.
 
