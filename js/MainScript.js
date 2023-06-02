@@ -6,7 +6,11 @@ const MULTIPLE = [{name: "Alerts", subpages: [{name: "multiple-alerts-page", dur
 const WEEKDAY = ["SUN",  "MON", "TUES", "WED", "THU", "FRI", "SAT"];
 
 const jingle = new Audio("assets/music/jingle.wav")
-const crawlSpeed = 150;
+
+const crawlSpeedCasual = 10; // A normal reading pace, in characters per second
+const crawlSpeedFast = 20; // A fast reading pace, in characters per second
+const crawlScreenTime = 45; // Shortest time crawl will be on screen, in seconds
+const crawlSpace = 70; // Approx number of characters that can fix in the crawl bar. Used for crawl speed calcs
 
 var isDay = true;
 var currentLogo;
@@ -506,8 +510,11 @@ function getElement(id){
 }
 
 function showCrawl(){
-  getElement('crawler-container').classList.add("shown");
-  setTimeout(startCrawl, 400); // wait for the settings to fully animate out before starting
+  // only show crawl bar if it contains text
+  if (CONFIG.crawl.length > 0){
+    getElement('crawler-container').classList.add("shown");
+    setTimeout(startCrawl, 400); // wait for the settings to fully animate out before starting
+  }
 }
 
 function hideCrawl(){
@@ -521,8 +528,27 @@ function startCrawl(){
 
 function calculateCrawlSpeed() {
   var crawlTextElement = getElement('crawl-text');
-  var elementLength = crawlTextElement.offsetWidth;
-  var timeTaken = elementLength / crawlSpeed;
+
+  // Get the length of the crawl
+  var elementLength = crawlTextElement.innerHTML.length;
+  var timeTaken;
+  // We basically have 3 speed cases to solve for: casual (10 chars/s), fast (20 chars/s), and then anything between.
+  // To handle low lengths correctly, we need to add in the ~70 chars worth of length of the crawl box, otherwise short strings fly by too quickly.
+
+  // Handle the low end case
+  if (elementLength < ( crawlScreenTime*crawlSpeedCasual) - crawlSpace ){
+    timeTaken = (elementLength + crawlSpace) / crawlSpeedCasual;
+  }
+
+  // Handle the high end case. This calc will result in animations longer than screen time, which will cut off the end of long messages, which I find preferable to long messages flying by too fast to read. 
+  else if (elementLength > (crawlScreenTime*crawlSpeedFast)){
+    timeTaken = elementLength / crawlSpeedFast;
+  }
+
+  // Handle the in-between case. Pin the animation time to screentime and let the chars/sec float between the casual and fast limits.
+  else {
+    timeTaken = crawlScreenTime;
+  }
   crawlTextElement.style.animationDuration = timeTaken + "s";
 }
 
