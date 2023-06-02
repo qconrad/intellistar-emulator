@@ -7,7 +7,9 @@
   transform: translateY(-50%);
   text-align: center;
 }
-
+.radar-container{
+  overflow: hidden;
+}
 .key{
   display: inline-block;
   float: right;
