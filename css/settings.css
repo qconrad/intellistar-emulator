@@ -40,13 +40,23 @@
 }
 
 .settings-item{
-  width: 400px;
+  width: 100%;
   margin: 0 auto;
   height: 35px;
 }
 
+.location-item{
+  width: 200px;
+  margin-left: 20px;
+  height: 35px;
+}
+
+.settings-padded {
+    margin-top: 20px;
+}
+
 .settings-text{
-  font-size: 35px;
+  font-size: 30px;
 }
 
 .settings-input{
@@ -69,10 +79,6 @@
   background-color: #595973;
 }
 
-#zip-code-text{
-  width: 5ch;
-  text-align: center;
-}
 
 #alert-message{
   background-color: rgba(0,0,0, 0.50);
