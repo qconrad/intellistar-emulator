@@ -18,8 +18,11 @@ var currentLogoIndex = 0;
 var pageOrder;
 var music;
 
-window.onload = function() {
-  CONFIG.addOption('zip-code', 'ZIP Code', '00000')
+window.onload = function () {
+
+  CONFIG.addLocationOption('airport-code', 'Airport', 'ATL or KATL')
+  CONFIG.addLocationOption('zip-code', 'Postal', '00000')
+
   CONFIG.addOption('crawlText', 'Crawl Text', 'Text that scrolls along the bottom')
   CONFIG.addOption('greetingText', 'Greeting Text', 'Message (or joke) that appears at the start')
   CONFIG.load();

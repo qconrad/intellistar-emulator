@@ -6,6 +6,7 @@ window.CONFIG = {
   units: 'e', // Supported in TWC API (e = English (imperial), m = Metric, h = Hybrid (UK)),
   unitField: 'imperial', // Supported in TWC API. This field will be filled in automatically. (imperial = e, metric = m, uk_hybrid = h)
   loop: false,
+  locationMode: "POSTAL",
   secrets: {
     // Possibly deprecated key: See issue #29
     // twcAPIKey: 'd522aa97197fd864d36b418f39ebb323'
@@ -13,6 +14,14 @@ window.CONFIG = {
   },
 
   // Config Functions (index.html settings manager)
+  locationOptions:[],
+  addLocationOption: (id, name, desc) => {
+    CONFIG.locationOptions.push({
+      id,
+      name,
+      desc,
+    })
+  },
   options: [],
   addOption: (id, name, desc) => {
     CONFIG.options.push({
@@ -23,56 +32,115 @@ window.CONFIG = {
   },
   submit: (btn, e) => {
     let args = {}
+    CONFIG.locationOptions.forEach((opt) => {
+      args[opt.id] = getElement(`${opt.id}-text`).value
+      args[`${opt.id}-button`] = getElement(`${opt.id}-button`).checked
+      localStorage.setItem(opt.id, args[opt.id])
+    })
+    args['countryCode'] = getElement('country-code-text').value
     CONFIG.options.forEach((opt) => {
       args[opt.id] = getElement(`${opt.id}-text`).value
       localStorage.setItem(opt.id, args[opt.id])
     })
+    console.log(args)
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
     if (args.greetingText !== '') CONFIG.greeting = args.greetingText
+    if(args.countryCode !== '') CONFIG.countryCode = args.countryCode
     if (args.loop === 'y') CONFIG.loop = true
-    if(/(^\d{5}$)|(^\d{5}-\d{4}$)/.test(args['zip-code'])){
-      zipCode = args['zip-code'];
-    } else {
-      alert("Enter valid ZIP code");
-      return;
+    
+    if (args['airport-code-button']==true){ 
+      CONFIG.locationMode="AIRPORT" 
+      if(args['airport-code'].length==0){
+        alert("Please enter an airport code")
+        return;
+      }
+    } 
+    else { 
+      CONFIG.locationMode="POSTAL" 
+      if(args['zip-code'].length==0){
+        alert("Please enter a postal code")
+        return;
+      }
+
     }
+    
+    zipCode = args['zip-code'];
+    airportCode = args['airport-code'];
+    
     CONFIG.unitField = CONFIG.units === 'm' ? 'metric' : (CONFIG.units === 'h' ? 'uk_hybrid' : 'imperial')
     fetchCurrentWeather();
   },
   load: () => {
     let settingsPrompt = getElement('settings-prompt')
-    let zipContainer = getElement('zip-container')
+    let locationContainer = getElement('location-container')
     let advancedSettingsOptions = getElement('advanced-settings-options')
+
+    CONFIG.locationOptions.forEach((option)=>{
+      //Create the necessary elements
+      let row = document.createElement('tr')
+      let radioButtonCell = document.createElement('td')
+      let textBoxCell = document.createElement('td')
+      
+      //Create the button
+      let button = document.createElement('input')
+      button.type = 'radio'
+      button.id = `${option.id}-button`
+      button.name='location_type'
+      button.value=option.id
+      
+
+      //Create the button's Label
+      let buttonLabel = document.createElement('label')
+      buttonLabel.for = `${option.id}-button`
+      buttonLabel.classList.add('strong-text', 'settings-item', 'settings-text', 'settings-padded')
+      buttonLabel.append(option.name)      
+
+
+      //Create the textbox
+      let textbox = document.createElement('input')
+      textbox.classList.add('location-item', 'settings-text', 'settings-input')
+      textbox.type = 'text'
+      textbox.style.fontSize = '20px'
+      textbox.placeholder = option.desc
+      textbox.id = `${option.id}-text`
+      
+      //Tie it all together
+      radioButtonCell.appendChild(button)
+      radioButtonCell.appendChild(buttonLabel)
+      textBoxCell.appendChild(textbox)
+      row.appendChild(radioButtonCell)
+      row.appendChild(textBoxCell)
+      
+
+    })
+
+    //Advanced Options Setup
     CONFIG.options.forEach((option) => {
       //<div class="regular-text settings-item settings-text">Zip Code</div>
       let label = document.createElement('div')
-      label.classList.add('strong-text', 'settings-item', 'settings-text')
+        label.classList.add('strong-text', 'settings-item', 'settings-text', 'settings-padded')
+        label.style.textAlign='left'
       label.appendChild(document.createTextNode(option.name))
       label.id = `${option.id}-label`
       //<input class="settings-item settings-text" type="text" id="zip-code-text">
-      let textbox = document.createElement('input')
+      let textbox = document.createElement('textarea')
       textbox.classList.add('settings-item', 'settings-text', 'settings-input')
       textbox.type = 'text'
       textbox.style.fontSize = '20px'
       textbox.placeholder = option.desc
       textbox.id = `${option.id}-text`
+      textbox.style.maxWidth='320px'
+      textbox.style.minWidth='320px'
+      textbox.style.height='100px'
+      textbox.style.marginTop='10px'
       if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       let br = document.createElement('br')
-      if(textbox.id == "zip-code-text"){
-        textbox.setAttribute('maxlength', '5')
-        textbox.style.fontSize = '35px'
-        label.style.width = "auto"
-        zipContainer.appendChild(label)
-        zipContainer.appendChild(textbox)
-        zipContainer.appendChild(br)
-      }
-      else{
-        advancedSettingsOptions.appendChild(label)
-        advancedSettingsOptions.appendChild(textbox)
-        advancedSettingsOptions.appendChild(br)
-      }
+      advancedSettingsOptions.appendChild(label)
+      advancedSettingsOptions.appendChild(textbox)
+      advancedSettingsOptions.appendChild(br)
       //<br>
     })
+
     let advancedButtonContainer = document.createElement('div')
     advancedButtonContainer.classList.add('settings-container')
     settingsPrompt.appendChild(advancedButtonContainer)

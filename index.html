@@ -392,7 +392,38 @@
   <!-- Settings Prompt -->
   <div id="settings-container" style="display: none;">
     <div id="settings-prompt">
-      <div id="zip-container" class="settings-container"></div>
+      <table style="width:350px">
+        <tbody>
+        
+          <!-- Locations won't be added programatically -->
+          <tr>
+            <td style="text-align: left;">
+              <input type="radio" id="airport-code-button" name='location-type' checked="false"/>
+              <label for="airport-code-button" class="strong-text settings-item settings-text settings-padded">Airport</label>
+            </td>
+            <td colspan="2">
+              <input type="text" id="airport-code-text" style="font-size: 20px; width:180px" 
+              placeholder="ATL or KATL" class="settings-item settings-text settings-input"/>
+            </td>
+          </tr>
+
+          <tr>
+            <td style="text-align: left;">
+              <input type="radio" id="zip-code-button" name='location-type' checked="true"/>
+              <label for="zip-code-button" class="strong-text settings-item settings-text settings-padded">Postal</label>
+            </td>
+            <td>
+              <input type="text" id="zip-code-text" style="font-size: 20px; width:100px" 
+              placeholder="00000" class="settings-item settings-text settings-input"/>
+            </td>
+            <td>
+              <input type="text" id="country-code-text" style="font-size: 20px; width:50px;" 
+              placeholder="US" value="US" maxlength="2" class="settings-item settings-text settings-input"/>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
       <div id="advanced-settings-options" class="settings-container hidden"></div>
     </div>
   </div>
