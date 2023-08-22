@@ -72,47 +72,7 @@ window.CONFIG = {
   },
   load: () => {
     let settingsPrompt = getElement('settings-prompt')
-    let locationContainer = getElement('location-container')
     let advancedSettingsOptions = getElement('advanced-settings-options')
-
-    CONFIG.locationOptions.forEach((option)=>{
-      //Create the necessary elements
-      let row = document.createElement('tr')
-      let radioButtonCell = document.createElement('td')
-      let textBoxCell = document.createElement('td')
-      
-      //Create the button
-      let button = document.createElement('input')
-      button.type = 'radio'
-      button.id = `${option.id}-button`
-      button.name='location_type'
-      button.value=option.id
-      
-
-      //Create the button's Label
-      let buttonLabel = document.createElement('label')
-      buttonLabel.for = `${option.id}-button`
-      buttonLabel.classList.add('strong-text', 'settings-item', 'settings-text', 'settings-padded')
-      buttonLabel.append(option.name)      
-
-
-      //Create the textbox
-      let textbox = document.createElement('input')
-      textbox.classList.add('location-item', 'settings-text', 'settings-input')
-      textbox.type = 'text'
-      textbox.style.fontSize = '20px'
-      textbox.placeholder = option.desc
-      textbox.id = `${option.id}-text`
-      
-      //Tie it all together
-      radioButtonCell.appendChild(button)
-      radioButtonCell.appendChild(buttonLabel)
-      textBoxCell.appendChild(textbox)
-      row.appendChild(radioButtonCell)
-      row.appendChild(textBoxCell)
-      
-
-    })
 
     //Advanced Options Setup
     CONFIG.options.forEach((option) => {
