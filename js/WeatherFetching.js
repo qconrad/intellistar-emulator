@@ -33,10 +33,9 @@ function fetchAlerts(){
   var alertCrawl = "";
   fetch(`https://api.weather.gov/alerts/active?point=${latitude},${longitude}`)
     .then(function(response) {
-      if (response.status !== 200) {
-        console.log("forecast request error");
-        return;
-      }
+        if (response.status !== 200) {
+            console.warn("Alerts Error, no alerts will be shown");
+        }
       response.json().then(function(data) {
         if (data.features == undefined){
           fetchForecast();
@@ -108,16 +107,56 @@ function fetchForecast(){
 }
 
 function fetchCurrentWeather(){
-  fetch(`https://api.weather.com/v3/location/point?postalKey=${zipCode}:${CONFIG.countryCode}&language=${CONFIG.language}&format=json&apiKey=${CONFIG.secrets.twcAPIKey}`)
-    .then(function(response) {
-      if (response.status !== 200) {
-        console.log('conditions request error');
-        return;
-      }
+
+  //Let's check what we're dealing with
+  let location = "";
+  console.log(CONFIG.locationMode)
+  if(CONFIG.locationMode=="POSTAL") {location=`postalKey=${zipCode}:${CONFIG.countryCode}`}
+  else if (CONFIG.locationMode=="AIRPORT") {
+    //Determine whether this is an IATA or ICAO code
+    let airportCodeLength=airportCode.length;
+    if(airportCodeLength==3){location=`iataCode=${airportCode}`}
+    else if (airportCodeLength==4){location=`icaoCode=${airportCode}`}
+    else {
+      alert("Please enter a valid ICAO or IATA Code")
+      console.error(`Expected Airport Code Lenght to be 3 or 4 but was ${airportCodeLength}`)
+      return;
+    }
+  }
+  else {
+    alert("Please select a location type");
+    console.error("Unknown what to use for location")
+    return;
+  }
+  
+
+  fetch(`https://api.weather.com/v3/location/point?${location}&language=${CONFIG.language}&format=json&apiKey=${CONFIG.secrets.twcAPIKey}`)
+      .then(function (response) {
+          if (response.status == 404) {
+              alert("Location not found!")
+              console.log('conditions request error');
+              return;
+          }
+          if (response.status !== 200) {
+              alert("Something went wrong (check the console)")
+              console.log('conditions request error');
+              return;
+          }
       response.json().then(function(data) {
         try {
           // which LOCALE?!
-          cityName = data.location.displayName.toUpperCase();
+          //Not sure about the acuracy of this. Remove this if necessary
+          if(CONFIG.locationMode=="AIRPORT"){
+            cityName = data.location.airportName
+            .toUpperCase() //Airport names are long
+            .replace("INTERNATIONAL","INTL.") //If a city name is too long, info bar breaks
+            .replace("AIRPORT","") //This is an attempt to fix it
+            .trim();
+            console.log(cityName);
+          } else {
+            //Shouldn't City Name be the field City Name, not Display Name?
+            cityName = data.location.city.toUpperCase();
+          }
           latitude = data.location.latitude;
           longitude = data.location.longitude;
         } catch (err) {
@@ -152,6 +191,7 @@ function fetchCurrentWeather(){
           });
       })
     });
+
 
 }
 

@@ -1,4 +1,5 @@
 var zipCode;
+var airportCode;
 var cityName;
 
 var longitude;
