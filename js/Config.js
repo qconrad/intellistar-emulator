@@ -124,13 +124,11 @@ window.CONFIG = {
       params.forEach((param) => {
         if (urlParams.has(param)) {
           CONFIG[param] = urlParams.get(param)
-        }
-        if (urlParams.get('play')) {
-          hideSettings()
-          CONFIG.submit()
+          localStorage.setItem(param, urlParams.get(param))
         }
       })
-    } else if (CONFIG.loop || localStorage.getItem('loop') === 'y') {
+    } 
+    if (CONFIG.loop || localStorage.getItem('loop') === 'y') {
       CONFIG.loop = true
       hideSettings()
       CONFIG.submit()
