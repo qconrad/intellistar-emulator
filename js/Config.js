@@ -52,9 +52,9 @@ window.CONFIG = {
     })
     console.log(args)
     if (currentLoop) {
-      CONFIG.crawl = localStorage.getItem('crawlText')
-      CONFIG.greeting = localStorage.getItem('greetingText')
-      CONFIG.countryCode = localStorage.getItem('countryCode')
+      if (localStorage.getItem('crawlText')) CONFIG.crawl = localStorage.getItem('crawlText')
+      if (localStorage.getItem('greetingText')) CONFIG.greeting = localStorage.getItem('greetingText')
+      if (localStorage.getItem('countryCode')) CONFIG.countryCode = localStorage.getItem('countryCode')
     } else {
       if (args.crawlText !== '') CONFIG.crawl = args.crawlText
       if (args.greetingText !== '') CONFIG.greeting = args.greetingText
