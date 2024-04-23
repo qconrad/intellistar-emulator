@@ -14,7 +14,7 @@ window.CONFIG = {
   },
 
   // Config Functions (index.html settings manager)
-  locationOptions:[],
+  locationOptions: [],
   addLocationOption: (id, name, desc) => {
     CONFIG.locationOptions.push({
       id,
@@ -45,28 +45,28 @@ window.CONFIG = {
     console.log(args)
     if (args.crawlText !== '') CONFIG.crawl = args.crawlText
     if (args.greetingText !== '') CONFIG.greeting = args.greetingText
-    if(args.countryCode !== '') CONFIG.countryCode = args.countryCode
+    if (args.countryCode !== '') CONFIG.countryCode = args.countryCode
     if (args.loop === 'y') CONFIG.loop = true
-    
-    if (args['airport-code-button']==true){ 
-      CONFIG.locationMode="AIRPORT" 
-      if(args['airport-code'].length==0){
+
+    if (args['airport-code-button'] == true) {
+      CONFIG.locationMode = "AIRPORT"
+      if (args['airport-code'].length == 0) {
         alert("Please enter an airport code")
         return;
       }
-    } 
-    else { 
-      CONFIG.locationMode="POSTAL" 
-      if(args['zip-code'].length==0){
+    }
+    else {
+      CONFIG.locationMode = "POSTAL"
+      if (args['zip-code'].length == 0) {
         alert("Please enter a postal code")
         return;
       }
 
     }
-    
+
     zipCode = args['zip-code'];
     airportCode = args['airport-code'];
-    
+
     CONFIG.unitField = CONFIG.units === 'm' ? 'metric' : (CONFIG.units === 'h' ? 'uk_hybrid' : 'imperial')
     fetchCurrentWeather();
   },
@@ -78,8 +78,8 @@ window.CONFIG = {
     CONFIG.options.forEach((option) => {
       //<div class="regular-text settings-item settings-text">Zip Code</div>
       let label = document.createElement('div')
-        label.classList.add('strong-text', 'settings-item', 'settings-text', 'settings-padded')
-        label.style.textAlign='left'
+      label.classList.add('strong-text', 'settings-item', 'settings-text', 'settings-padded')
+      label.style.textAlign = 'left'
       label.appendChild(document.createTextNode(option.name))
       label.id = `${option.id}-label`
       //<input class="settings-item settings-text" type="text" id="zip-code-text">
@@ -89,10 +89,10 @@ window.CONFIG = {
       textbox.style.fontSize = '20px'
       textbox.placeholder = option.desc
       textbox.id = `${option.id}-text`
-      textbox.style.maxWidth='320px'
-      textbox.style.minWidth='320px'
-      textbox.style.height='100px'
-      textbox.style.marginTop='10px'
+      textbox.style.maxWidth = '320px'
+      textbox.style.minWidth = '320px'
+      textbox.style.height = '100px'
+      textbox.style.marginTop = '10px'
       if (localStorage.getItem(option.id)) textbox.value = localStorage.getItem(option.id)
       let br = document.createElement('br')
       advancedSettingsOptions.appendChild(label)
@@ -118,9 +118,21 @@ window.CONFIG = {
     btn.style = 'margin-bottom: 10px;'
     btn.appendChild(document.createTextNode('Start'))
     settingsPrompt.appendChild(btn)
-    if (CONFIG.loop || localStorage.getItem('loop') === 'y') {
-      CONFIG.loop = true;
-      hideSettings();
+    const urlParams = window.location.search ? new URLSearchParams(window.location.search) : null
+    if (urlParams) {
+      const params = ['zip-code', 'airport-code', 'countryCode', 'greetingText', 'crawlText', 'loop']
+      params.forEach((param) => {
+        if (urlParams.has(param)) {
+          CONFIG[param] = urlParams.get(param)
+        }
+        if (urlParams.get('play')) {
+          hideSettings()
+          CONFIG.submit()
+        }
+      })
+    } else if (CONFIG.loop || localStorage.getItem('loop') === 'y') {
+      CONFIG.loop = true
+      hideSettings()
       CONFIG.submit()
     }
   }
