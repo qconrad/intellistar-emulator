@@ -1,10 +1,12 @@
-.git/
-README.md
-LICENSE
-.github/
-.gitmodules
+# Ignore Python artifacts
+__pycache__/
+*.pyc
+.venv/
+
+# Docker
 Dockerfile
-.dockerignore
-.gitignore
-screenshots/
-docs/
+.env
+
+# Editor
+.vscode/
+.idea/

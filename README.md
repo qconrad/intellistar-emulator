@@ -1,57 +1,118 @@
-# intellistar-emulator
-A web application that displays weather information in the same visual presentation as the cable headend unit [Intellistar](https://en.wikipedia.org/wiki/IntelliStar).
+# Intellistar Emulator (prototype)
 
-## Overview
-This is a local forecast segment that airs on The Weather Channel called the "Local on the 8s". The name is because it airs at timeslots that end in "8" (9:28, 2:48, etc.). The forecast is approximately a minute long and provides information on current and forecasted weather conditions. This type of forecast started in 1982 using WeatherStar units. It was later upgraded to Intellistar in 2003 and received various graphic changes over the years. This emulator uses the style that started in 2013.
+This repository contains a prototype Intellistar-style weather emulator built with Flask and Pillow. It renders a 1280×720 "Intellistar-like" card with background image support, optional logo, and an optional OpenWeather integration for current conditions.
 
-## Instructions
-## Option 1 (easier)
-1. Visit: <https://qconrad.github.io/intellistar-emulator/>.
-2. Enter zip code
-3. Click start
-4. Press F11 for fullscreen
+This branch includes PWA support and Chromebook-friendly packaging so the app can be installed on Chrome OS as a Progressive Web App (PWA) and run fullscreen like a kiosk.
 
-## Option 2 (more customizable)
-1. Extract all contents into folder
-2. Run index.html in Google Chrome
-3. Enter zip code
-4. Click start
-5. Press F11 for fullscreen
+## What's included
 
-## Option 3 (Docker)
-1. `docker run -p 8080:80 ghcr.io/qconrad/intellistar-emulator`
-2. Visit: http://localhost:8080
-3. Enter zip code
-4. Click start
-5. Press F11 for fullscreen
+- app.py — Flask server + renderer, Chromebook-only heuristic enforcement, PWA support (manifest + service worker)
+- requirements.txt — Python dependencies
+- static/manifest.json — Web App Manifest for PWA install
+- static/sw.js — Service Worker providing basic offline caching
+- static/icon.svg — Placeholder app icon (used by the manifest)
+- static/icons/* — placeholder PNG maskable icons (192 and 512)
 
-## Features
-Most of core animation and logic has been replicated including severe weather alerts, forecast descriptions, crawl text, and the Doppler radar map.
+## Run locally
 
-*Some of these features are temporarily not working due to the discontinuation of WU's API*
+1. Install dependencies
 
-## Looping
-To enable or disable looping, click on the TWC logo in the info-bar in the top-left corner of the emulator.
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
 
-To get looping working properly, you may (as of Chrome M66) have to go to chrome://flags#autoplay-policy (Autoplay Policy) and change it to `User gesture is required for cross-origin iframes` or `No user gesture is required`  
+2. (Optional) Set OpenWeather API key
 
-## Screenshots
-![Screenshot 1](/screenshots/1.png)
+```bash
+export OPENWEATHER_API_KEY=your_openweather_api_key
+```
 
-![Screenshot 2](/screenshots/2.png)
+3. Run the app
 
-![Screenshot 3](/screenshots/3.png)
+```bash
+python app.py
+```
 
-![Screenshot 4](/screenshots/4.png)
+4. Open the site on a Chromebook
 
-![Screenshot 5](/screenshots/5.png)
+Point your Chromebook browser to `http://<host>:5000/`. The page will detect Chrome OS and show the live image. From the Chrome menu, choose "Install app" or "Install Intellistar Emulator" to add it to the shelf. You can then open it fullscreen.
 
-![Screenshot 6](/screenshots/6.png)
+## PWA / Kiosk installation notes (Chromebook)
 
-![Screenshot 7](/screenshots/7.png)
+- To install the app on Chrome for Chrome OS:
+  1. Open the site in Chrome on your Chromebook.
+  2. Click the Chrome menu (three dots) and choose "Install app" or the install icon in the address bar.
+  3. After install, open the app from the shelf and use Chrome's window controls to go fullscreen.
 
-![Screenshot 8](/screenshots/8.png)
+- For an enterprise-managed Chromebook fleet consider using kiosk mode via Google Admin Console for automatic app deployment.
 
-![Screenshot 9](/screenshots/9.png)
+## HTTPS via Cloudflare Tunnel (no public IP required)
 
-![Screenshot 10](/screenshots/10.png)
+This repository includes a docker-compose setup that runs the emulator and a Cloudflare Tunnel (cloudflared) so you can serve the app over HTTPS without opening firewall ports or owning a public IP.
+
+There are two modes:
+
+A) Quick test (ephemeral, no DNS configuration)
+- This creates a temporary https://*.trycloudflare.com URL that forwards to your local app. Not suitable for production but great for quick testing.
+
+B) Persistent / Production (recommended)
+- Create a Cloudflare Tunnel via the Cloudflare Zero Trust dashboard, create a persistent Tunnel name, and map a DNS CNAME in your domain to the tunnel. Run cloudflared with the tunnel credentials for a stable hostname under your domain.
+
+### Setup using docker-compose (supports both modes)
+
+1. Make sure you have Docker & Docker Compose installed.
+2. Create a `.env` file in the repo root with any of the following variables you need:
+
+```env
+OPENWEATHER_API_KEY=your_openweather_api_key
+# Optional: if you have a tunnel token (for quick authenticated run)
+TUNNEL_TOKEN=
+# Optional: the tunnel name/credentials file approach will be described below
+```
+
+3. Start the services:
+
+```bash
+docker-compose up -d --build
+```
+
+- Quick ephemeral test (no Cloudflare account required): leave `TUNNEL_TOKEN` empty — cloudflared will create a temporary public URL on trycloudflare.com and print it in the container logs.
+- Persistent/production: create a Tunnel in Cloudflare Zero Trust > Tunnels, generate credentials and follow the Cloudflare docs to attach a DNS name to the tunnel. You can mount the tunnel credentials into the cloudflared container (see examples below) or use a tunnel token.
+
+4. View logs to get the public URL (ephemeral) or verify tunnel is running:
+
+```bash
+docker-compose logs -f cloudflared
+```
+
+### Example: run a persistent tunnel with a credentials file
+
+1. Create a tunnel in Cloudflare and download the credentials JSON for the tunnel.
+2. Place the credentials JSON on your host, e.g. `/opt/cloudflared/<TUNNEL_NAME>.json`.
+3. Update `docker-compose.yml` to mount the credentials and run `cloudflared tunnel run <TUNNEL_NAME>` (see commented example in the repository).
+
+### Notes and security
+
+- The Cloudflare Tunnel approach allows HTTPS termination via Cloudflare and avoids exposing your host to the public internet directly.
+- If you use the ephemeral trycloudflare URL, be aware the URL may change each run and is not suitable for production or long-term use.
+- For production, create a named tunnel, map DNS from your domain to the tunnel, and use the downloaded tunnel credentials for long-running tunnels.
+
+## Files to customize
+
+- `static/manifest.json` — customize the name, icons, and start_url as needed.
+- `static/sw.js` — the service worker contains a basic cache list and fetch handler — expand it for more robust offline behavior.
+- `app.py` — the renderer and layout; change fonts, sizes, and artwork as desired.
+
+## Security / Production notes
+
+- The Chromebook-only restriction is heuristic (user-agent / client hints). It can be spoofed. For stronger protection, add authentication (OAuth) or device enrollment.
+- Consider running the app behind HTTPS using the Cloudflare Tunnel as documented above.
+
+## TODO
+
+- Add Dockerfile and systemd service
+- Replace placeholder artwork with licensed assets
+- Add scheduling/caching for periodic updates
+- Add radar tile overlay option
