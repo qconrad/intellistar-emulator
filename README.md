@@ -11,6 +11,7 @@ This branch includes PWA support and Chromebook-friendly packaging so the app ca
 - static/manifest.json — Web App Manifest for PWA install
 - static/sw.js — Service Worker providing basic offline caching
 - static/icon.svg — Placeholder app icon (used by the manifest)
+- static/icons/* — placeholder PNG maskable icons (192 and 512)
 
 ## Run locally
 
@@ -47,6 +48,57 @@ Point your Chromebook browser to `http://<host>:5000/`. The page will detect Chr
 
 - For an enterprise-managed Chromebook fleet consider using kiosk mode via Google Admin Console for automatic app deployment.
 
+## HTTPS via Cloudflare Tunnel (no public IP required)
+
+This repository includes a docker-compose setup that runs the emulator and a Cloudflare Tunnel (cloudflared) so you can serve the app over HTTPS without opening firewall ports or owning a public IP.
+
+There are two modes:
+
+A) Quick test (ephemeral, no DNS configuration)
+- This creates a temporary https://*.trycloudflare.com URL that forwards to your local app. Not suitable for production but great for quick testing.
+
+B) Persistent / Production (recommended)
+- Create a Cloudflare Tunnel via the Cloudflare Zero Trust dashboard, create a persistent Tunnel name, and map a DNS CNAME in your domain to the tunnel. Run cloudflared with the tunnel credentials for a stable hostname under your domain.
+
+### Setup using docker-compose (supports both modes)
+
+1. Make sure you have Docker & Docker Compose installed.
+2. Create a `.env` file in the repo root with any of the following variables you need:
+
+```env
+OPENWEATHER_API_KEY=your_openweather_api_key
+# Optional: if you have a tunnel token (for quick authenticated run)
+TUNNEL_TOKEN=
+# Optional: the tunnel name/credentials file approach will be described below
+```
+
+3. Start the services:
+
+```bash
+docker-compose up -d --build
+```
+
+- Quick ephemeral test (no Cloudflare account required): leave `TUNNEL_TOKEN` empty — cloudflared will create a temporary public URL on trycloudflare.com and print it in the container logs.
+- Persistent/production: create a Tunnel in Cloudflare Zero Trust > Tunnels, generate credentials and follow the Cloudflare docs to attach a DNS name to the tunnel. You can mount the tunnel credentials into the cloudflared container (see examples below) or use a tunnel token.
+
+4. View logs to get the public URL (ephemeral) or verify tunnel is running:
+
+```bash
+docker-compose logs -f cloudflared
+```
+
+### Example: run a persistent tunnel with a credentials file
+
+1. Create a tunnel in Cloudflare and download the credentials JSON for the tunnel.
+2. Place the credentials JSON on your host, e.g. `/opt/cloudflared/<TUNNEL_NAME>.json`.
+3. Update `docker-compose.yml` to mount the credentials and run `cloudflared tunnel run <TUNNEL_NAME>` (see commented example in the repository).
+
+### Notes and security
+
+- The Cloudflare Tunnel approach allows HTTPS termination via Cloudflare and avoids exposing your host to the public internet directly.
+- If you use the ephemeral trycloudflare URL, be aware the URL may change each run and is not suitable for production or long-term use.
+- For production, create a named tunnel, map DNS from your domain to the tunnel, and use the downloaded tunnel credentials for long-running tunnels.
+
 ## Files to customize
 
 - `static/manifest.json` — customize the name, icons, and start_url as needed.
@@ -56,7 +108,7 @@ Point your Chromebook browser to `http://<host>:5000/`. The page will detect Chr
 ## Security / Production notes
 
 - The Chromebook-only restriction is heuristic (user-agent / client hints). It can be spoofed. For stronger protection, add authentication (OAuth) or device enrollment.
-- Consider building a Docker image for deployment and running behind HTTPS.
+- Consider running the app behind HTTPS using the Cloudflare Tunnel as documented above.
 
 ## TODO
 

@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    container_name: intellistar-app
+    restart: unless-stopped
+    environment:
+      - OPENWEATHER_API_KEY=${OPENWEATHER_API_KEY}
+    networks:
+      - intellistar-net
+
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    depends_on:
+      - app
+    environment:
+      # Optional: use a tunnel token (see README). If empty, the container will start an ephemeral tunnel and print a trycloudflare.com URL.
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: >
+      sh -c "if [ -n \"$TUNNEL_TOKEN\" ]; then \
+                cloudflared tunnel --no-autoupdate run --token $TUNNEL_TOKEN; \
+              else \
+                cloudflared tunnel --no-autoupdate --url http://app:5000; \
+              fi"
+    networks:
+      - intellistar-net
+
+networks:
+  intellistar-net:
+    driver: bridge
